@@ -1,0 +1,19 @@
+﻿scene_id,line_id,candidate,file_path,duration_sec,rms_energy,peak_value,leading_silence_sec,trailing_silence_sec,qc_result,qc_notes
+scene_01,line_001,1,D:\irodori\projects\test_project\audio\scene_01\line_001_001.wav,3.0,0.13579,0.843,0.06,0.36,qc_pass,OK
+scene_01,line_001,2,D:\irodori\projects\test_project\audio\scene_01\line_001_002.wav,3.68,0.14118,0.8586,0.0,0.32,qc_pass,OK
+scene_01,line_001,3,D:\irodori\projects\test_project\audio\scene_01\line_001_003.wav,3.44,0.14772,0.7052,0.2,0.34,qc_pass,OK
+scene_01,line_002,1,D:\irodori\projects\test_project\audio\scene_01\line_002_001.wav,5.92,0.08298,0.9948,0.96,1.04,qc_warn,クリッピング(peak=0.9948); 先頭無音が長い(1.0s)
+scene_01,line_002,2,D:\irodori\projects\test_project\audio\scene_01\line_002_002.wav,5.92,0.08653,0.9999,0.92,1.1,qc_warn,クリッピング(peak=0.9999); 先頭無音が長い(0.9s)
+scene_01,line_002,3,D:\irodori\projects\test_project\audio\scene_01\line_002_003.wav,6.32,0.09302,0.9999,0.02,1.06,qc_warn,クリッピング(peak=0.9999)
+scene_01,line_003,1,D:\irodori\projects\test_project\audio\scene_01\line_003_001.wav,4.72,0.10002,1.0,0.0,1.12,qc_warn,クリッピング(peak=1.0000)
+scene_01,line_003,2,D:\irodori\projects\test_project\audio\scene_01\line_003_002.wav,4.0,0.12124,0.9507,0.48,1.2,qc_pass,OK
+scene_01,line_003,3,D:\irodori\projects\test_project\audio\scene_01\line_003_003.wav,4.72,0.12749,0.9999,0.0,0.94,qc_warn,クリッピング(peak=0.9999)
+scene_02,line_001,1,D:\irodori\projects\test_project\audio\scene_02\line_001_001.wav,4.8,0.12135,1.0,0.92,1.1,qc_warn,クリッピング(peak=1.0000); 先頭無音が長い(0.9s)
+scene_02,line_001,2,D:\irodori\projects\test_project\audio\scene_02\line_001_002.wav,4.92,0.12302,0.9999,0.86,1.02,qc_warn,クリッピング(peak=0.9999); 先頭無音が長い(0.9s)
+scene_02,line_001,3,D:\irodori\projects\test_project\audio\scene_02\line_001_003.wav,4.6,0.10981,1.0,1.0,1.1,qc_warn,クリッピング(peak=1.0000); 先頭無音が長い(1.0s)
+scene_02,line_002,1,D:\irodori\projects\test_project\audio\scene_02\line_002_001.wav,4.0,0.12058,0.9997,0.64,0.94,qc_warn,クリッピング(peak=0.9997); 先頭無音が長い(0.6s)
+scene_02,line_002,2,D:\irodori\projects\test_project\audio\scene_02\line_002_002.wav,4.0,0.10407,0.9998,0.56,1.04,qc_warn,クリッピング(peak=0.9998); 先頭無音が長い(0.6s)
+scene_02,line_002,3,D:\irodori\projects\test_project\audio\scene_02\line_002_003.wav,4.6,0.12314,0.9999,0.58,1.08,qc_warn,クリッピング(peak=0.9999); 先頭無音が長い(0.6s)
+scene_02,line_003,1,D:\irodori\projects\test_project\audio\scene_02\line_003_001.wav,4.32,0.1338,1.0,0.0,1.02,qc_warn,クリッピング(peak=1.0000)
+scene_02,line_003,2,D:\irodori\projects\test_project\audio\scene_02\line_003_002.wav,4.0,0.13228,0.7097,0.92,1.08,qc_warn,先頭無音が長い(0.9s)
+scene_02,line_003,3,D:\irodori\projects\test_project\audio\scene_02\line_003_003.wav,4.04,0.13932,1.0,0.0,1.08,qc_warn,クリッピング(peak=1.0000)

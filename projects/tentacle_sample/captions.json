@@ -1,0 +1,61 @@
+{
+  "profiles": {
+    "日常会話": {
+      "caption": "若い女性が、リラックスした自然な口調で、明るく話している。",
+      "cfg_text": 3.0,
+      "cfg_caption": 3.0,
+      "cfg_speaker": 5.0,
+      "num_steps": 30
+    },
+    "甘い囁き": {
+      "caption": "若い女性が、耳元で囁くように、甘く柔らかい声で話している。",
+      "cfg_text": 5.0,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "num_steps": 30
+    },
+    "恥じらい": {
+      "caption": "若い女性が、恥ずかしそうにもじもじしながら、小さな声で話している。",
+      "cfg_text": 6.0,
+      "cfg_caption": 6.0,
+      "cfg_speaker": 5.0,
+      "num_steps": 30
+    },
+    "積極的・甘え": {
+      "caption": "若い女性が、自信を持って甘く誘うように、近い距離感で話している。",
+      "cfg_text": 5.0,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "num_steps": 30
+    },
+    "興奮・高まり": {
+      "caption": "若い女性が、息を荒くしながら、感情が高ぶった声で話している。",
+      "cfg_text": 7.0,
+      "cfg_caption": 7.0,
+      "cfg_speaker": 5.0,
+      "num_steps": 30
+    },
+    "絶頂・叫び": {
+      "caption": "若い女性が、感情が限界に達して、声を抑えられずに叫んでいる。",
+      "cfg_text": 8.0,
+      "cfg_caption": 8.0,
+      "cfg_speaker": 5.0,
+      "num_steps": 30
+    },
+    "余韻・安堵": {
+      "caption": "若い女性が、ほっとしたように力が抜けて、ゆっくり柔らかく話している。",
+      "cfg_text": 3.0,
+      "cfg_caption": 3.0,
+      "cfg_speaker": 5.0,
+      "num_steps": 30
+    },
+    "泣き・感動": {
+      "caption": "若い女性が、涙声になりながら、感情を込めて話している。",
+      "cfg_text": 6.0,
+      "cfg_caption": 6.0,
+      "cfg_speaker": 5.0,
+      "num_steps": 30
+    }
+  },
+  "scene_mapping": {}
+}

@@ -1,0 +1,26 @@
+# Python venv / packages
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# TTS engine repos (large, installed separately)
+irodori-tts-v2/
+irodori-tts-voicedesign/
+emoji/
+
+# Audio files (large binary, generated)
+*.wav
+*.mp3
+*.flac
+*.ogg
+
+# Excel temp files
+~$*.xlsx
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Claude Code session data
+.claude/

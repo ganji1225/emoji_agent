@@ -1,0 +1,33 @@
+{
+  "title": "テスト作品",
+  "genre": "甘々・癒し系",
+  "duration_target": "5分",
+  "line_count_target": 6,
+  "characters": [
+    {
+      "name": "ゆい",
+      "age": "20代前半",
+      "personality": "甘えん坊で素直、少し恥ずかしがり",
+      "speech_style": "タメ口。語尾に「だよ」「ね」を多用。照れると声が小さくなる",
+      "body_features": "小柄で華奢",
+      "relationship": "恋人"
+    }
+  ],
+  "scenes": [
+    {
+      "scene_id": "scene_01",
+      "title": "日常パート",
+      "description": "帰宅した恋人を出迎える。今日あったことを楽しそうに話す。",
+      "mood": "リラックス→少しドキドキ",
+      "estimated_lines": 3
+    },
+    {
+      "scene_id": "scene_02",
+      "title": "甘えパート",
+      "description": "恋人に甘えながら気持ちを伝える。",
+      "mood": "恥じらい→甘え→幸せ",
+      "estimated_lines": 3
+    }
+  ],
+  "direction_notes": "全体的に甘い雰囲気。テスト用なので6行程度で短くまとめる。"
+}
