@@ -166,7 +166,57 @@ def concat_scenes(project_name: str, line_silence: float = LINE_SILENCE_SEC,
     return scene_files
 
 
-def run_ma(project_name: str) -> list[str]:
+def wav_to_mp3(project_name: str, source_dir: str = "master") -> list[str]:
+    """WAVファイルをMP3に変換する（配布用）
+
+    参考: https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku
+    ffmpeg VBR qscale:a 2 ≒ 190kbps
+    """
+    import subprocess
+    import shutil
+
+    if not shutil.which("ffmpeg"):
+        print("[error] ffmpeg が見つかりません。PATH に ffmpeg を追加してください")
+        return []
+
+    project_dir = PROJECTS_DIR / project_name
+    src_dir = project_dir / source_dir
+    mp3_dir = project_dir / "mp3"
+    mp3_dir.mkdir(parents=True, exist_ok=True)
+
+    wav_files = sorted(src_dir.glob("*.wav"))
+    if not wav_files:
+        print(f"[warn] {src_dir} に WAV ファイルがありません")
+        return []
+
+    mp3_files = []
+    for wav_path in wav_files:
+        mp3_path = mp3_dir / f"{wav_path.stem}.mp3"
+        cmd = [
+            "ffmpeg", "-y", "-i", str(wav_path),
+            "-codec:a", "libmp3lame",
+            "-qscale:a", "2",
+            str(mp3_path),
+        ]
+        try:
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+            if result.returncode == 0:
+                # ファイルサイズ表示
+                wav_size = wav_path.stat().st_size / 1024 / 1024
+                mp3_size = mp3_path.stat().st_size / 1024 / 1024
+                ratio = mp3_size / wav_size * 100 if wav_size > 0 else 0
+                print(f"[ok] {wav_path.name} → {mp3_path.name} ({wav_size:.1f}MB → {mp3_size:.1f}MB, {ratio:.0f}%)")
+                mp3_files.append(str(mp3_path))
+            else:
+                print(f"[error] {wav_path.name}: {result.stderr[-100:]}")
+        except Exception as e:
+            print(f"[error] {wav_path.name}: {e}")
+
+    print(f"\n[ok] MP3変換完了: {len(mp3_files)}/{len(wav_files)}ファイル → {mp3_dir}")
+    return mp3_files
+
+
+def run_ma(project_name: str, export_mp3: bool = False) -> list[str]:
     """MA全工程を実行する"""
     print(f"=== MAエージェント ===")
 
@@ -179,6 +229,11 @@ def run_ma(project_name: str) -> list[str]:
     # 2. シーン結合 + 全体結合
     files = concat_scenes(project_name)
 
+    # 3. MP3変換（オプション）
+    if export_mp3:
+        mp3_files = wav_to_mp3(project_name)
+        files.extend(mp3_files)
+
     print(f"\n{'='*50}")
     print(f"MA完了！出力: D:/irodori/projects/{project_name}/master/")
     return files
@@ -187,15 +242,22 @@ def run_ma(project_name: str) -> list[str]:
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage:")
-        print("  python ma_agent.py <project_name>            -- MA実行")
-        print("  python ma_agent.py <project_name> --auto      -- 自動承認+MA実行")
+        print("  python ma_agent.py <project_name>              -- MA実行")
+        print("  python ma_agent.py <project_name> --auto        -- 自動承認+MA実行")
+        print("  python ma_agent.py <project_name> --mp3         -- MA実行+MP3書き出し")
+        print("  python ma_agent.py <project_name> --mp3-only    -- MP3変換のみ")
         sys.exit(1)
 
     project_name = sys.argv[1]
     auto = "--auto" in sys.argv
+    export_mp3 = "--mp3" in sys.argv
+    mp3_only = "--mp3-only" in sys.argv
 
-    if auto:
-        auto_approve_first(project_name)
-        copy_approved(project_name)
+    if mp3_only:
+        wav_to_mp3(project_name)
+    else:
+        if auto:
+            auto_approve_first(project_name)
+            copy_approved(project_name)
 
-    run_ma(project_name)
+        run_ma(project_name, export_mp3=export_mp3)

@@ -538,33 +538,39 @@
   },
 
   "_intensity_guide": {
-    "_desc": "感情強度に応じた絵文字数と配置方式の最適解（2026-04-13 聴き比べテスト結果）",
+    "_desc": "感情強度に応じた絵文字数と配置方式の最適解（2026-04-13 + 2026-04-15 聴き比べ結果）",
+    "_important": "絵文字は2-3個が最適バランス。4個以上は不自然な音声やノイズが増加する",
+    "_emoji_effect": "絵文字数が増えると吐息・声にならない音声が増える傾向がある",
     "弱": {
-      "method": "B_sandwich",
-      "prefix_count": "2-3個",
+      "method": "sandwich",
+      "prefix_count": "2個",
       "suffix_count": "1個",
-      "reason": "表現力とクリーンさのバランスが最高。D_sandwich_多はノイズ増で逆効果",
+      "cfg_recommendation": "cfg_text/caption: 3.0",
+      "reason": "表現力とクリーンさのバランスが最高",
       "scenes": "日常・自信・威圧・強がり・挑発"
     },
     "中": {
-      "method": "B_sandwich or C_prefix_多",
-      "prefix_count": "2-4個",
-      "suffix_count": "0-1個",
-      "reason": "間（ま）の自然さが最も良い。D_sandwich_多は間が不自然になる",
+      "method": "sandwich",
+      "prefix_count": "2-3個",
+      "suffix_count": "1個",
+      "cfg_recommendation": "cfg_text/caption: 5.0",
+      "reason": "間（ま）の自然さと感情幅が最も安定",
       "scenes": "恥じらい・困惑・喘ぎ(弱)・動揺・恐怖・抵抗"
     },
     "強": {
-      "method": "D_sandwich_多",
-      "prefix_count": "3-5個",
-      "suffix_count": "2-3個",
-      "reason": "圧倒的な表現力。ノイズは激しい場面では許容範囲。全指標で最高評価",
+      "method": "sandwich",
+      "prefix_count": "3個（上限厳守）",
+      "suffix_count": "2個",
+      "cfg_recommendation": "cfg_text/caption: 7.0（8.0はノイズリスク高）",
+      "reason": "3個が表現力とノイズのベストバランス。4個以上はノイズ増加",
       "scenes": "喘ぎ(強)・絶頂・叫び・嗚咽・荒い息遣い・崩壊"
     },
     "極限": {
-      "method": "D_sandwich_多（最大盛り）",
-      "prefix_count": "5-8個",
-      "suffix_count": "2-3個",
-      "reason": "連続絶頂・出産など極限状態。ノイズも演技の一部として活用",
+      "method": "sandwich",
+      "prefix_count": "3個",
+      "suffix_count": "2個 + 💦",
+      "cfg_recommendation": "cfg_text/caption: 8.0（ノイズ許容の場面のみ）",
+      "reason": "CFG8は成人向け特化の音声が出やすいがノイズ確率高い。意図的な場合のみ使用",
       "scenes": "連続絶頂・出産・全穴同時・妊娠パンパン"
     }
   }

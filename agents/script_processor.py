@@ -130,36 +130,39 @@ def emotion_to_emojis_all(emotion: str) -> list[str]:
 def build_sandwich(text: str, emojis: list[str], intensity: str) -> str:
     """テスト結果に基づいたサンドイッチ方式で絵文字を配置する
 
-    聴き比べテスト結果（2026-04-13）:
-      弱: B_sandwich（prefix 2-3, suffix 1）が最適
-      中: B_sandwich or C_prefix_多（prefix 2-4, suffix 0-1）
-      強: D_sandwich_多（prefix 3-5, suffix 2-3）が圧勝
-      極限: D_sandwich_多 最大盛り
+    聴き比べテスト結果（2026-04-13 + 2026-04-15）:
+      弱: prefix 2, suffix 1 が最適
+      中: prefix 2-3, suffix 1 が安定
+      強: prefix 3, suffix 2 が最適（4個以上はノイズ増）
+      極限: prefix 3, suffix 2（意図的にノイズを入れたい場合のみ4個）
+
+    重要な発見（2026-04-15 聴き比べ）:
+      - 絵文字2-3個が感情幅が大きく安定
+      - 4個以上は不自然な音声やノイズが増加
+      - 絵文字数が多いと吐息・声にならない音声が増える
     """
     if not emojis:
         return text
 
     if intensity == "weak":
-        # B_sandwich: prefix 2-3, suffix 1
-        prefix = "".join(emojis[:3])
+        # prefix 2, suffix 1
+        prefix = "".join(emojis[:2])
         suffix = emojis[-1] if len(emojis) >= 2 else ""
     elif intensity == "medium":
-        # B_sandwich〜C_prefix_多: prefix 2-4, suffix 0-1
-        prefix = "".join(emojis[:4])
-        suffix = emojis[-1] if len(emojis) >= 3 else ""
+        # prefix 2-3, suffix 1
+        prefix = "".join(emojis[:3])
+        suffix = emojis[-1] if len(emojis) >= 2 else ""
     elif intensity == "strong":
-        # D_sandwich_多: prefix all, suffix 2-3
-        prefix = "".join(emojis)
-        suffix_emojis = emojis[-3:] if len(emojis) >= 3 else emojis[-2:]
-        # suffix は prefix と少し違う組み合わせで着地を表現
+        # prefix 3, suffix 2（上限厳守）
+        prefix = "".join(emojis[:3])
+        suffix_emojis = emojis[-2:] if len(emojis) >= 2 else emojis[-1:]
         suffix = "".join(suffix_emojis)
-        # 💦 を suffix に追加（強い感情の余韻）
         if "💦" not in suffix:
             suffix += "💦"
     else:  # extreme
-        # D_sandwich_多 最大盛り
-        prefix = "".join(emojis)
-        suffix_emojis = emojis[-3:] if len(emojis) >= 3 else emojis
+        # prefix 3, suffix 2 + 💦
+        prefix = "".join(emojis[:3])
+        suffix_emojis = emojis[-2:] if len(emojis) >= 2 else emojis
         suffix = "".join(suffix_emojis) + "💦"
 
     result = f"{prefix} {text}"
@@ -191,7 +194,56 @@ def normalize_text(text: str) -> str:
         "\U00002600-\U000026FF"  # misc symbols
         "]+", flags=re.UNICODE
     )
-    return emoji_pattern.sub("", text).strip()
+    text = emoji_pattern.sub("", text).strip()
+    # 漢字読み間違い対策: TTS が誤読しやすい単語をひらがな/カタカナに変換
+    text = _fix_kanji_reading(text)
+    return text
+
+
+# TTS誤読しやすい漢字 → ひらがな/カタカナ変換テーブル
+# 参考: https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku
+KANJI_FIX_MAP = [
+    (r"今日", "きょう"),
+    (r"昨日", "きのう"),
+    (r"明日", "あした"),
+    (r"一人", "ひとり"),
+    (r"二人", "ふたり"),
+    (r"大人", "おとな"),
+    (r"上手", "じょうず"),
+    (r"下手", "へた"),
+    (r"雑魚", "ザコ"),
+    (r"瘴気", "しょうき"),
+    (r"霊山", "れいざん"),
+    (r"番人", "ばんにん"),
+    (r"蟲", "むし"),
+    (r"贄", "にえ"),
+    (r"苗床", "なえどこ"),
+    (r"孵化", "ふか"),
+    (r"蔓", "つる"),
+    (r"繭", "まゆ"),
+    (r"媚薬", "びやく"),
+    (r"蜘蛛", "くも"),
+]
+
+
+def _fix_kanji_reading(text: str) -> str:
+    """TTS が誤読しやすい漢字をひらがな/カタカナに変換する"""
+    for kanji, reading in KANJI_FIX_MAP:
+        text = text.replace(kanji, reading)
+    return text
+
+
+# ============================================================
+# 間（ま）の自動挿入
+# ============================================================
+def insert_pause_markers(text: str) -> str:
+    """句読点や「……」の位置に ⏸️（間）マーカーを挿入する
+
+    参考: Irodori-TTS では ⏸️ が間・沈黙、⏩ が早口として機能する
+    """
+    # 「……」の後に間を挿入（ただし末尾は除く）
+    text = re.sub(r"……(?!$)(?!）)", "…… ⏸️ ", text)
+    return text
 
 
 # ============================================================
