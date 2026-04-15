@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
-"""脚本処理エージェント - Grokの生台本（JSON/CSV/TXT）を絵文字付きproduction.csvに変換
+"""脚本処理エージェント - Grokの生台本（JSON/CSV/TXT）やゲームテキスト(.md)を
+絵文字付きproduction.csvに変換する。
 サンドイッチ方式: 感情強度に応じて prefix + テキスト + suffix で絵文字を配置
 """
 import csv
 import json
+import os
 import re
 import sys
 from pathlib import Path
+
+os.environ["PYTHONIOENCODING"] = "utf-8"
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 PROJECTS_DIR = Path("D:/irodori/projects")
 
@@ -187,6 +194,190 @@ def normalize_text(text: str) -> str:
     return emoji_pattern.sub("", text).strip()
 
 
+# ============================================================
+# テキスト内容から感情を自動推定する
+# ============================================================
+EMOTION_INFERENCE_RULES = [
+    # 極限系（優先）
+    (r"ん゛ほ゛|お゛ほ゛|は゛ん゛|ぐ゛お゛|あ゛ひ゛|ん゛お゛", "喘ぎ(強),絶頂,荒い息遣い"),
+    (r"あ゛あ゛|は゛あ゛|あ゛お゛", "喘ぎ(強),叫び,嗚咽"),
+    (r"イキ狂|壊れた|壊して|溶ける|溶けちゃ|ぶっ壊", "絶頂,叫び,喘ぎ(強),崩壊"),
+    (r"イッちゃう|イっちゃ|イキそう|イク", "絶頂,叫び,喘ぎ(強)"),
+    (r"孕ませて|孕みたい|産ませて|産みたい", "絶頂,嗚咽,懇願"),
+    # 強い系
+    (r"んあぁ|んおぉ|あぁぁ|おぉお", "喘ぎ(強),絶頂"),
+    (r"気持ちいい.*止まら|快楽.*溺れ|快楽.*最高", "喘ぎ(強),絶頂,虚脱"),
+    (r"子宮.*疼|子宮.*痙攣|子宮.*締ま", "喘ぎ(強),恥じらい"),
+    (r"おまんこ.*ヒクヒク|おまんこ.*びくびく", "喘ぎ(弱),恥じらい"),
+    (r"母乳.*噴|母乳.*搾|乳首.*吸", "喘ぎ(強),恥じらい"),
+    (r"卵.*パンパン|お腹.*膨|お腹.*パンパン", "絶頂,喘ぎ(強),嗚咽"),
+    # 中程度
+    (r"はぁ.*はぁ|はぁん", "喘ぎ(弱),荒い息遣い"),
+    (r"んっ.*はぁ|あんっ", "喘ぎ(弱),恥じらい"),
+    (r"気持ちいい|気持ち悪い.*気持ちい", "喘ぎ(弱),困惑"),
+    (r"嫌なのに.*気持ち|嫌.*でも", "困惑,恥じらい"),
+    (r"恥ずかし|恥ずかし", "恥じらい"),
+    (r"熱い.*体|体.*熱い|熱くて", "喘ぎ(弱),困惑"),
+    (r"愛液|濡れ|ぐちょ|ぬるぬる|ぬめ", "喘ぎ(弱),恥じらい"),
+    (r"もっと.*欲し|もっと.*して|もっと.*犯", "喘ぎ(強),甘え,懇願"),
+    (r"誇り.*いらない|誇り.*どうでも|番人.*もう", "絶望,虚脱"),
+    (r"戻りたくない|戻れない|人間じゃ", "虚脱,放心"),
+    # 弱い系
+    (r"やめて|離して|離れなさい|放して", "恐怖,拒絶"),
+    (r"しまった|まずい", "驚き,恐怖"),
+    (r"怖い|恐ろし", "恐怖"),
+    (r"嫌.*やだ|やだ", "恐怖,拒絶"),
+    (r"力が.*入らない|動けない|動かない|抵抗できない", "絶望,恐怖"),
+    (r"もう.*だめ|もう.*限界", "絶望,喘ぎ(弱)"),
+    (r"まだ.*負け|まだ.*戦える|抵抗.*する", "強がり"),
+    # 事後系
+    (r"永遠に.*犯され|永遠に.*溺れ|ずっと.*快楽", "放心,虚脱,甘え"),
+    (r"もう.*いいかな|もう.*いいかも", "放心,虚脱"),
+    (r"壊れた笑み|虚ろな目", "放心,虚脱"),
+    # 身体反応系（弱〜中の補完）
+    (r"おまんこ|まんこ|子宮|クリ", "喘ぎ(弱),恥じらい"),
+    (r"乳首|母乳|乳|胸.*吸", "喘ぎ(弱),恥じらい"),
+    (r"粘液|ぬめ|ぬる|べちゃ", "困惑,恥じらい"),
+    (r"媚薬|媚毒|甘い.*液|分泌液", "困惑,喘ぎ(弱)"),
+    (r"快楽|気持ちいい|気持ちよ", "喘ぎ(弱),困惑"),
+    (r"疼|うず|ヒクヒク|びくびく|痙攣", "喘ぎ(弱),恥じらい"),
+    (r"濡れ|愛液|ぐちょ|じゅわ", "喘ぎ(弱),恥じらい"),
+    (r"触手|蔓|幼虫|蝿|卵", "恐怖,困惑"),
+    (r"這い|絡み|巻き|吸い付|包み込", "恐怖,困惑"),
+    (r"飲まされ|注ぎ込|流し込", "恐怖,困惑"),
+    (r"お尻|アナル|尻穴", "恥じらい,困惑"),
+    (r"苗床|繁殖|肉袋|器.*なる", "絶望,虚脱"),
+    (r"膨ら|パンパン|いっぱい", "喘ぎ(強),恥じらい"),
+    (r"出口.*見え|あと少し|もう少し", "焦り,強がり"),
+    (r"嫌|やだ|こんなの", "恐怖,拒絶"),
+    (r"……っ|くっ|あっ", "驚き,動揺"),
+    # フォールバック
+    (r"……", "動揺"),
+]
+
+
+def infer_emotion_from_text(text: str) -> str:
+    """テキスト内容から感情タグを自動推定する"""
+    for pattern, emotion in EMOTION_INFERENCE_RULES:
+        if re.search(pattern, text):
+            return emotion
+    return "日常"
+
+
+def load_game_text(filepath: Path) -> list[dict]:
+    """ゲームテキスト（.md）を解析してセリフを抽出する
+
+    対象行:
+      - （括弧の独白）→ 採用
+      - 「発話セリフ」→ 採用（括弧を除去）
+    除外行:
+      - # セクションヘッダ → scene_id として利用
+      - 【演出指示】【CG】→ 除外
+      - ★パラメータ → 除外
+      - ——END—— → 除外
+      - --- → 除外
+      - ナレーション（地の文）→ 除外
+      - 空行 → 除外
+    """
+    with open(filepath, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+
+    rows = []
+    current_scene = "scene_01"
+    scene_count = 0
+
+    for line in lines:
+        l = line.strip()
+        if not l:
+            continue
+
+        # セクションヘッダ → scene_id 更新
+        section_match = re.match(r'^#{1,3}\s+(.+)$', l)
+        if section_match:
+            section_name = section_match.group(1)
+            # scene_id を生成（S1-mid → s1_mid, S2-ev1 → s2_ev1 etc.）
+            sid = re.search(r'(S\d+[-_]\w+)', section_name)
+            if sid:
+                scene_count += 1
+                current_scene = sid.group(1).lower().replace('-', '_')
+            elif re.search(r'Stage\s*\d', section_name):
+                # Stage ヘッダはスキップ（子セクションで scene_id を設定）
+                pass
+            continue
+
+        # 除外行
+        if l.startswith('【') or l.startswith('★') or l.startswith('——') or l == '---':
+            continue
+
+        # 独白: （...）
+        monologue_match = re.match(r'^（(.+)）$', l)
+        if monologue_match:
+            text = monologue_match.group(1)
+            # 長い行は分割（60文字超）
+            sub_lines = _split_long_text(text, max_len=55)
+            for sub in sub_lines:
+                emotion = infer_emotion_from_text(sub)
+                rows.append({
+                    "scene_id": current_scene,
+                    "speaker": "白雨",
+                    "emotion_tags": emotion,
+                    "text_raw": f"（{sub}）",
+                    "line_type": "独白",
+                })
+            continue
+
+        # 発話: 「...」
+        speech_match = re.match(r'^「(.+?)」?$', l)
+        if speech_match:
+            text = speech_match.group(1)
+            sub_lines = _split_long_text(text, max_len=55)
+            for sub in sub_lines:
+                emotion = infer_emotion_from_text(sub)
+                rows.append({
+                    "scene_id": current_scene,
+                    "speaker": "白雨",
+                    "emotion_tags": emotion,
+                    "text_raw": sub,
+                    "line_type": "発話",
+                })
+            continue
+
+        # それ以外はナレーション → スキップ
+
+    return rows
+
+
+def _split_long_text(text: str, max_len: int = 55) -> list[str]:
+    """長いテキストを適切な位置で分割する"""
+    if len(text) <= max_len:
+        return [text]
+
+    result = []
+    # 「……」で分割を試みる
+    parts = re.split(r'(……)', text)
+    current = ""
+    for i, part in enumerate(parts):
+        if part == "……":
+            current += part
+            # 次のパートと合わせて長すぎるなら、ここで切る
+            remaining = "".join(parts[i+1:]) if i+1 < len(parts) else ""
+            if len(current) >= max_len * 0.4 and remaining:
+                result.append(current.strip())
+                current = ""
+        else:
+            if len(current + part) > max_len and current:
+                result.append(current.strip())
+                current = part
+            else:
+                current += part
+
+    if current.strip():
+        result.append(current.strip())
+
+    # 分割できなかった場合はそのまま返す
+    return result if result else [text]
+
+
 def load_json(filepath: Path) -> list[dict]:
     """JSON形式の台本を読み込む"""
     with open(filepath, "r", encoding="utf-8") as f:
@@ -292,9 +483,9 @@ def process_script(project_name: str) -> str:
         # 絵文字変換
         emojis = emotion_to_emojis_all(emotion)
 
-        # Grok絵文字提案があればそちらを優先
+        # Grok絵文字提案があればそちらを優先（emoji_suggestionは既にサンドイッチ済み）
         if grok_emoji:
-            text_with_emoji = f"{grok_emoji} {text_raw}"
+            text_with_emoji = grok_emoji
         else:
             text_with_emoji = build_sandwich(text_raw, emojis, intensity)
 
@@ -354,9 +545,130 @@ def process_script(project_name: str) -> str:
     return str(prod_csv)
 
 
+def process_game_text(project_name: str, game_text_paths: list[str]) -> str:
+    """ゲームテキスト(.md)を解析して production.csv を生成する
+
+    Args:
+        project_name: プロジェクト名
+        game_text_paths: ゲームテキストファイルのパスリスト
+    """
+    project_dir = PROJECTS_DIR / project_name
+    project_dir.mkdir(parents=True, exist_ok=True)
+    prod_csv = project_dir / "production.csv"
+
+    all_rows = []
+    for path_str in game_text_paths:
+        filepath = Path(path_str)
+        if not filepath.exists():
+            print(f"[error] ファイルが見つかりません: {filepath}")
+            continue
+        rows = load_game_text(filepath)
+        source_name = filepath.stem
+        # rows に source 情報を追加
+        for r in rows:
+            r["source"] = source_name
+        all_rows.extend(rows)
+        print(f"[ok] {filepath.name} → {len(rows)}行抽出（独白: {sum(1 for r in rows if r.get('line_type')=='独白')}, 発話: {sum(1 for r in rows if r.get('line_type')=='発話')}）")
+
+    if not all_rows:
+        print("[error] 音声化対象の行がありません")
+        return ""
+
+    # production.csv に変換
+    prod_rows = []
+    scene_line_counts = {}
+    stats = {"weak": 0, "medium": 0, "strong": 0, "extreme": 0}
+
+    for row in all_rows:
+        scene_id = row.get("scene_id", "scene_01")
+        scene_line_counts[scene_id] = scene_line_counts.get(scene_id, 0) + 1
+        line_num = scene_line_counts[scene_id]
+
+        text_raw = row.get("text_raw", "")
+        emotion = row.get("emotion_tags", "")
+
+        tags = [t.strip() for t in re.split(r"[,、\s]+", emotion.strip()) if t.strip()]
+        intensity = classify_intensity(tags)
+        stats[intensity] += 1
+
+        emojis = emotion_to_emojis_all(emotion)
+        text_with_emoji = build_sandwich(text_raw, emojis, intensity)
+
+        prod_rows.append({
+            "scene_id": scene_id,
+            "line_id": f"line_{line_num:03d}",
+            "speaker": row.get("speaker", "白雨"),
+            "emotion_note": emotion,
+            "text_raw": text_raw,
+            "text_with_emoji": text_with_emoji,
+            "caption": "",
+            "cfg_text": "",
+            "cfg_caption": "",
+            "cfg_speaker": "",
+            "num_steps": "",
+            "num_candidates": "3",
+            "seed": "",
+            "status": "pending",
+            "approved_candidate": "",
+            "notes": f"intensity={intensity},type={row.get('line_type', '')},src={row.get('source', '')}",
+        })
+
+    # 書き出し
+    fieldnames = list(prod_rows[0].keys())
+    with open(prod_csv, "w", encoding="utf-8-sig", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(prod_rows)
+
+    # プレーンテキスト出力
+    txt_path = project_dir / "script_with_emoji.txt"
+    with open(txt_path, "w", encoding="utf-8") as f:
+        current_scene = ""
+        for row in prod_rows:
+            if row["scene_id"] != current_scene:
+                current_scene = row["scene_id"]
+                f.write(f"\n=== {current_scene} ===\n")
+            notes = row["notes"]
+            intensity_mark = ""
+            if "intensity=" in notes:
+                intensity_mark = notes.split("intensity=")[1].split(",")[0]
+            f.write(f"[{intensity_mark}][{row['emotion_note']}] {row['text_with_emoji']}\n")
+
+    print(f"\n[ok] production.csv を生成しました ({len(prod_rows)}行)")
+    print(f"[ok] script_with_emoji.txt を生成しました（確認用）")
+
+    # サマリー
+    scenes = sorted(set(r["scene_id"] for r in prod_rows))
+    print(f"\n  シーン数: {len(scenes)}")
+    for s in scenes:
+        count = sum(1 for r in prod_rows if r["scene_id"] == s)
+        print(f"    {s}: {count}行")
+
+    print(f"\n  強度分布:")
+    print(f"    弱 (B_sandwich):     {stats['weak']}行")
+    print(f"    中 (B/C方式):        {stats['medium']}行")
+    print(f"    強 (D_sandwich_多):  {stats['strong']}行")
+    print(f"    極限 (D最大盛り):    {stats['extreme']}行")
+
+    return str(prod_csv)
+
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python script_processor.py <project_name>")
-        print("  台本形式: script_raw.json (推奨) / script_raw.csv / script_raw.txt")
+        print("Usage:")
+        print("  python script_processor.py <project_name>")
+        print("    台本形式: script_raw.json (推奨) / script_raw.csv / script_raw.txt")
+        print()
+        print("  python script_processor.py --game <project_name> <file1.md> [file2.md ...]")
+        print("    ゲームテキスト解析モード: .md ファイルから独白・発話を抽出")
         sys.exit(1)
-    process_script(sys.argv[1])
+
+    if sys.argv[1] == "--game":
+        if len(sys.argv) < 4:
+            print("Usage: python script_processor.py --game <project_name> <file1.md> [file2.md ...]")
+            sys.exit(1)
+        project_name = sys.argv[2]
+        game_files = sys.argv[3:]
+        process_game_text(project_name, game_files)
+    else:
+        process_script(sys.argv[1])

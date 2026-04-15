@@ -1,0 +1,34 @@
+{
+  "_comment": "白雨 - ゲームテキスト音声化用キャプション (クール・低めの声)",
+  "_character": "白雨 / 霊山の番人 / 丁寧だが芯がある独白スタイル",
+  "intensity_profiles": {
+    "weak": {
+      "caption": "若い女性が、クールで低めの落ち着いた声で、芯の強さを持って静かに話している。",
+      "cfg_text": 3.0,
+      "cfg_caption": 3.0,
+      "cfg_speaker": 5.0,
+      "num_steps": 30
+    },
+    "medium": {
+      "caption": "若い女性が、クールで低めの声で、恥じらいながらも動揺を抑えきれずに話している。",
+      "cfg_text": 6.0,
+      "cfg_caption": 6.0,
+      "cfg_speaker": 5.0,
+      "num_steps": 30
+    },
+    "strong": {
+      "caption": "若い女性が、感情が限界に達して、低めの声が崩れながら荒い息で叫んでいる。",
+      "cfg_text": 8.0,
+      "cfg_caption": 8.0,
+      "cfg_speaker": 5.0,
+      "num_steps": 30
+    },
+    "extreme": {
+      "caption": "若い女性が、完全に理性を失い、低い声が裏返りながら絶叫している。",
+      "cfg_text": 8.0,
+      "cfg_caption": 8.0,
+      "cfg_speaker": 5.0,
+      "num_steps": 30
+    }
+  }
+}

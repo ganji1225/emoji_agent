@@ -366,6 +366,102 @@
     }
   },
 
+  "grok_game_voice": {
+    "_desc": "Grokゲームテキスト分析で抽出された頻出パターン（hakuu_game_voices 151行分析、2026-04-15）",
+    "_note": "出現頻度順。実際のGrok出力で安定して使われたパターンのみ収録",
+    "恥じらい_困惑_基本": {
+      "prefix": "🥵🫣",
+      "suffix": "💦",
+      "count": 40,
+      "usage_note": "最頻出。恥じらい・困惑・弱喘ぎの汎用パターン",
+      "emotion_tags": ["恥じらい,困惑", "喘ぎ(弱),恥じらい", "喘ぎ(弱),困惑", "恐怖,困惑"]
+    },
+    "強喘ぎ_絶頂_標準": {
+      "prefix": "🥵😮‍💨💦",
+      "suffix": "😭",
+      "count": 26,
+      "usage_note": "第2頻出。強い喘ぎ・絶頂の定番パターン",
+      "emotion_tags": ["喘ぎ(強),絶頂", "喘ぎ(強),絶頂,困惑", "喘ぎ(強),崩壊"]
+    },
+    "甘え_懇願": {
+      "prefix": "🥵🙏",
+      "suffix": "💦",
+      "count": 13,
+      "usage_note": "甘え・懇願・もっと欲しい系",
+      "emotion_tags": ["喘ぎ(強),甘え", "甘え,放心", "崩壊,甘え"]
+    },
+    "恐怖_拒絶_単純": {
+      "prefix": "😱",
+      "suffix": "😱",
+      "count": 11,
+      "usage_note": "恐怖・拒絶。シンプルだが効果的",
+      "emotion_tags": ["恐怖,拒絶", "恐怖,強がり", "動揺,恐怖"]
+    },
+    "極限_崩壊_絶頂": {
+      "prefix": "🥵😮‍💨💦😱",
+      "suffix": "😭",
+      "count": 9,
+      "usage_note": "崩壊・極限状態の絶頂。😱追加で悲鳴感を強調",
+      "emotion_tags": ["喘ぎ(強),絶頂,崩壊", "喘ぎ(強),崩壊,放心"]
+    },
+    "中喘ぎ_基本": {
+      "prefix": "🥵😮‍💨",
+      "suffix": "💦",
+      "count": 8,
+      "usage_note": "中程度の喘ぎ・息遣い",
+      "emotion_tags": ["喘ぎ(強),絶頂", "崩壊,困惑", "喘ぎ(強),崩壊"]
+    },
+    "恐怖_身体反応": {
+      "prefix": "😱🥵",
+      "suffix": "😱",
+      "count": 7,
+      "usage_note": "恐怖+身体が反応してしまう矛盾",
+      "emotion_tags": ["恐怖,困惑", "恐怖,動揺"]
+    },
+    "放心_余韻": {
+      "prefix": "🥵😌",
+      "suffix": "💦",
+      "count": 7,
+      "usage_note": "事後・放心・まだ体がヒクヒク",
+      "emotion_tags": ["放心,喘ぎ(強)", "放心,崩壊"]
+    },
+    "弱喘ぎ_単体": {
+      "prefix": "🥵",
+      "suffix": "💦",
+      "count": 7,
+      "usage_note": "最小構成の喘ぎ。弱い身体反応",
+      "emotion_tags": ["喘ぎ(弱)", "喘ぎ(弱),困惑", "喘ぎ(弱),拒絶"]
+    },
+    "甘え_崩壊_懇願": {
+      "prefix": "🙏🥵",
+      "suffix": "💦",
+      "count": 6,
+      "usage_note": "お母さんになりたい等、崩壊した甘え・懇願",
+      "emotion_tags": ["喘ぎ(強),甘え,崩壊", "甘え,崩壊"]
+    },
+    "絶望_恥辱": {
+      "prefix": "😭🥵",
+      "suffix": "😱",
+      "count": 5,
+      "usage_note": "絶望・恥辱。泣きながら体が反応",
+      "emotion_tags": ["絶望,恥じらい", "絶望,崩壊"]
+    },
+    "強絶頂_泣き": {
+      "prefix": "🥵😮‍💨💦",
+      "suffix": "😭💦",
+      "count": 5,
+      "usage_note": "強い絶頂で泣いてしまう",
+      "emotion_tags": ["喘ぎ(強),絶頂,崩壊", "喘ぎ(強),絶頂"]
+    },
+    "強喘ぎ_転換": {
+      "prefix": "🥵😮‍💨",
+      "suffix": "😭💦",
+      "count": 4,
+      "usage_note": "喘ぎから泣きへの転換",
+      "emotion_tags": ["喘ぎ(強),絶頂"]
+    }
+  },
+
   "basic_combos": {
     "_desc": "基本の組み合わせパターン（汎用、prefix/suffix分割なし）",
     "熱く息が荒い":        { "emoji": "🥵😮\u200d💨💦",    "usage_note": "お゛ほぉっ…の定番" },
@@ -414,7 +510,31 @@
     "絶頂,喘ぎ(強),嗚咽":       "pregnancy.お腹明らかに膨張",
     "絶頂,叫び,喘ぎ(強),嗚咽": "pregnancy.パンパン妊娠_限界",
     "絶頂,叫び,喘ぎ(強),荒い息遣い": "pregnancy.出産進行中",
-    "脱力,囁き,甘え":           "afterglow.放心_ヒクヒク"
+    "脱力,囁き,甘え":           "afterglow.放心_ヒクヒク",
+
+    "_grok_game_voice_mappings": "--- Grokゲームテキスト分析由来 ---",
+    "恥じらい,困惑":               "grok_game_voice.恥じらい_困惑_基本",
+    "喘ぎ(弱),恥じらい,困惑":       "grok_game_voice.恥じらい_困惑_基本",
+    "恐怖,困惑":                   "grok_game_voice.恥じらい_困惑_基本",
+    "困惑,恥じらい":               "grok_game_voice.恥じらい_困惑_基本",
+    "動揺,困惑":                   "grok_game_voice.恥じらい_困惑_基本",
+    "喘ぎ(強),絶頂,困惑":           "grok_game_voice.強喘ぎ_絶頂_標準",
+    "喘ぎ(強),崩壊":               "grok_game_voice.強喘ぎ_絶頂_標準",
+    "喘ぎ(強),甘え":               "grok_game_voice.甘え_懇願",
+    "甘え,放心":                   "grok_game_voice.甘え_懇願",
+    "崩壊,甘え":                   "grok_game_voice.甘え_懇願",
+    "恐怖,拒絶":                   "grok_game_voice.恐怖_拒絶_単純",
+    "恐怖,強がり":                 "grok_game_voice.恐怖_拒絶_単純",
+    "動揺,恐怖":                   "grok_game_voice.恐怖_身体反応",
+    "恐怖,動揺":                   "grok_game_voice.恐怖_身体反応",
+    "喘ぎ(強),絶頂,崩壊":           "grok_game_voice.極限_崩壊_絶頂",
+    "喘ぎ(強),崩壊,放心":           "grok_game_voice.極限_崩壊_絶頂",
+    "放心,喘ぎ(強)":               "grok_game_voice.放心_余韻",
+    "放心,崩壊":                   "grok_game_voice.放心_余韻",
+    "喘ぎ(強),甘え,崩壊":           "grok_game_voice.甘え_崩壊_懇願",
+    "甘え,崩壊":                   "grok_game_voice.甘え_崩壊_懇願",
+    "絶望,恥じらい":               "grok_game_voice.絶望_恥辱",
+    "絶望,崩壊":                   "grok_game_voice.絶望_恥辱"
   },
 
   "_intensity_guide": {

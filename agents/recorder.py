@@ -32,11 +32,11 @@ MAX_RETRIES = 2
 TIMEOUT_SEC = 180
 
 
-def record_project(project_name: str, model: str = "voicedesign", dry_run: bool = False) -> dict:
+def record_project(project_name: str, model: str = "voicedesign", dry_run: bool = False, audio_subdir: str = "audio") -> dict:
     """production.csv の pending 行を順に音声生成する"""
     project_dir = PROJECTS_DIR / project_name
     prod_csv = project_dir / "production.csv"
-    audio_dir = project_dir / "audio"
+    audio_dir = project_dir / audio_subdir
 
     if not prod_csv.exists():
         print(f"[error] production.csv が見つかりません: {prod_csv}")
@@ -194,19 +194,30 @@ def record_project(project_name: str, model: str = "voicedesign", dry_run: bool 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage:")
-        print("  python recorder.py <project_name>                   -- VoiceDesignで生成")
-        print("  python recorder.py <project_name> --model v1        -- v1モデルで生成")
-        print("  python recorder.py <project_name> --dry-run         -- ドライラン（実行せず確認）")
+        print("  python recorder.py <project_name>                          -- VoiceDesignで生成")
+        print("  python recorder.py <project_name> --model v1               -- v1モデルで生成")
+        print("  python recorder.py <project_name> --dry-run                -- ドライラン（実行せず確認）")
+        print("  python recorder.py <project_name> --audio-dir audio_agent  -- 出力先フォルダ指定")
         sys.exit(1)
 
     project_name = sys.argv[1]
     model = "voicedesign"
     dry_run = False
+    audio_subdir = "audio"
 
-    for arg in sys.argv[2:]:
-        if arg == "--model" and sys.argv.index(arg) + 1 < len(sys.argv):
-            model = sys.argv[sys.argv.index(arg) + 1]
-        if arg == "--dry-run":
+    args = sys.argv[2:]
+    i = 0
+    while i < len(args):
+        if args[i] == "--model" and i + 1 < len(args):
+            model = args[i + 1]
+            i += 2
+        elif args[i] == "--dry-run":
             dry_run = True
+            i += 1
+        elif args[i] == "--audio-dir" and i + 1 < len(args):
+            audio_subdir = args[i + 1]
+            i += 2
+        else:
+            i += 1
 
-    record_project(project_name, model=model, dry_run=dry_run)
+    record_project(project_name, model=model, dry_run=dry_run, audio_subdir=audio_subdir)
