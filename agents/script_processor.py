@@ -490,13 +490,22 @@ def load_txt(filepath: Path) -> list[dict]:
     return rows
 
 
-def process_script(project_name: str) -> str:
+def process_script(project_name: str, ignore_grok_emoji: bool = False,
+                    use_pause_markers: bool = True) -> str:
     """台本ファイルを読み込んで production.csv を生成する
 
     対応形式（優先順）:
       1. script_raw.json  (推奨: Grok JSON出力)
       2. script_raw.csv
       3. script_raw.txt
+
+    Args:
+        project_name: プロジェクト名
+        ignore_grok_emoji: True の場合、Grok の emoji_suggestion を無視し
+            パイプラインの build_sandwich() で絵文字を再構築する。
+            改善されたパイプライン（絵文字2-3個制限、スタッキング等）を
+            Grok版データに適用する際に使用。
+        use_pause_markers: True の場合、「……」位置に ⏸️ を自動挿入する
     """
     project_dir = PROJECTS_DIR / project_name
     prod_csv = project_dir / "production.csv"
@@ -557,10 +566,16 @@ def process_script(project_name: str) -> str:
         # 絵文字変換
         emojis = emotion_to_emojis_all(emotion)
 
-        # Grok絵文字提案があればそちらを優先（emoji_suggestionは既にサンドイッチ済み）
-        if grok_emoji:
+        # ⏸️ 間マーカーの自動挿入
+        if use_pause_markers:
+            text_raw = insert_pause_markers(text_raw)
+
+        # 絵文字サンドイッチ構築
+        if grok_emoji and not ignore_grok_emoji:
+            # Grok絵文字提案をそのまま使用（emoji_suggestionは既にサンドイッチ済み）
             text_with_emoji = grok_emoji
         else:
+            # パイプラインで再構築（改善版: 絵文字2-3個制限、スタッキング等）
             text_with_emoji = build_sandwich(text_raw, emojis, intensity)
 
         prod_rows.append({
@@ -730,8 +745,10 @@ def process_game_text(project_name: str, game_text_paths: list[str]) -> str:
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage:")
-        print("  python script_processor.py <project_name>")
+        print("  python script_processor.py <project_name> [--ignore-grok-emoji] [--no-pause]")
         print("    台本形式: script_raw.json (推奨) / script_raw.csv / script_raw.txt")
+        print("    --ignore-grok-emoji: Grokのemoji_suggestionを無視しパイプラインで再構築")
+        print("    --no-pause: ⏸️間マーカーの自動挿入を無効化")
         print()
         print("  python script_processor.py --game <project_name> <file1.md> [file2.md ...]")
         print("    ゲームテキスト解析モード: .md ファイルから独白・発話を抽出")
@@ -745,4 +762,8 @@ if __name__ == "__main__":
         game_files = sys.argv[3:]
         process_game_text(project_name, game_files)
     else:
-        process_script(sys.argv[1])
+        project_name = sys.argv[1]
+        ignore_grok = "--ignore-grok-emoji" in sys.argv
+        use_pause = "--no-pause" not in sys.argv
+        process_script(project_name, ignore_grok_emoji=ignore_grok,
+                       use_pause_markers=use_pause)
