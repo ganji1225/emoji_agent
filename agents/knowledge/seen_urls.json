@@ -1,0 +1,90 @@
+{
+  "https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku": {
+    "title": "Irodori-TTSのキャプション設計で声質を操る方法",
+    "snippet": "キャプションの行動描写が声質に影響する",
+    "first_seen": "2026-04-16",
+    "last_checked": "2026-04-16",
+    "status": "fetched",
+    "content_hash": "sha256:e82a1609bc71fecc"
+  },
+  "https://note.com/aiaicreate/n/n958873db85eb": {
+    "title": "絵文字で感情表現ができるIrodori-TTSの使い方",
+    "snippet": "絵文字を使った感情表現テクニック",
+    "first_seen": "2026-04-16",
+    "last_checked": "2026-04-16",
+    "status": "fetched",
+    "content_hash": "sha256:aa9f83d6365d9712"
+  },
+  "https://note.com/sugerpowder/n/n1c182e6f0ea1": {
+    "title": "Irodori-TTSを実際に動かしてみた！感情絵文字で声に表情をつける面白さ",
+    "snippet": "感情絵文字による声の表情付け実践",
+    "first_seen": "2026-04-16",
+    "last_checked": "2026-04-16",
+    "status": "fetched",
+    "content_hash": "sha256:ddb2dd1c4ceb5147"
+  },
+  "https://zenn.dev/megyo9/articles/548448f7c8fc83": {
+    "title": "ローカルで動かせる日本語TTSをいろいろ試す（その３）",
+    "snippet": "日本語TTS比較とIrodori-TTS",
+    "first_seen": "2026-04-16",
+    "last_checked": "2026-04-16",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://huggingface.co/Aratako/Irodori-TTS-500M-v2-VoiceDesign/blob/main/EMOJI_ANNOTATIONS.md": {
+    "title": "EMOJI_ANNOTATIONS.md - 公式絵文字アノテーション",
+    "snippet": "絵文字効果の公式ドキュメント",
+    "first_seen": "2026-04-16",
+    "last_checked": "2026-04-16",
+    "status": "fetched",
+    "content_hash": "sha256:a1a77bf4f96fbbda"
+  },
+  "https://github.com/shinshin86/Irodori-TTS-500M-v2-VoiceDesign-with-colab": {
+    "title": "Irodori-TTS VoiceDesign Colab版",
+    "snippet": "WebUI実装・Colab対応",
+    "first_seen": "2026-04-16",
+    "last_checked": "2026-04-16",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://x.com/shinshin86/status/2039462896464498794": {
+    "title": "shinshin86 - VoiceDesign WebUI化ツイート",
+    "snippet": "VoiceDesignをWebUI化して喋る内容と声質を指定",
+    "first_seen": "2026-04-16",
+    "last_checked": "2026-04-16",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://note.com/aaafrog/n/n2021733405ad": {
+    "title": "日本語最強クラスの音声生成Irodori-TTS 絵文字で感情まで操れる",
+    "snippet": "絵文字で感情操作の解説",
+    "first_seen": "2026-04-16",
+    "last_checked": "2026-04-16",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://note.com/totchira/n/n1b9eb0c64080": {
+    "title": "絵文字で感情表現ができる合成音声Irodori-TTSを使ってみた",
+    "snippet": "絵文字による感情表現の実践レポート",
+    "first_seen": "2026-04-16",
+    "last_checked": "2026-04-16",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://zenn.dev/kun432/scraps/87d7776909e4d9": {
+    "title": "Irodori-TTSを試す",
+    "snippet": "Irodori-TTSの試用レポート",
+    "first_seen": "2026-04-16",
+    "last_checked": "2026-04-16",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://library.libecity.com/articles/01KNFP7SDC3ZW1HRJFASXF81BX": {
+    "title": "声優不要！？神AI Irodori-TTS",
+    "snippet": "Irodori-TTS紹介記事",
+    "first_seen": "2026-04-16",
+    "last_checked": "2026-04-16",
+    "status": "pending_fetch",
+    "content_hash": ""
+  }
+}

@@ -1,0 +1,5 @@
+﻿id,title,url,categories,combined_score,summary,knowhow_count,publish_date
+art_20260416_001,Irodori-TTSのキャプション設計で声質を操る方法,https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku,"caption_design,cfg_tuning,voice_quality",0.71,キャプションに行動描写を入れると声質が変わる。cfg_caption=5.0が恥じらい系に最適。年齢表現で声の高さを制御可能。,5,2026-04-11
+art_20260416_002,Irodori-TTS EMOJI_ANNOTATIONS.md - 公式絵文字アノテーション,https://huggingface.co/Aratako/Irodori-TTS-500M-v2-VoiceDesign/blob/main/EMOJI_ANNOTATIONS.md,"emoji_technique,voice_quality,caption_design",0.66,33種類の絵文字で音声の感情・効果音・話速・声質を制御。複数同じ絵文字で効果を強調可能。,6,2026-03-24
+art_20260416_004,Irodori-TTSを実際に動かしてみた！感情絵文字で声に表情をつける面白さ,https://note.com/sugerpowder/n/n1c182e6f0ea1,"emoji_technique,voice_quality",0.57,Irodori-TTS導入・WebUIによる絵文字感情制御の実践レポート。具体的テクニック情報は少なめ。,1,2026-04-07
+art_20260416_003,絵文字で感情表現ができるIrodori-TTSの使い方,https://note.com/aiaicreate/n/n958873db85eb,"emoji_technique,voice_quality",0.55,Irodori-TTSの絵文字感情制御とNSFW対応の可能性を実践レポート。キャプションエンジニアリングで細かい音声制御が可能。,2,2026-03-18

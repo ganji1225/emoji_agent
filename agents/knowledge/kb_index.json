@@ -1,0 +1,225 @@
+{
+  "_updated": "2026-04-16T15:12:05.033547+09:00",
+  "_total_articles": 4,
+  "_categories": {
+    "caption_design": 2,
+    "emoji_technique": 3,
+    "cfg_tuning": 1,
+    "audio_postprocess": 0,
+    "voice_quality": 4,
+    "training_tips": 0
+  },
+  "articles": [
+    {
+      "id": "art_20260416_001",
+      "url": "https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku",
+      "title": "Irodori-TTSのキャプション設計で声質を操る方法",
+      "source_type": "blog",
+      "discovered_date": "2026-04-16",
+      "fetch_date": "2026-04-16",
+      "categories": [
+        "caption_design",
+        "cfg_tuning",
+        "voice_quality"
+      ],
+      "relevance_score": 0.65,
+      "quality_score": 0.8,
+      "combined_score": 0.71,
+      "content_hash": "sha256:e82a1609bc71fecc",
+      "summary": "キャプションに行動描写を入れると声質が変わる。cfg_caption=5.0が恥じらい系に最適。年齢表現で声の高さを制御可能。",
+      "extracted_knowhow": [
+        {
+          "type": "caption_technique",
+          "finding": "キャプションに行動描写（一生懸命・たどたどしい等）を加えると、声質にハリやテンポ変化が生まれる",
+          "params": {},
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "caption_technique",
+          "finding": "年齢表現で声質をコントロール: 幼い女の子=高く舌足らず / 少女=中間 / 若い女性=大人っぽく",
+          "params": {},
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "cfg_tuning",
+          "finding": "WAV→MP3変換はffmpeg VBR qscale:a 2（約190kbps）が最適",
+          "params": {
+            "ffmpeg_qscale": 2,
+            "approx_bitrate": "190kbps"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "emoji_technique",
+          "finding": "⏸️=間（沈黙）、⏩=早口として機能。感情の変わり目の直前に絵文字を挿入",
+          "params": {},
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "voice_quality",
+          "finding": "難読漢字はTTS誤読の原因。重要な単語はひらがなで書く",
+          "params": {},
+          "confidence": "high",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2026-04-11",
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260416_002",
+      "url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v2-VoiceDesign/blob/main/EMOJI_ANNOTATIONS.md",
+      "title": "Irodori-TTS EMOJI_ANNOTATIONS.md - 公式絵文字アノテーション",
+      "source_type": "huggingface",
+      "discovered_date": "2026-04-16",
+      "fetch_date": "2026-04-16",
+      "categories": [
+        "emoji_technique",
+        "voice_quality",
+        "caption_design"
+      ],
+      "relevance_score": 0.6,
+      "quality_score": 0.75,
+      "combined_score": 0.66,
+      "content_hash": "sha256:a1a77bf4f96fbbda",
+      "summary": "33種類の絵文字で音声の感情・効果音・話速・声質を制御。複数同じ絵文字で効果を強調可能。",
+      "extracted_knowhow": [
+        {
+          "type": "emoji_technique",
+          "finding": "👂で囁き・耳元効果、😮‍💨で吐息・溜息・寝息、📢でエコー・リバーブ効果",
+          "params": {
+            "proximity": "👂",
+            "breathing": "😮‍💨",
+            "echo": "📢"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "emoji_technique",
+          "finding": "⏩で早口、🐢でゆっくり話法を制御可能",
+          "params": {
+            "fast": "⏩",
+            "slow": "🐢"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "emoji_technique",
+          "finding": "👅で舐める音・咀嚼音、💋でリップノイズ、🤧で咳・くしゃみ、🥤で嚥下音",
+          "params": {
+            "licking": "👅",
+            "lip": "💋",
+            "cough": "🤧",
+            "swallow": "🥤"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "emoji_technique",
+          "finding": "📞で電話越し音質、🤐で口塞ぎ、😰でどもり効果",
+          "params": {
+            "phone": "📞",
+            "muffled": "🤐",
+            "stutter": "😰"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "emoji_technique",
+          "finding": "同じ絵文字を複数回使用するとその効果が強調される（スタッキングテクニック）",
+          "params": {
+            "technique": "emoji_repetition"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "voice_quality",
+          "finding": "33種類の感情絵文字が声質に影響: 😊楽しげ 😠怒り 😰パニック 🥺不安 😭泣き 😱恐怖 😪眠い 😆大笑い 😲驚き 🙏懇願",
+          "params": {
+            "total_emojis": 33
+          },
+          "confidence": "high",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2026-03-24",
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260416_003",
+      "url": "https://note.com/aiaicreate/n/n958873db85eb",
+      "title": "絵文字で感情表現ができるIrodori-TTSの使い方",
+      "source_type": "blog",
+      "discovered_date": "2026-04-16",
+      "fetch_date": "2026-04-16",
+      "categories": [
+        "emoji_technique",
+        "voice_quality"
+      ],
+      "relevance_score": 0.45,
+      "quality_score": 0.7,
+      "combined_score": 0.55,
+      "content_hash": "sha256:aa9f83d6365d9712",
+      "summary": "Irodori-TTSの絵文字感情制御とNSFW対応の可能性を実践レポート。キャプションエンジニアリングで細かい音声制御が可能。",
+      "extracted_knowhow": [
+        {
+          "type": "emoji_technique",
+          "finding": "絵文字による感情表現コントロールが可能。テキスト入力層で効果を制御。",
+          "params": {},
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "caption_technique",
+          "finding": "キャプションエンジニアリングで細かいNSFW系音声制御も対応可能",
+          "params": {},
+          "confidence": "medium",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2026-03-18",
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260416_004",
+      "url": "https://note.com/sugerpowder/n/n1c182e6f0ea1",
+      "title": "Irodori-TTSを実際に動かしてみた！感情絵文字で声に表情をつける面白さ",
+      "source_type": "blog",
+      "discovered_date": "2026-04-16",
+      "fetch_date": "2026-04-16",
+      "categories": [
+        "emoji_technique",
+        "voice_quality"
+      ],
+      "relevance_score": 0.45,
+      "quality_score": 0.75,
+      "combined_score": 0.57,
+      "content_hash": "sha256:ddb2dd1c4ceb5147",
+      "summary": "Irodori-TTS導入・WebUIによる絵文字感情制御の実践レポート。具体的テクニック情報は少なめ。",
+      "extracted_knowhow": [
+        {
+          "type": "emoji_technique",
+          "finding": "WebUI上で絵文字を入力することで声の感情表現が変化する実践確認",
+          "params": {},
+          "confidence": "high",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2026-04-07",
+      "excluded": false,
+      "exclusion_reason": null
+    }
+  ]
+}

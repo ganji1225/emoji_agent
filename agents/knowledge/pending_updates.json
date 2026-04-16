@@ -1,0 +1,193 @@
+{
+  "pending_updates": [
+    {
+      "id": "upd_20260416_art_20260416_001",
+      "target": "default_captions.json",
+      "operation": "review_caption_technique",
+      "data": {
+        "finding": "キャプションに行動描写（一生懸命・たどたどしい等）を加えると、声質にハリやテンポ変化が生まれる",
+        "params": {}
+      },
+      "source_article": "art_20260416_001",
+      "source_url": "https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-16"
+    },
+    {
+      "id": "upd_20260416_art_20260416_001",
+      "target": "default_captions.json",
+      "operation": "review_caption_technique",
+      "data": {
+        "finding": "年齢表現で声質をコントロール: 幼い女の子=高く舌足らず / 少女=中間 / 若い女性=大人っぽく",
+        "params": {}
+      },
+      "source_article": "art_20260416_001",
+      "source_url": "https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-16"
+    },
+    {
+      "id": "upd_20260416_art_20260416_001",
+      "target": "default_captions.json",
+      "operation": "review_cfg_values",
+      "data": {
+        "finding": "WAV→MP3変換はffmpeg VBR qscale:a 2（約190kbps）が最適",
+        "params": {
+          "ffmpeg_qscale": 2,
+          "approx_bitrate": "190kbps"
+        }
+      },
+      "source_article": "art_20260416_001",
+      "source_url": "https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-16"
+    },
+    {
+      "id": "upd_20260416_art_20260416_001",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "⏸️=間（沈黙）、⏩=早口として機能。感情の変わり目の直前に絵文字を挿入",
+        "params": {}
+      },
+      "source_article": "art_20260416_001",
+      "source_url": "https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-16"
+    },
+    {
+      "id": "upd_20260416_art_20260416_002",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "👂で囁き・耳元効果、😮‍💨で吐息・溜息・寝息、📢でエコー・リバーブ効果",
+        "params": {
+          "proximity": "👂",
+          "breathing": "😮‍💨",
+          "echo": "📢"
+        }
+      },
+      "source_article": "art_20260416_002",
+      "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v2-VoiceDesign/blob/main/EMOJI_ANNOTATIONS.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-16"
+    },
+    {
+      "id": "upd_20260416_art_20260416_002",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "⏩で早口、🐢でゆっくり話法を制御可能",
+        "params": {
+          "fast": "⏩",
+          "slow": "🐢"
+        }
+      },
+      "source_article": "art_20260416_002",
+      "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v2-VoiceDesign/blob/main/EMOJI_ANNOTATIONS.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-16"
+    },
+    {
+      "id": "upd_20260416_art_20260416_002",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "👅で舐める音・咀嚼音、💋でリップノイズ、🤧で咳・くしゃみ、🥤で嚥下音",
+        "params": {
+          "licking": "👅",
+          "lip": "💋",
+          "cough": "🤧",
+          "swallow": "🥤"
+        }
+      },
+      "source_article": "art_20260416_002",
+      "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v2-VoiceDesign/blob/main/EMOJI_ANNOTATIONS.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-16"
+    },
+    {
+      "id": "upd_20260416_art_20260416_002",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "📞で電話越し音質、🤐で口塞ぎ、😰でどもり効果",
+        "params": {
+          "phone": "📞",
+          "muffled": "🤐",
+          "stutter": "😰"
+        }
+      },
+      "source_article": "art_20260416_002",
+      "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v2-VoiceDesign/blob/main/EMOJI_ANNOTATIONS.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-16"
+    },
+    {
+      "id": "upd_20260416_art_20260416_002",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "同じ絵文字を複数回使用するとその効果が強調される（スタッキングテクニック）",
+        "params": {
+          "technique": "emoji_repetition"
+        }
+      },
+      "source_article": "art_20260416_002",
+      "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v2-VoiceDesign/blob/main/EMOJI_ANNOTATIONS.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-16"
+    },
+    {
+      "id": "upd_20260416_art_20260416_003",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "絵文字による感情表現コントロールが可能。テキスト入力層で効果を制御。",
+        "params": {}
+      },
+      "source_article": "art_20260416_003",
+      "source_url": "https://note.com/aiaicreate/n/n958873db85eb",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-16"
+    },
+    {
+      "id": "upd_20260416_art_20260416_003",
+      "target": "default_captions.json",
+      "operation": "review_caption_technique",
+      "data": {
+        "finding": "キャプションエンジニアリングで細かいNSFW系音声制御も対応可能",
+        "params": {}
+      },
+      "source_article": "art_20260416_003",
+      "source_url": "https://note.com/aiaicreate/n/n958873db85eb",
+      "confidence": "medium",
+      "status": "pending_review",
+      "created": "2026-04-16"
+    },
+    {
+      "id": "upd_20260416_art_20260416_004",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "WebUI上で絵文字を入力することで声の感情表現が変化する実践確認",
+        "params": {}
+      },
+      "source_article": "art_20260416_004",
+      "source_url": "https://note.com/sugerpowder/n/n1c182e6f0ea1",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-16"
+    }
+  ]
+}
