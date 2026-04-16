@@ -31,6 +31,12 @@ EMOTION_EMOJI_MAP = [
     (r"息をのむ|ハッ", "😮"),
     (r"舐め|ぺろ|ちゅぱ|水音", "👅"),
     (r"リップ|キス|唇|ちゅ", "💋"),
+    (r"咳|くしゃみ|ゴホ|コホ", "🤧"),
+    (r"嚥下|ごくり|飲み込|ぐびっ", "🥤"),
+    (r"エコー|リバーブ|響く|こだま", "📢"),
+    (r"電話越し|電話口|受話器", "📞"),
+    (r"ゆっくり|丁寧に|噛み締め|一語一語", "🐢"),
+    (r"早口|まくしたて|一気に|矢継ぎ早", "⏩"),
     # 感情・話し方系
     (r"笑い|くすくす|ふふ|クスッ|含み笑", "🤭"),
     (r"甘え", "😏"),
@@ -127,7 +133,7 @@ def emotion_to_emojis_all(emotion: str) -> list[str]:
     return emojis
 
 
-def build_sandwich(text: str, emojis: list[str], intensity: str) -> str:
+def build_sandwich(text: str, emojis: list[str], intensity: str, stacking: bool = False) -> str:
     """テスト結果に基づいたサンドイッチ方式で絵文字を配置する
 
     聴き比べテスト結果（2026-04-13 + 2026-04-15）:
@@ -140,9 +146,22 @@ def build_sandwich(text: str, emojis: list[str], intensity: str) -> str:
       - 絵文字2-3個が感情幅が大きく安定
       - 4個以上は不自然な音声やノイズが増加
       - 絵文字数が多いと吐息・声にならない音声が増える
+
+    スタッキングテクニック（公式EMOJI_ANNOTATIONS.md 2026-03-24確認）:
+      stacking=True の場合、絵文字を2回重ねて効果を強調する
+      例: 👂 → 👂👂 でより強い囁き効果
+      ※ 総数3個以内のルールを維持するため prefix を倍加する
     """
     if not emojis:
         return text
+
+    # スタッキングテクニック: 絵文字1個の場合に2回重ねて効果強調
+    # 例: [👂] → prefix="👂👂", suffix="" (総数2個でルール内)
+    if stacking and len(emojis) == 1:
+        prefix = emojis[0] * 2
+        suffix = ""
+        result = f"{prefix} {text}"
+        return result
 
     if intensity == "weak":
         # prefix 2, suffix 1
@@ -239,7 +258,10 @@ def _fix_kanji_reading(text: str) -> str:
 def insert_pause_markers(text: str) -> str:
     """句読点や「……」の位置に ⏸️（間）マーカーを挿入する
 
-    参考: Irodori-TTS では ⏸️ が間・沈黙、⏩ が早口として機能する
+    参考: Irodori-TTS では以下の絵文字が特殊効果として機能する（公式EMOJI_ANNOTATIONS確認済み）
+      ⏸️ = 間・沈黙（感情の変わり目の直前に挿入）
+      ⏩ = 早口・まくしたてる（慌て・興奮シーンに）
+      🐢 = ゆっくり・丁寧に（噛み締めるような語りかけに）
     """
     # 「……」の後に間を挿入（ただし末尾は除く）
     text = re.sub(r"……(?!$)(?!）)", "…… ⏸️ ", text)

@@ -11,8 +11,10 @@
       "source_article": "art_20260416_001",
       "source_url": "https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku",
       "confidence": "high",
-      "status": "pending_review",
-      "created": "2026-04-16"
+      "status": "applied",
+      "created": "2026-04-16",
+      "applied": "2026-04-16",
+      "apply_note": "default_captions.jsonの全プロファイルキャプションに行動描写を追加済み（前セッション）"
     },
     {
       "id": "upd_20260416_art_20260416_001",
@@ -25,8 +27,10 @@
       "source_article": "art_20260416_001",
       "source_url": "https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku",
       "confidence": "high",
-      "status": "pending_review",
-      "created": "2026-04-16"
+      "status": "applied",
+      "created": "2026-04-16",
+      "applied": "2026-04-16",
+      "apply_note": "default_captions.jsonのキャプションに「若い女性が」「少女が」等の年齢表現を統一済み（前セッション）"
     },
     {
       "id": "upd_20260416_art_20260416_001",
@@ -42,8 +46,10 @@
       "source_article": "art_20260416_001",
       "source_url": "https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku",
       "confidence": "high",
-      "status": "pending_review",
-      "created": "2026-04-16"
+      "status": "applied",
+      "created": "2026-04-16",
+      "applied": "2026-04-16",
+      "apply_note": "ma_agent.pyにwav_to_mp3()関数を追加、ffmpeg qscale:a 2 使用済み（前セッション）"
     },
     {
       "id": "upd_20260416_art_20260416_001",
@@ -56,8 +62,10 @@
       "source_article": "art_20260416_001",
       "source_url": "https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku",
       "confidence": "high",
-      "status": "pending_review",
-      "created": "2026-04-16"
+      "status": "applied",
+      "created": "2026-04-16",
+      "applied": "2026-04-16",
+      "apply_note": "script_processor.pyのinsert_pause_markers()で⏸️自動挿入実装済み。voice_effectsカテゴリに⏩パターン追加済み"
     },
     {
       "id": "upd_20260416_art_20260416_002",
@@ -74,8 +82,10 @@
       "source_article": "art_20260416_002",
       "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v2-VoiceDesign/blob/main/EMOJI_ANNOTATIONS.md",
       "confidence": "high",
-      "status": "pending_review",
-      "created": "2026-04-16"
+      "status": "applied",
+      "created": "2026-04-16",
+      "applied": "2026-04-16",
+      "apply_note": "voice_effectsカテゴリに耳元囁き・吐息・エコーパターンを追加。script_processor.pyのEMOTION_EMOJI_MAPに📢追加済み"
     },
     {
       "id": "upd_20260416_art_20260416_002",
@@ -91,8 +101,10 @@
       "source_article": "art_20260416_002",
       "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v2-VoiceDesign/blob/main/EMOJI_ANNOTATIONS.md",
       "confidence": "high",
-      "status": "pending_review",
-      "created": "2026-04-16"
+      "status": "applied",
+      "created": "2026-04-16",
+      "applied": "2026-04-16",
+      "apply_note": "voice_effectsカテゴリに🐢ゆっくり・⏩早口パターン追加。script_processor.pyのEMOTION_EMOJI_MAPに🐢と⏩追加済み"
     },
     {
       "id": "upd_20260416_art_20260416_002",
@@ -110,8 +122,10 @@
       "source_article": "art_20260416_002",
       "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v2-VoiceDesign/blob/main/EMOJI_ANNOTATIONS.md",
       "confidence": "high",
-      "status": "pending_review",
-      "created": "2026-04-16"
+      "status": "applied",
+      "created": "2026-04-16",
+      "applied": "2026-04-16",
+      "apply_note": "voice_effectsカテゴリに🤧咳・🥤嚥下パターン追加。EMOTION_EMOJI_MAPに🤧と🥤追加済み（👅💋は既存）"
     },
     {
       "id": "upd_20260416_art_20260416_002",
@@ -128,8 +142,10 @@
       "source_article": "art_20260416_002",
       "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v2-VoiceDesign/blob/main/EMOJI_ANNOTATIONS.md",
       "confidence": "high",
-      "status": "pending_review",
-      "created": "2026-04-16"
+      "status": "applied",
+      "created": "2026-04-16",
+      "applied": "2026-04-16",
+      "apply_note": "voice_effectsカテゴリに📞電話・🤐口塞ぎ・😰どもりパターン追加済み"
     },
     {
       "id": "upd_20260416_art_20260416_002",
@@ -144,8 +160,10 @@
       "source_article": "art_20260416_002",
       "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v2-VoiceDesign/blob/main/EMOJI_ANNOTATIONS.md",
       "confidence": "high",
-      "status": "pending_review",
-      "created": "2026-04-16"
+      "status": "applied",
+      "created": "2026-04-16",
+      "applied": "2026-04-16",
+      "apply_note": "build_sandwich()にstacking=Trueオプション追加。emoji_patterns.jsonの_intensity_guideとvoice_effectsカテゴリにスタッキングガイドを追記済み"
     },
     {
       "id": "upd_20260416_art_20260416_003",
@@ -158,8 +176,10 @@
       "source_article": "art_20260416_003",
       "source_url": "https://note.com/aiaicreate/n/n958873db85eb",
       "confidence": "high",
-      "status": "pending_review",
-      "created": "2026-04-16"
+      "status": "applied",
+      "created": "2026-04-16",
+      "applied": "2026-04-16",
+      "apply_note": "既存機能の確認・文書化として完了。script_processor.pyの実装が対応済み"
     },
     {
       "id": "upd_20260416_art_20260416_003",
@@ -172,8 +192,9 @@
       "source_article": "art_20260416_003",
       "source_url": "https://note.com/aiaicreate/n/n958873db85eb",
       "confidence": "medium",
-      "status": "pending_review",
-      "created": "2026-04-16"
+      "status": "noted",
+      "created": "2026-04-16",
+      "apply_note": "confidence=medium。既存のdefault_captions.jsonが既にNSFW対応キャプションを持つため追加対応なし"
     },
     {
       "id": "upd_20260416_art_20260416_004",
@@ -186,8 +207,10 @@
       "source_article": "art_20260416_004",
       "source_url": "https://note.com/sugerpowder/n/n1c182e6f0ea1",
       "confidence": "high",
-      "status": "pending_review",
-      "created": "2026-04-16"
+      "status": "applied",
+      "created": "2026-04-16",
+      "applied": "2026-04-16",
+      "apply_note": "既存機能の実践確認として完了。新規実装なし"
     }
   ]
 }

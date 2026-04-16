@@ -1,7 +1,7 @@
 {
-  "_comment": "絵文字パターンライブラリ - Grok提案 + CFGテスト結果ベース",
-  "_updated": "2026-04-13",
-  "_source": "script_raw_grok.xlsx (エロいemoji, エロい音声csv形式, gork20260413)",
+  "_comment": "絵文字パターンライブラリ - Grok提案 + CFGテスト結果 + 公式EMOJI_ANNOTATIONSベース",
+  "_updated": "2026-04-16",
+  "_source": "script_raw_grok.xlsx (2026-04-13) + HuggingFace EMOJI_ANNOTATIONS.md (公式, 2026-03-24)",
   "_pattern_format": "サンドイッチ方式: prefix + テキスト + suffix",
 
   "touch": {
@@ -462,6 +462,90 @@
     }
   },
 
+  "voice_effects": {
+    "_desc": "公式EMOJI_ANNOTATIONS.md由来の音声エフェクト・話速・音質制御パターン（2026-03-24）",
+    "_source": "https://huggingface.co/Aratako/Irodori-TTS-500M-v2-VoiceDesign/blob/main/EMOJI_ANNOTATIONS.md",
+    "_stacking_note": "同じ絵文字を複数回使用すると効果が強調される（スタッキングテクニック）例: 👂👂 = より強い囁き",
+
+    "耳元囁き_基本": {
+      "prefix": "👂",
+      "suffix": "",
+      "usage_note": "👂で囁き・耳元の近さを演出。単体でも効果あり",
+      "stacking": "👂👂 でより強い囁き効果"
+    },
+    "耳元囁き_強": {
+      "prefix": "👂👂",
+      "suffix": "",
+      "usage_note": "スタッキングで強い囁き・耳に息がかかる感じ",
+      "stacking_example": true
+    },
+    "吐息_息遣い": {
+      "prefix": "😮‍💨",
+      "suffix": "",
+      "usage_note": "😮‍💨で吐息・溜息・寝息を演出"
+    },
+    "エコー_リバーブ": {
+      "prefix": "📢",
+      "suffix": "",
+      "usage_note": "📢でエコー・リバーブ効果。洞窟・広い空間の演出に"
+    },
+    "電話越し_音質": {
+      "prefix": "📞",
+      "suffix": "",
+      "usage_note": "📞で電話越しのフィルタード音質"
+    },
+    "口塞ぎ_くぐもり": {
+      "prefix": "🤐",
+      "suffix": "",
+      "usage_note": "🤐で口を塞がれたくぐもった声"
+    },
+    "ゆっくり_丁寧": {
+      "prefix": "🐢",
+      "suffix": "",
+      "usage_note": "🐢でゆっくりと丁寧に話す。セリフを噛み締めるように"
+    },
+    "早口_一気に": {
+      "prefix": "⏩",
+      "suffix": "",
+      "usage_note": "⏩で早口・まくしたてる。慌て・興奮・言い訳に"
+    },
+    "舐め音_咀嚼音": {
+      "prefix": "👅",
+      "suffix": "",
+      "usage_note": "👅で舐める音・咀嚼音・口内の水音"
+    },
+    "リップノイズ": {
+      "prefix": "💋",
+      "suffix": "",
+      "usage_note": "💋でリップノイズ・キス音"
+    },
+    "咳_くしゃみ": {
+      "prefix": "🤧",
+      "suffix": "",
+      "usage_note": "🤧で咳・くしゃみ音の演出"
+    },
+    "嚥下_ごくり": {
+      "prefix": "🥤",
+      "suffix": "",
+      "usage_note": "🥤で嚥下音・ごくりと飲み込む音"
+    },
+    "どもり_緊張": {
+      "prefix": "😰",
+      "suffix": "",
+      "usage_note": "😰でどもり・緊張した話し方"
+    },
+    "囁き_ゆっくり_複合": {
+      "prefix": "👂🐢",
+      "suffix": "",
+      "usage_note": "耳元でゆっくりと囁く。最も親密な語りかけ"
+    },
+    "囁き_吐息_複合": {
+      "prefix": "👂😮‍💨",
+      "suffix": "",
+      "usage_note": "耳元で吐息を混じえた囁き。色っぽい演出に"
+    }
+  },
+
   "basic_combos": {
     "_desc": "基本の組み合わせパターン（汎用、prefix/suffix分割なし）",
     "熱く息が荒い":        { "emoji": "🥵😮\u200d💨💦",    "usage_note": "お゛ほぉっ…の定番" },
@@ -512,6 +596,18 @@
     "絶頂,叫び,喘ぎ(強),荒い息遣い": "pregnancy.出産進行中",
     "脱力,囁き,甘え":           "afterglow.放心_ヒクヒク",
 
+    "_voice_effects_mappings": "--- 公式EMOJI_ANNOTATIONS由来のエフェクト・話速マッピング ---",
+    "ゆっくり,丁寧":                 "voice_effects.ゆっくり_丁寧",
+    "ゆっくり,噛み締め":             "voice_effects.ゆっくり_丁寧",
+    "早口,慌て":                     "voice_effects.早口_一気に",
+    "早口,興奮":                     "voice_effects.早口_一気に",
+    "エコー,広い空間":               "voice_effects.エコー_リバーブ",
+    "電話越し":                       "voice_effects.電話越し_音質",
+    "口塞ぎ,くぐもり":               "voice_effects.口塞ぎ_くぐもり",
+    "囁き,ゆっくり":                 "voice_effects.囁き_ゆっくり_複合",
+    "囁き,吐息,甘え":               "voice_effects.囁き_吐息_複合",
+    "囁き,耳元,吐息":               "voice_effects.囁き_吐息_複合",
+
     "_grok_game_voice_mappings": "--- Grokゲームテキスト分析由来 ---",
     "恥じらい,困惑":               "grok_game_voice.恥じらい_困惑_基本",
     "喘ぎ(弱),恥じらい,困惑":       "grok_game_voice.恥じらい_困惑_基本",
@@ -538,9 +634,10 @@
   },
 
   "_intensity_guide": {
-    "_desc": "感情強度に応じた絵文字数と配置方式の最適解（2026-04-13 + 2026-04-15 聴き比べ結果）",
+    "_desc": "感情強度に応じた絵文字数と配置方式の最適解（2026-04-13 + 2026-04-15 聴き比べ結果 + 公式EMOJI_ANNOTATIONS 2026-03-24）",
     "_important": "絵文字は2-3個が最適バランス。4個以上は不自然な音声やノイズが増加する",
     "_emoji_effect": "絵文字数が増えると吐息・声にならない音声が増える傾向がある",
+    "_stacking_technique": "同じ絵文字を2回重ねると効果が強調される（公式ドキュメント確認済み）。例: 👂→👂👂で囁き強調 / 😮‍💨→😮‍💨😮‍💨で吐息強調。ただし総絵文字数は3個以内を守ること",
     "弱": {
       "method": "sandwich",
       "prefix_count": "2個",
