@@ -21,11 +21,11 @@ SCENE_SILENCE_SEC = 2.0    # シーン間の無音（秒）
 SAMPLE_RATE = 48000         # 出力サンプルレート
 
 
-def copy_approved(project_name: str) -> int:
+def copy_approved(project_name: str, audio_subdir: str = "audio") -> int:
     """approved_candidate に基づいて候補を approved/ フォルダにコピーする"""
     project_dir = PROJECTS_DIR / project_name
     prod_csv = project_dir / "production.csv"
-    audio_dir = project_dir / "audio"
+    audio_dir = project_dir / audio_subdir
     approved_dir = project_dir / "approved"
 
     with open(prod_csv, "r", encoding="utf-8-sig") as f:
@@ -55,7 +55,14 @@ def copy_approved(project_name: str) -> int:
         # コピー（soundfileで読み書きして統一）
         data, sr = sf.read(str(src))
         sf.write(str(dst), data, sr)
+        row["status"] = "approved"  # ステータスを approved に更新
         copied += 1
+
+    # CSV 書き戻し
+    with open(prod_csv, "w", encoding="utf-8-sig", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
 
     print(f"[ok] {copied}ファイルを approved/ にコピーしました")
     return copied
@@ -216,12 +223,15 @@ def wav_to_mp3(project_name: str, source_dir: str = "master") -> list[str]:
     return mp3_files
 
 
-def run_ma(project_name: str, export_mp3: bool = False) -> list[str]:
+def run_ma(project_name: str, export_mp3: bool = False,
+           audio_subdir: str = "audio") -> list[str]:
     """MA全工程を実行する"""
     print(f"=== MAエージェント ===")
+    if audio_subdir != "audio":
+        print(f"音声ソース: {audio_subdir}/")
 
     # 1. 承認済み音声をコピー
-    copied = copy_approved(project_name)
+    copied = copy_approved(project_name, audio_subdir=audio_subdir)
     if copied == 0:
         print("[info] 承認済み音声がありません")
         return []
@@ -252,12 +262,17 @@ if __name__ == "__main__":
     auto = "--auto" in sys.argv
     export_mp3 = "--mp3" in sys.argv
     mp3_only = "--mp3-only" in sys.argv
+    audio_subdir = "audio"
+    if "--audio-dir" in sys.argv:
+        idx = sys.argv.index("--audio-dir")
+        if idx + 1 < len(sys.argv):
+            audio_subdir = sys.argv[idx + 1]
 
     if mp3_only:
         wav_to_mp3(project_name)
     else:
         if auto:
             auto_approve_first(project_name)
-            copy_approved(project_name)
+            copy_approved(project_name, audio_subdir=audio_subdir)
 
-        run_ma(project_name, export_mp3=export_mp3)
+        run_ma(project_name, export_mp3=export_mp3, audio_subdir=audio_subdir)
