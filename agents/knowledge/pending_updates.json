@@ -211,6 +211,96 @@
       "created": "2026-04-16",
       "applied": "2026-04-16",
       "apply_note": "既存機能の実践確認として完了。新規実装なし"
+    },
+    {
+      "id": "upd_20260417_art_20260417_005",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "テキストに絵文字を挿入することで感情が音声に反映。😊で楽しげに、😭で泣き声、😠で怒り表現が実現",
+        "params": {
+          "emoji_meaning": "😊=楽しげ、😭=嗚咽・悲しみ、😠=怒り・不満"
+        }
+      },
+      "source_article": "art_20260417_005",
+      "source_url": "https://note.com/aaafrog/n/n2021733405ad",
+      "confidence": "high",
+      "status": "rejected",
+      "created": "2026-04-17",
+      "reject_note": "既知・実装済み。EMOTION_EMOJI_MAPに😊😭😠は全て対応済み"
+    },
+    {
+      "id": "upd_20260417_art_20260417_005",
+      "target": "default_captions.json",
+      "operation": "review_caption_technique",
+      "data": {
+        "finding": "音声指示テキストに明るく元気に・落ち着いた声でなど演技指示を記述。英語指示の方が安定する傾向",
+        "params": {
+          "stability": "英語指示がより安定"
+        }
+      },
+      "source_article": "art_20260417_005",
+      "source_url": "https://note.com/aaafrog/n/n2021733405ad",
+      "confidence": "high",
+      "status": "rejected",
+      "created": "2026-04-17",
+      "reject_note": "不採用。本システムは日本語キャプションで動作確認済み。英語への移行根拠なし"
+    },
+    {
+      "id": "upd_20260417_art_20260417_006",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "Irodori-TTSは絵文字によるスタイル制御（感情・SE等）機能を搭載し、テキストに絵文字を挿入するだけでアニメキャラ風の感情表現が可能",
+        "params": {
+          "supported_features": [
+            "emotion_control",
+            "sound_effects"
+          ]
+        }
+      },
+      "source_article": "art_20260417_006",
+      "source_url": "https://note.com/jscdisk/n/n6352441b050f",
+      "confidence": "high",
+      "status": "rejected",
+      "created": "2026-04-17",
+      "reject_note": "既知。パイプライン全体の基本機能であり新規情報なし"
+    },
+    {
+      "id": "upd_20260417_art_20260417_006",
+      "target": "default_captions.json",
+      "operation": "review_caption_technique",
+      "data": {
+        "finding": "難しい漢字はひらがなに変換してから入力すると安定する",
+        "params": {
+          "input_preprocessing": "kanji_to_hiragana_conversion"
+        }
+      },
+      "source_article": "art_20260417_006",
+      "source_url": "https://note.com/jscdisk/n/n6352441b050f",
+      "confidence": "high",
+      "status": "rejected",
+      "created": "2026-04-17",
+      "reject_note": "既知・実装済み。script_processor.pyの_fix_kanji_reading()とKANJI_FIX_MAP(20語)が対応済み"
+    },
+    {
+      "id": "upd_20260417_art_20260417_007",
+      "target": "ma_agent.py",
+      "operation": "review_postprocess_technique",
+      "data": {
+        "finding": "テキストファイルを行ごとに読み込み、Gradioで順序的に一括音声生成処理を実行。1行1セリフのtxtファイル形式。",
+        "params": {
+          "input_format": "txt (1行1セリフ)",
+          "output_naming": "セリフそのまままたはプレフィックス+連番",
+          "ui_component": "Gradio file upload + batch processing button"
+        }
+      },
+      "source_article": "art_20260417_007",
+      "source_url": "https://note.com/aiaicreate/n/n61b29f9810a8",
+      "confidence": "high",
+      "status": "rejected",
+      "created": "2026-04-17",
+      "reject_note": "不採用。Gradioは使用しない。recorder.pyによる独自バッチ処理で同等機能を実装済み"
     }
   ]
 }

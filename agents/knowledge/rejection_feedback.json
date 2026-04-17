@@ -1,0 +1,65 @@
+{
+  "_comment": "提案リジェクトのフィードバック記録。knowledge_collector.pyが参照し同種の提案を再生成しない",
+  "_updated": "2026-04-17",
+
+  "known_implementations": {
+    "_desc": "既にパイプラインに実装済みのため提案不要な項目",
+    "emoji_emotion_mapping": {
+      "description": "絵文字→感情の基本マッピング（😊=楽しげ、😭=泣き、😠=怒り等）",
+      "implemented_in": "agents/script_processor.py EMOTION_EMOJI_MAP",
+      "skip_if_finding_contains": ["絵文字.*感情", "で楽しげ", "で泣き声", "で怒り", "emoji_meaning", "感情表現コントロール"]
+    },
+    "kanji_reading_fix": {
+      "description": "難読漢字→ひらがな変換",
+      "implemented_in": "agents/script_processor.py _fix_kanji_reading() KANJI_FIX_MAP(20語)",
+      "skip_if_finding_contains": ["漢字.*ひらがな", "難読漢字", "kanji_to_hiragana", "漢字.*変換"]
+    },
+    "emoji_style_control_general": {
+      "description": "絵文字によるスタイル制御の基本概念（パイプライン全体の基本機能）",
+      "implemented_in": "agents/script_processor.py build_sandwich(), emoji_patterns.json",
+      "skip_if_finding_contains": ["絵文字.*スタイル制御", "絵文字.*感情.*可能", "アニメキャラ風.*感情", "emotion_control.*sound_effects"]
+    },
+    "batch_generation": {
+      "description": "CSVからの一括音声生成バッチ処理",
+      "implemented_in": "agents/recorder.py record_project()",
+      "skip_if_finding_contains": ["一括音声生成", "バッチ処理", "1行1セリフ", "batch processing"]
+    }
+  },
+
+  "not_applicable": {
+    "_desc": "本システムのアーキテクチャに合わないため採用しない技術",
+    "gradio_ui": {
+      "description": "GradioベースのWebUI操作",
+      "reason": "本システムはCLIバッチ処理方式を採用。GradioUIは使用しない",
+      "skip_if_finding_contains": ["Gradio", "gradio", "WebUI.*一括", "file upload.*button"]
+    },
+    "english_caption": {
+      "description": "英語キャプションの使用",
+      "reason": "本システムは日本語キャプションで動作確認済み。変更する根拠なし",
+      "skip_if_finding_contains": ["英語指示.*安定", "英語.*キャプション", "English.*caption.*stable"]
+    }
+  },
+
+  "rejection_history": [
+    {
+      "date": "2026-04-17",
+      "rejected_ids": [
+        "upd_20260417_art_20260417_005",
+        "upd_20260417_art_20260417_006",
+        "upd_20260417_art_20260417_007"
+      ],
+      "sources": [
+        "https://note.com/aaafrog/n/n2021733405ad",
+        "https://note.com/jscdisk/n/n6352441b050f",
+        "https://note.com/aiaicreate/n/n61b29f9810a8"
+      ],
+      "reasons": [
+        "基本的な絵文字→感情マッピングは既にEMOTION_EMOJI_MAPで実装済み",
+        "漢字→ひらがな変換は_fix_kanji_reading()で実装済み",
+        "英語キャプションは採用しない（日本語キャプションで安定動作中）",
+        "Gradio UIは使用しない（recorder.pyのCLIバッチ処理を使用）",
+        "絵文字スタイル制御の概念説明は既知の情報"
+      ]
+    }
+  ]
+}

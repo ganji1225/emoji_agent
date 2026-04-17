@@ -41,6 +41,7 @@ KB_INDEX_PATH = KNOWLEDGE_DIR / "kb_index.json"
 SEEN_URLS_PATH = KNOWLEDGE_DIR / "seen_urls.json"
 KB_MD_PATH = KNOWLEDGE_DIR / "knowledge_base.md"
 PENDING_UPDATES_PATH = KNOWLEDGE_DIR / "pending_updates.json"
+REJECTION_FEEDBACK_PATH = KNOWLEDGE_DIR / "rejection_feedback.json"
 
 JST = timezone(timedelta(hours=9))
 
@@ -549,6 +550,12 @@ def generate_proposals() -> list[dict]:
             if not kh.get("actionable"):
                 continue
 
+            # フィードバックによるスキップチェック
+            should_skip, skip_reason = _is_rejected_by_feedback(kh)
+            if should_skip:
+                print(f"  [skip] {kh.get('finding', '')[:50]} → {skip_reason[:60]}")
+                continue
+
             proposal = _knowhow_to_proposal(art, kh, today)
             if proposal:
                 new_proposals.append(proposal)
@@ -559,6 +566,41 @@ def generate_proposals() -> list[dict]:
 
     print(f"[propose] 新規提案: {len(new_proposals)}件")
     return new_proposals
+
+
+def _load_rejection_feedback() -> dict:
+    """rejection_feedback.json を読み込む"""
+    return _load_json(REJECTION_FEEDBACK_PATH, {})
+
+
+def _is_rejected_by_feedback(knowhow: dict) -> tuple[bool, str]:
+    """フィードバックに基づいて提案をスキップすべきか判定する
+
+    Returns:
+        (should_skip: bool, reason: str)
+    """
+    feedback = _load_rejection_feedback()
+    finding = knowhow.get("finding", "")
+    params_str = json.dumps(knowhow.get("params", {}), ensure_ascii=False)
+    target_text = finding + " " + params_str
+
+    # known_implementations チェック
+    for key, rule in feedback.get("known_implementations", {}).items():
+        if key.startswith("_"):
+            continue
+        for pattern in rule.get("skip_if_finding_contains", []):
+            if re.search(pattern, target_text, re.IGNORECASE):
+                return True, f"既実装: {rule.get('description', key)} ({rule.get('implemented_in', '')})"
+
+    # not_applicable チェック
+    for key, rule in feedback.get("not_applicable", {}).items():
+        if key.startswith("_"):
+            continue
+        for pattern in rule.get("skip_if_finding_contains", []):
+            if re.search(pattern, target_text, re.IGNORECASE):
+                return True, f"不採用: {rule.get('description', key)} — {rule.get('reason', '')}"
+
+    return False, ""
 
 
 def _knowhow_to_proposal(article: dict, knowhow: dict, today: str) -> dict | None:
