@@ -255,17 +255,41 @@ def _fix_kanji_reading(text: str) -> str:
 # ============================================================
 # 間（ま）の自動挿入
 # ============================================================
-def insert_pause_markers(text: str) -> str:
+def insert_pause_markers(text: str, max_pauses: int = 2) -> str:
     """句読点や「……」の位置に ⏸️（間）マーカーを挿入する
 
     参考: Irodori-TTS では以下の絵文字が特殊効果として機能する（公式EMOJI_ANNOTATIONS確認済み）
       ⏸️ = 間・沈黙（感情の変わり目の直前に挿入）
       ⏩ = 早口・まくしたてる（慌て・興奮シーンに）
       🐢 = ゆっくり・丁寧に（噛み締めるような語りかけに）
+
+    Args:
+        text: 対象テキスト
+        max_pauses: 1行あたりの最大⏸️挿入数（デフォルト2）
+            - 0: 挿入なし
+            - 2: デフォルト。感情の変わり目2箇所に絞る（推奨）
+            - 連続再生時はセリフが長く感じるためデフォルト2が最適
+            - 聴き比べフィードバック(2026-04-17): ⏸️多用で長さが気になる
     """
-    # 「……」の後に間を挿入（ただし末尾は除く）
-    text = re.sub(r"……(?!$)(?!）)", "…… ⏸️ ", text)
-    return text
+    if max_pauses == 0:
+        return text
+
+    count = 0
+    result = []
+    # 「……」で分割して処理
+    parts = re.split(r"(……)", text)
+    for i, part in enumerate(parts):
+        if part == "……":
+            # 末尾（次のパートが空 or 「）」）はスキップ
+            next_part = parts[i + 1] if i + 1 < len(parts) else ""
+            if next_part and not next_part.startswith("）") and count < max_pauses:
+                result.append("…… ⏸️ ")
+                count += 1
+            else:
+                result.append("……")
+        else:
+            result.append(part)
+    return "".join(result)
 
 
 # ============================================================
