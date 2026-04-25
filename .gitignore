@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.uv_cache/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 一時ファイル / バックアップ
+*.bak
+*.bak_*
+*.tmp
+*.log
+
+# プロジェクト固有（このリポジトリの管理対象外）
+# 各プロジェクトの作業データは D:/irodori/projects/ 配下にあり、別管理

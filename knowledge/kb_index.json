@@ -1,0 +1,1376 @@
+{
+  "_updated": "2026-04-25T10:44:28.881221+09:00",
+  "_total_articles": 23,
+  "_categories": {
+    "caption_design": 8,
+    "emoji_technique": 13,
+    "cfg_tuning": 3,
+    "audio_postprocess": 3,
+    "voice_quality": 12,
+    "training_tips": 2
+  },
+  "articles": [
+    {
+      "id": "art_20260416_001",
+      "url": "https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku",
+      "title": "Irodori-TTSのキャプション設計で声質を操る方法",
+      "source_type": "blog",
+      "discovered_date": "2026-04-16",
+      "fetch_date": "2026-04-16",
+      "categories": [
+        "caption_design",
+        "cfg_tuning",
+        "voice_quality"
+      ],
+      "relevance_score": 0.65,
+      "quality_score": 0.8,
+      "combined_score": 0.71,
+      "content_hash": "sha256:e82a1609bc71fecc",
+      "summary": "キャプションに行動描写を入れると声質が変わる。cfg_caption=5.0が恥じらい系に最適。年齢表現で声の高さを制御可能。",
+      "extracted_knowhow": [
+        {
+          "type": "caption_technique",
+          "finding": "キャプションに行動描写（一生懸命・たどたどしい等）を加えると、声質にハリやテンポ変化が生まれる",
+          "params": {},
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "caption_technique",
+          "finding": "年齢表現で声質をコントロール: 幼い女の子=高く舌足らず / 少女=中間 / 若い女性=大人っぽく",
+          "params": {},
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "cfg_tuning",
+          "finding": "WAV→MP3変換はffmpeg VBR qscale:a 2（約190kbps）が最適",
+          "params": {
+            "ffmpeg_qscale": 2,
+            "approx_bitrate": "190kbps"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "emoji_technique",
+          "finding": "⏸️=間（沈黙）、⏩=早口として機能。感情の変わり目の直前に絵文字を挿入",
+          "params": {},
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "voice_quality",
+          "finding": "難読漢字はTTS誤読の原因。重要な単語はひらがなで書く",
+          "params": {},
+          "confidence": "high",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2026-04-11",
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260416_002",
+      "url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v2-VoiceDesign/blob/main/EMOJI_ANNOTATIONS.md",
+      "title": "Irodori-TTS EMOJI_ANNOTATIONS.md - 公式絵文字アノテーション",
+      "source_type": "huggingface",
+      "discovered_date": "2026-04-16",
+      "fetch_date": "2026-04-16",
+      "categories": [
+        "emoji_technique",
+        "voice_quality",
+        "caption_design"
+      ],
+      "relevance_score": 0.6,
+      "quality_score": 0.75,
+      "combined_score": 0.66,
+      "content_hash": "sha256:a1a77bf4f96fbbda",
+      "summary": "33種類の絵文字で音声の感情・効果音・話速・声質を制御。複数同じ絵文字で効果を強調可能。",
+      "extracted_knowhow": [
+        {
+          "type": "emoji_technique",
+          "finding": "👂で囁き・耳元効果、😮‍💨で吐息・溜息・寝息、📢でエコー・リバーブ効果",
+          "params": {
+            "proximity": "👂",
+            "breathing": "😮‍💨",
+            "echo": "📢"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "emoji_technique",
+          "finding": "⏩で早口、🐢でゆっくり話法を制御可能",
+          "params": {
+            "fast": "⏩",
+            "slow": "🐢"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "emoji_technique",
+          "finding": "👅で舐める音・咀嚼音、💋でリップノイズ、🤧で咳・くしゃみ、🥤で嚥下音",
+          "params": {
+            "licking": "👅",
+            "lip": "💋",
+            "cough": "🤧",
+            "swallow": "🥤"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "emoji_technique",
+          "finding": "📞で電話越し音質、🤐で口塞ぎ、😰でどもり効果",
+          "params": {
+            "phone": "📞",
+            "muffled": "🤐",
+            "stutter": "😰"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "emoji_technique",
+          "finding": "同じ絵文字を複数回使用するとその効果が強調される（スタッキングテクニック）",
+          "params": {
+            "technique": "emoji_repetition"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "voice_quality",
+          "finding": "33種類の感情絵文字が声質に影響: 😊楽しげ 😠怒り 😰パニック 🥺不安 😭泣き 😱恐怖 😪眠い 😆大笑い 😲驚き 🙏懇願",
+          "params": {
+            "total_emojis": 33
+          },
+          "confidence": "high",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2026-03-24",
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260416_003",
+      "url": "https://note.com/aiaicreate/n/n958873db85eb",
+      "title": "絵文字で感情表現ができるIrodori-TTSの使い方",
+      "source_type": "blog",
+      "discovered_date": "2026-04-16",
+      "fetch_date": "2026-04-16",
+      "categories": [
+        "emoji_technique",
+        "voice_quality"
+      ],
+      "relevance_score": 0.45,
+      "quality_score": 0.7,
+      "combined_score": 0.55,
+      "content_hash": "sha256:aa9f83d6365d9712",
+      "summary": "Irodori-TTSの絵文字感情制御とNSFW対応の可能性を実践レポート。キャプションエンジニアリングで細かい音声制御が可能。",
+      "extracted_knowhow": [
+        {
+          "type": "emoji_technique",
+          "finding": "絵文字による感情表現コントロールが可能。テキスト入力層で効果を制御。",
+          "params": {},
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "caption_technique",
+          "finding": "キャプションエンジニアリングで細かいNSFW系音声制御も対応可能",
+          "params": {},
+          "confidence": "medium",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2026-03-18",
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260416_004",
+      "url": "https://note.com/sugerpowder/n/n1c182e6f0ea1",
+      "title": "Irodori-TTSを実際に動かしてみた！感情絵文字で声に表情をつける面白さ",
+      "source_type": "blog",
+      "discovered_date": "2026-04-16",
+      "fetch_date": "2026-04-16",
+      "categories": [
+        "emoji_technique",
+        "voice_quality"
+      ],
+      "relevance_score": 0.45,
+      "quality_score": 0.75,
+      "combined_score": 0.57,
+      "content_hash": "sha256:ddb2dd1c4ceb5147",
+      "summary": "Irodori-TTS導入・WebUIによる絵文字感情制御の実践レポート。具体的テクニック情報は少なめ。",
+      "extracted_knowhow": [
+        {
+          "type": "emoji_technique",
+          "finding": "WebUI上で絵文字を入力することで声の感情表現が変化する実践確認",
+          "params": {},
+          "confidence": "high",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2026-04-07",
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260417_005",
+      "url": "https://note.com/aaafrog/n/n2021733405ad",
+      "title": "日本語最強クラスの音声生成「Irodori-TTS」絵文字で感情まで操れる神ツール",
+      "source_type": "blog",
+      "discovered_date": "2026-04-17",
+      "fetch_date": "2026-04-17",
+      "categories": [
+        "emoji_technique",
+        "caption_design",
+        "voice_quality"
+      ],
+      "relevance_score": 0.85,
+      "quality_score": 0.95,
+      "combined_score": 0.89,
+      "content_hash": "sha256:9cc19969bb565a68",
+      "summary": "Irodori-TTSは絵文字を活用して感情表現を音声に反映させ、ボイスクローン機能で高精度な音声再現が可能。",
+      "extracted_knowhow": [
+        {
+          "type": "emoji_technique",
+          "finding": "テキストに絵文字を挿入することで感情が音声に反映。😊で楽しげに、😭で泣き声、😠で怒り表現が実現",
+          "params": {
+            "emoji_meaning": "😊=楽しげ、😭=嗚咽・悲しみ、😠=怒り・不満"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "caption_technique",
+          "finding": "音声指示テキストに明るく元気に・落ち着いた声でなど演技指示を記述。英語指示の方が安定する傾向",
+          "params": {
+            "stability": "英語指示がより安定"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "voice_quality",
+          "finding": "複数回生成で当たり音声を引ける実用レベルの品質を実現。ガチャ要素あり。",
+          "params": {
+            "consistency": "ガチャ要素あり（試行必要）"
+          },
+          "confidence": "high",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2026-04-06",
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260417_006",
+      "url": "https://note.com/jscdisk/n/n6352441b050f",
+      "title": "テキストに絵文字入れるだけ アニメキャラ風の感情表現ができる日本語TTSirodoriTTS_V2",
+      "source_type": "blog",
+      "discovered_date": "2026-04-17",
+      "fetch_date": "2026-04-17",
+      "categories": [
+        "emoji_technique",
+        "caption_design"
+      ],
+      "relevance_score": 0.8,
+      "quality_score": 0.95,
+      "combined_score": 0.86,
+      "content_hash": "sha256:f6b904b1e60157c7",
+      "summary": "Irodori-TTS V2はコーデック改良と学習量2.5倍により音質が向上。テキストに絵文字挿入でアニメキャラ風感情表現が可能。",
+      "extracted_knowhow": [
+        {
+          "type": "emoji_technique",
+          "finding": "Irodori-TTSは絵文字によるスタイル制御（感情・SE等）機能を搭載し、テキストに絵文字を挿入するだけでアニメキャラ風の感情表現が可能",
+          "params": {
+            "supported_features": [
+              "emotion_control",
+              "sound_effects"
+            ]
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "caption_technique",
+          "finding": "難しい漢字はひらがなに変換してから入力すると安定する",
+          "params": {
+            "input_preprocessing": "kanji_to_hiragana_conversion"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "training_tips",
+          "finding": "V2モデルはコーデックを日本語専用版（Semantic-DACVAE-Japanese-32dim）に切り替え、学習ステップをV1比で2.5倍増加、データフィルタリングを厳格化",
+          "params": {
+            "codec_v2": "Semantic-DACVAE-Japanese_32dim",
+            "training_multiplier": 2.5
+          },
+          "confidence": "high",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2026-04-08",
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260417_007",
+      "url": "https://note.com/aiaicreate/n/n61b29f9810a8",
+      "title": "Irodori-TTSで音声を一括生成する",
+      "source_type": "blog",
+      "discovered_date": "2026-04-17",
+      "fetch_date": "2026-04-17",
+      "categories": [
+        "audio_postprocess"
+      ],
+      "relevance_score": 0.45,
+      "quality_score": 0.8,
+      "combined_score": 0.59,
+      "content_hash": "sha256:b0d43b9faa591b16",
+      "summary": "テキストファイルから複数音声を一括生成するGradioインターフェースの実装方法。1行1セリフのtxtファイルを入力として順序的に処理。",
+      "extracted_knowhow": [
+        {
+          "type": "audio_postprocess",
+          "finding": "テキストファイルを行ごとに読み込み、Gradioで順序的に一括音声生成処理を実行。1行1セリフのtxtファイル形式。",
+          "params": {
+            "input_format": "txt (1行1セリフ)",
+            "output_naming": "セリフそのまままたはプレフィックス+連番",
+            "ui_component": "Gradio file upload + batch processing button"
+          },
+          "confidence": "high",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2026-04-16",
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260421_008",
+      "url": "https://huggingface.co/Aratako/Irodori-TTS-500M/blob/main/EMOJI_ANNOTATIONS.md",
+      "title": "Irodori-TTS-500M Emoji Annotations Guide",
+      "source_type": "huggingface",
+      "discovered_date": "2026-04-21",
+      "fetch_date": "2026-04-21",
+      "categories": [
+        "emoji_technique",
+        "voice_quality"
+      ],
+      "relevance_score": 0.8,
+      "quality_score": 0.65,
+      "combined_score": 0.74,
+      "content_hash": "sha256:4e64407265b869eb",
+      "summary": "Irodori-TTS-500Mは入力テキストに絵文字を挿入することで、音声効果、話し方、感情表現を制御できる。同じ絵文字を複数使用することで効果を強調できる。",
+      "extracted_knowhow": [
+        {
+          "type": "emoji_technique",
+          "finding": "Irodori-TTSは42種類の絵文字をサポートしており、各絵文字が特定の音声効果や感情表現をトリガーする",
+          "params": {
+            "supported_emojis": 42,
+            "emoji_repetition_effect": "複数使用で効果強調可能"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "emoji_technique",
+          "finding": "呼吸・息遣い系制御：👂(囁き)、😮‍💨(吐息)、🌬️(息切れ)、🥱(あくび)で息遣いの質感を変更可能",
+          "params": {
+            "whisper_emoji": "👂",
+            "breath_emoji": "😮‍💨",
+            "heavy_breathing_emoji": "🌬️",
+            "yawn_emoji": "🥱"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "emoji_technique",
+          "finding": "感情表現制御：😆(喜び)、😠(怒り)、😭(悲しみ)、😱(恐怖)、😊(楽しい)など多様な感情パターンに対応",
+          "params": {
+            "joy_emoji": "😆",
+            "anger_emoji": "😠",
+            "sadness_emoji": "😭",
+            "fear_emoji": "😱",
+            "cheerful_emoji": "😊"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "emoji_technique",
+          "finding": "話速制御：⏩(早口)、🐢(ゆっくり)で話速を調整。その他⏸️(沈黙/間)で強調効果を生成",
+          "params": {
+            "fast_speaking_emoji": "⏩",
+            "slow_speaking_emoji": "🐢",
+            "pause_emoji": "⏸️"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "emoji_technique",
+          "finding": "音声加工効果：📢(エコー・リバーブ)、📞(電話越し/スピーカー越し)で音声を空間的に加工可能",
+          "params": {
+            "echo_reverb_emoji": "📢",
+            "phone_speaker_emoji": "📞"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "emoji_technique",
+          "finding": "口腔音・咀嚼音：👅(舐める音/咀嚼)、💋(リップノイズ)、🥤(嚥下音)、🤧(咳/鼻すすり)で細かい音声テクスチャーを制御",
+          "params": {
+            "licking_chewing_emoji": "👅",
+            "lip_smack_emoji": "💋",
+            "swallow_emoji": "🥤",
+            "cough_emoji": "🤧"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "voice_quality",
+          "finding": "制御精度は完全ではないが、マスタリングにより多様な音声合成が可能。絵文字を組み合わせることで複合効果を生成できる",
+          "params": {
+            "control_accuracy": "imperfect",
+            "combination_effect": "supported"
+          },
+          "confidence": "medium",
+          "actionable": true
+        }
+      ],
+      "publish_date": null,
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260421_009",
+      "url": "https://zenn.dev/kun432/scraps/87d7776909e4d9",
+      "title": "「Irodori-TTS」を試す",
+      "source_type": "blog",
+      "discovered_date": "2026-04-21",
+      "fetch_date": "2026-04-21",
+      "categories": [
+        "emoji_technique",
+        "cfg_tuning",
+        "voice_quality",
+        "audio_postprocess"
+      ],
+      "relevance_score": 1.0,
+      "quality_score": 0.85,
+      "combined_score": 0.94,
+      "content_hash": "sha256:1ff80829de8725d3",
+      "summary": "Irodori-TTS-500Mの絵文字ベースのスタイル制御機能とゼロショット音声クローン生成を実装検証。bf16精度設定で推論速度を大幅改善。",
+      "extracted_knowhow": [
+        {
+          "type": "emoji_technique",
+          "finding": "入力テキストに絵文字を直接埋め込むことで発話スタイル・感情表現・音声効果を制御可能。対応絵文字は公式ドキュメント参照。",
+          "params": {
+            "emoji_control": "supported",
+            "style_dimensions": "emotion_expression, voice_effects, speech_style"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "cfg_tuning",
+          "finding": "モデル精度をfloat32からbf16に設定することで推論時間を約58%削減（1.786秒→0.733秒）。",
+          "params": {
+            "model_precision": "bf16",
+            "codec_precision": "bf16",
+            "speed_improvement": "58%",
+            "baseline_time_ms": 1786,
+            "optimized_time_ms": 733
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "voice_quality",
+          "finding": "ゼロショット音声クローンはリファレンス音声の話者特性をMioTTSより正確に再現。参照音声なしでも使用可能。",
+          "params": {
+            "ref_wav_required": false,
+            "zero_shot_clone": "supported",
+            "vram_usage_gb": 7.7,
+            "compared_model": "MioTTS"
+          },
+          "confidence": "medium",
+          "actionable": true
+        },
+        {
+          "type": "audio_postprocess",
+          "finding": "DACVAE（128次元）コーデックで連続潜在変数として表現し、48kHz波形再構成を実現。",
+          "params": {
+            "codec": "DACVAE",
+            "latent_dimensions": 128,
+            "output_sample_rate": 48000
+          },
+          "confidence": "high",
+          "actionable": false
+        }
+      ],
+      "publish_date": "2025-03-22",
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260421_010",
+      "url": "https://note.com/totchira/n/n1b9eb0c64080",
+      "title": "絵文字で感情表現ができる合成音声Irodori-TTSを使ってみた",
+      "source_type": "blog",
+      "discovered_date": "2026-04-21",
+      "fetch_date": "2026-04-21",
+      "categories": [
+        "emoji_technique",
+        "voice_quality",
+        "caption_design"
+      ],
+      "relevance_score": 0.85,
+      "quality_score": 0.9,
+      "combined_score": 0.87,
+      "content_hash": "sha256:8771c5d16c747c40",
+      "summary": "Irodori-TTSは絵文字アノテーションでスタイル制御を実現し、囁き声・泣き声・効果音など従来は生成困難だった音声表現が手軽に可能になる。",
+      "extracted_knowhow": [
+        {
+          "type": "emoji_technique",
+          "finding": "絵文字には全体効果型（👂で囁き声化）と単体音声型（🤭で含み笑い）の2種類が存在",
+          "params": {
+            "emoji_👂": "全体的に囁き声効果",
+            "emoji_🤭": "単体で笑い声を出力"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "emoji_technique",
+          "finding": "複数絵文字（🤭🤭🤭）の使用で複数人会話表現に変換される可能性がある",
+          "params": {
+            "emoji_count": "3以上で複数音声化傾向"
+          },
+          "confidence": "medium",
+          "actionable": true
+        },
+        {
+          "type": "voice_quality",
+          "finding": "「音質はガチャ次第」、同じテキスト・同じSeed値なら再現性あり",
+          "params": {
+            "seed_consistency": "identical seed = identical voice quality",
+            "generation_time": "RTX4070で2～3秒"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "caption_design",
+          "finding": "三点リーダーは文脈の雰囲気を保持するが、絵文字は台詞化する傾向。効果は文脈依存的",
+          "params": {
+            "context_sensitivity": "high"
+          },
+          "confidence": "medium",
+          "actionable": true
+        },
+        {
+          "type": "voice_quality",
+          "finding": "従来困難だった音声効果（唾音、泣き声、欠伸、リップノイズ）が対応絵文字で生成可能",
+          "params": {
+            "supported_effects": [
+              "crying",
+              "swallowing",
+              "yawning",
+              "lip_noise"
+            ]
+          },
+          "confidence": "high",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2026-02-27",
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260421_011",
+      "url": "https://github.com/iron-mukakin/Emoji-TTS/blob/main/README.md",
+      "title": "Emoji-TTS README - Flow Matching TTS with Emotion Control (iron-mukakin fork)",
+      "source_type": "github",
+      "discovered_date": "2026-04-21",
+      "fetch_date": "2026-04-21",
+      "categories": [
+        "emoji_technique",
+        "cfg_tuning",
+        "voice_quality",
+        "training_tips",
+        "audio_postprocess"
+      ],
+      "relevance_score": 0.8,
+      "quality_score": 0.65,
+      "combined_score": 0.74,
+      "content_hash": "sha256:ed20eb17565325ac",
+      "summary": "Flow Matching TTS with zero-shot voice cloning, emotion style presets, multi-candidate generation, and LoRA fine-tuning support. Emoji caption feature uses LLM to auto-annotate with 38 emotion types.",
+      "extracted_knowhow": [
+        {
+          "type": "emoji_technique",
+          "finding": "Emoji caption feature extracts acoustic features (pitch, energy, speech rate, MFCC delta, ZCR) and calls LLM API to annotate text with 38 emotion emoji types including whisper, strong, calm, laugh, crying, scream, fast-speaking, slow, humming.",
+          "params": {
+            "emoji_types": 38,
+            "acoustic_features": [
+              "pitch",
+              "energy",
+              "speech_rate",
+              "mfcc_delta",
+              "zcr"
+            ]
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "cfg_tuning",
+          "finding": "Independent CFG guidance: cfg-scale-text=3.0, cfg-scale-speaker=5.0 as defaults. Guidance modes: independent, joint, alternating. cfg_min_t=0.5, cfg_max_t=1.0",
+          "params": {
+            "cfg_scale_text_default": 3.0,
+            "cfg_scale_speaker_default": 5.0,
+            "guidance_modes": [
+              "independent",
+              "joint",
+              "alternating"
+            ],
+            "cfg_min_t": 0.5,
+            "cfg_max_t": 1.0
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "voice_quality",
+          "finding": "Multi-candidate generation (1-8 candidates) with truncation-factor parameter and score rescaling (k and sigma parameters) for expression range control.",
+          "params": {
+            "max_candidates": 8,
+            "truncation_factor": "optional",
+            "score_rescaling_params": [
+              "k",
+              "sigma"
+            ]
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "audio_postprocess",
+          "finding": "Trailing silence trimming via flattening heuristic enabled by default (trim-tail: True) to clean generated audio.",
+          "params": {
+            "trim_tail": true,
+            "method": "flattening_heuristic"
+          },
+          "confidence": "medium",
+          "actionable": true
+        },
+        {
+          "type": "training_tips",
+          "finding": "Default fine-tuning config: batch_size=4, gradient_accumulation=2, optimizer=muon, learning_rate=3e-4, max_steps=3000, warmup_steps=300, stable_steps=2100, lr_scheduler=wsd, precision=bf16. Optimized for ~50 samples on RTX 5060 Ti.",
+          "params": {
+            "batch_size": 4,
+            "gradient_accumulation_steps": 2,
+            "optimizer": "muon",
+            "learning_rate": 0.0003,
+            "max_steps": 3000,
+            "warmup_steps": 300,
+            "stable_steps": 2100,
+            "lr_scheduler": "wsd",
+            "precision": "bf16"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "training_tips",
+          "finding": "LoRA fine-tuning: rank=16, alpha=32.0, dropout=0.05, target_modules=wq,wk,wv,wo",
+          "params": {
+            "lora_rank": 16,
+            "lora_alpha": 32.0,
+            "lora_dropout": 0.05,
+            "target_modules": "wq,wk,wv,wo"
+          },
+          "confidence": "high",
+          "actionable": true
+        }
+      ],
+      "publish_date": null,
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260421_012",
+      "url": "https://zenn.dev/megyo9/articles/548448f7c8fc83",
+      "title": "ローカルで動かせる日本語TTSをいろいろ試す（その３）",
+      "source_type": "blog",
+      "discovered_date": "2026-04-21",
+      "fetch_date": "2026-04-21",
+      "categories": [
+        "emoji_technique",
+        "voice_quality",
+        "caption_design"
+      ],
+      "relevance_score": 0.85,
+      "quality_score": 0.95,
+      "combined_score": 0.89,
+      "content_hash": "sha256:7c51a5136d41b7e7",
+      "summary": "Irodori-TTSとmio-tts-cppの日本語TTS性能を比較。絵文字による感情表現指定の有効性と制限事項を検証。",
+      "extracted_knowhow": [
+        {
+          "type": "emoji_technique",
+          "finding": "Irodori-TTSは絵文字で感情を表現できるが、複数の絵文字連続（👂😮‍💨👂😮‍💨）による囁き声指定は困難",
+          "params": {
+            "system": "Irodori-TTS",
+            "emotion_marker": "emoji",
+            "limitation": "compound_emoji_sequences"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "caption_design",
+          "finding": "全角「？」使用時にmio-tts-cppで不自然な音声生成が発生。半角「?」への変換で改善確認",
+          "params": {
+            "system": "mio-tts-cpp",
+            "problematic_character": "fullwidth_question_mark",
+            "solution": "halfwidth_conversion"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "voice_quality",
+          "finding": "mio-tts-cppは感情表現の自動品質が高く生成速度も優秀だが、感情指定オプションなし",
+          "params": {
+            "system": "mio-tts-cpp",
+            "strength": "generation_speed",
+            "limitation": "no_emotion_control"
+          },
+          "confidence": "high",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2026-03-22",
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260421_013",
+      "url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v2/blob/main/EMOJI_ANNOTATIONS.md",
+      "title": "EMOJI_ANNOTATIONS.md - Irodori-TTS-500M-v2 Emoji Control Guide",
+      "source_type": "huggingface",
+      "discovered_date": "2026-04-21",
+      "fetch_date": "2026-04-21",
+      "categories": [
+        "emoji_technique",
+        "voice_quality",
+        "caption_design"
+      ],
+      "relevance_score": 0.8,
+      "quality_score": 0.65,
+      "combined_score": 0.74,
+      "content_hash": "sha256:bc59757c6803a70b",
+      "summary": "Irodori-TTS-500M-v2では33種類の絵文字で音声の感情表現、話し方、音響効果を制御できます。同じ絵文字の複数使用（スタッキング）により効果を強調可能。",
+      "extracted_knowhow": [
+        {
+          "type": "emoji_technique",
+          "finding": "33種類の絵文字により音響効果と感情表現を制御。各絵文字が特定の音声特性（囁き、呼吸音、喘ぎ、泣き声など）を生成",
+          "params": {
+            "emoji_count": 33,
+            "control_dimensions": [
+              "sound_effects",
+              "speaking_style",
+              "emotional_expression"
+            ],
+            "effectiveness": "imperfect but learnable"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "emoji_technique",
+          "finding": "同じ絵文字を複数回使用することで効果を強調・増幅できる（stackable emoji control）",
+          "params": {
+            "technique": "emoji_repetition",
+            "effect": "emphasis_amplification"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "voice_quality",
+          "finding": "話速制御: ⏩(高速)、🐢(低速)により合成音声のテンポを明確に変更可能",
+          "params": {
+            "fast_emoji": "⏩",
+            "slow_emoji": "🐢",
+            "characteristics": [
+              "rapid-fire speech",
+              "slow speech"
+            ]
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "voice_quality",
+          "finding": "音響環境の模擬: 📢(エコー/リバーブ)、📞(電話/スピーカー経由)により合成音声の音響特性を変更",
+          "params": {
+            "echo_reverb_emoji": "📢",
+            "phone_speaker_emoji": "📞",
+            "effect_type": "acoustic_environment"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "caption_design",
+          "finding": "生理音・音声特性制御: 👂(囁き)、😮‍💨(吐息)、⏸️(沈黙)、🥤(嚥下音)、🤧(咳)など細かい音響要素を個別制御",
+          "params": {
+            "whisper": "👂",
+            "breath": "😮‍💨",
+            "pause": "⏸️",
+            "swallow": "🥤",
+            "cough": "🤧"
+          },
+          "confidence": "high",
+          "actionable": true
+        }
+      ],
+      "publish_date": null,
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260421_014",
+      "url": "https://huggingface.co/emoji-tts/emoji-tts",
+      "title": "Emoji-TTS Model (Chatterbox-based) · Hugging Face",
+      "source_type": "huggingface",
+      "discovered_date": "2026-04-21",
+      "fetch_date": "2026-04-21",
+      "categories": [
+        "emoji_technique",
+        "training_tips"
+      ],
+      "relevance_score": 0.35,
+      "quality_score": 0.65,
+      "combined_score": 0.47,
+      "content_hash": "sha256:226145ed972c4c6c",
+      "summary": "Emoji-TTS is an inference-ready checkpoint based on Chatterbox Turbo featuring emoji-conditioned control via a separate adapter module.",
+      "extracted_knowhow": [
+        {
+          "type": "emoji_technique",
+          "finding": "Emoji control is implemented via a separate adapter module (emoji_adapter.safetensors) with emoji_adapter_config.json and emoji_vocab.json configuration files",
+          "params": {
+            "core_weights": [
+              "t3_turbo_v1.safetensors",
+              "s3gen.safetensors",
+              "s3gen_meanflow.safetensors",
+              "ve.safetensors"
+            ],
+            "emoji_module": "emoji_adapter.safetensors",
+            "emoji_config": "emoji_adapter_config.json",
+            "emoji_vocab": "emoji_vocab.json"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "training_tips",
+          "finding": "Emoji-TTS uses a modular architecture with separate adapter for emoji conditioning based on Chatterbox Turbo, enabling flexible emoji-based control while maintaining core generation quality",
+          "params": {
+            "base_model": "Chatterbox Turbo",
+            "control_type": "emoji-conditioned",
+            "architecture": "adapter-based"
+          },
+          "confidence": "high",
+          "actionable": true
+        }
+      ],
+      "publish_date": null,
+      "excluded": true,
+      "exclusion_reason": "combined_score 0.47 < 0.5"
+    },
+    {
+      "id": "art_20260423_015",
+      "url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v2-VoiceDesign",
+      "title": "Aratako/Irodori-TTS-500M-v2-VoiceDesign · Hugging Face",
+      "source_type": "huggingface",
+      "discovered_date": "2026-04-23",
+      "fetch_date": "2026-04-23",
+      "categories": [
+        "Voice Design",
+        "Caption Engineering",
+        "Emoji Control",
+        "Architecture"
+      ],
+      "relevance_score": 0.8,
+      "quality_score": 0.65,
+      "combined_score": 0.74,
+      "content_hash": "sha256:b2ee2224d4406fd9",
+      "summary": "キャプション条件付けによる音声設計とEmoji制御を備えた日本語TTSモデル。参照音声不要でテキスト説明のみで声質・感情・話し方を制御可能。",
+      "extracted_knowhow": [
+        {
+          "technique": "キャプション詳細記述",
+          "description": "性別、年代、声の高さ、感情状態、話し方を明確に記載",
+          "example": "低い声の女性が、苛立ちを隠せない様子で焦って話している。クリアな音質",
+          "actionable": true
+        },
+        {
+          "technique": "絵文字複数組み合わせ",
+          "description": "複数絵文字で感情の重ね合わせ：😠+😒+😠で怒り強調",
+          "actionable": true
+        },
+        {
+          "technique": "漢字→ひらがな変換",
+          "description": "複雑な漢字は事前にひらがな/カタカナに変換することで読み上げ精度向上",
+          "actionable": true
+        },
+        {
+          "technique": "キャプション単純化",
+          "description": "シンプルな説明の方が高精度。矛盾・複雑な説明は音声生成が不安定になる",
+          "actionable": true
+        },
+        {
+          "technique": "Emoji+Caption組み合わせ",
+          "description": "キャプションで基本声質を設計し、絵文字で特定フレーズの感情を細調整",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2026-01-01",
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260423_016",
+      "url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v2",
+      "title": "Aratako/Irodori-TTS-500M-v2 · Hugging Face",
+      "source_type": "huggingface",
+      "discovered_date": "2026-04-23",
+      "fetch_date": "2026-04-23",
+      "categories": [
+        "Architecture",
+        "Emoji Control",
+        "Voice Cloning",
+        "Training"
+      ],
+      "relevance_score": 0.6,
+      "quality_score": 0.65,
+      "combined_score": 0.62,
+      "content_hash": "sha256:104d6f089069d0cb",
+      "summary": "日本語専用のRF-DiTベースTTSモデルv2。絵文字スタイル制御、ゼロショット音声クローニング、48kHz高品質音声生成が特徴。学習ステップ2.5倍増加で品質向上。",
+      "extracted_knowhow": [
+        {
+          "technique": "絵文字アノテーション制御",
+          "description": "😭泣き声、🤧風邪声、👂😮‍💨親密ボイスなど特定絵文字で音声効果制御",
+          "actionable": true
+        },
+        {
+          "technique": "v2学習改善",
+          "description": "v2で学習ステップを2.5倍に増加させ収束・安定性向上",
+          "params": {
+            "training_steps_multiplier": 2.5
+          },
+          "actionable": true
+        },
+        {
+          "technique": "VAEコーデック",
+          "description": "Semantic-DACVAE-Japanese-32dim使用、v2で高品質日本語音声生成を実現",
+          "params": {
+            "vae_dim": 32,
+            "sample_rate": "48kHz"
+          },
+          "actionable": true
+        }
+      ],
+      "publish_date": "2026-01-01",
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260423_017",
+      "url": "https://note.com/kazu_t/n/nbdd0ee937600",
+      "title": "テキスト指示だけで声を作れる日本語TTS「Irodori-TTS VoiceDesign」をMacで試した",
+      "source_type": "blog",
+      "discovered_date": "2026-04-23",
+      "fetch_date": "2026-04-23",
+      "categories": [
+        "Caption Engineering",
+        "Voice Design",
+        "Emoji Control",
+        "Deployment"
+      ],
+      "relevance_score": 0.45,
+      "quality_score": 0.5,
+      "combined_score": 0.47,
+      "content_hash": "sha256:23b7f00b84a46bb2",
+      "summary": "Irodori-TTS VoiceDesignのMac実践レポート。キャプションベースの声設計テクニックと絵文字埋め込みによる感情制御の実例を紹介。",
+      "extracted_knowhow": [
+        {
+          "technique": "キャプション構成パターン",
+          "description": "声質+感情状態+話し方+音質の組み合わせ",
+          "example": "落ち着いた女性の声で、やわらかく自然に読み上げてください",
+          "actionable": true
+        },
+        {
+          "technique": "矛盾指示の回避",
+          "description": "怒りながら穏やかに のような矛盾した指示は避ける。一貫したキャプションで安定性向上",
+          "actionable": true
+        },
+        {
+          "technique": "漢字前処理",
+          "description": "複雑な漢字はひらがなやカタカナに事前変換",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2026-04-02",
+      "excluded": true,
+      "exclusion_reason": "combined_score 0.47 < 0.5"
+    },
+    {
+      "id": "art_20260423_018",
+      "url": "https://note.com/seal309midorin/n/nb3fa17b52deb",
+      "title": "【多様な感情表現】Irodori TTSサンプル＆導入解説",
+      "source_type": "blog",
+      "discovered_date": "2026-04-23",
+      "fetch_date": "2026-04-23",
+      "categories": [
+        "CFG Tuning",
+        "Inference Parameters",
+        "Emoji Control",
+        "Voice Cloning"
+      ],
+      "relevance_score": 0.8,
+      "quality_score": 0.8,
+      "combined_score": 0.8,
+      "content_hash": "sha256:8f132ebb4933fbb0",
+      "summary": "Irodori TTS v2の感情表現サンプルと導入解説。CFGパラメータの具体値（cfg-scale-text=3.0, cfg-scale-speaker=5.0, num-steps=40）を含む。",
+      "extracted_knowhow": [
+        {
+          "technique": "CFGスケール設定",
+          "description": "テキストCFGと話者CFGの基本値",
+          "params": {
+            "cfg_scale_text": 3.0,
+            "cfg_scale_speaker": 5.0,
+            "num_steps": 40
+          },
+          "actionable": true
+        },
+        {
+          "technique": "CFG適用ウィンドウ",
+          "description": "拡散タイムステップの範囲指定",
+          "params": {
+            "cfg_min_t": 0.5,
+            "cfg_max_t": 1.0
+          },
+          "actionable": true
+        },
+        {
+          "technique": "参照音声正規化",
+          "description": "DACVAE エンコード前の音量ターゲット",
+          "params": {
+            "ref_normalize_db": -16.0,
+            "max_ref_seconds": 30.0
+          },
+          "actionable": true
+        },
+        {
+          "technique": "テールトリミング",
+          "description": "自動無音除去の閾値設定",
+          "params": {
+            "tail_std_threshold": 0.05,
+            "tail_mean_threshold": 0.1
+          },
+          "actionable": true
+        },
+        {
+          "technique": "混合精度設定",
+          "description": "モデルにbf16、コーデックにfp32を使用してメモリ削減と品質保持を両立",
+          "params": {
+            "model_precision": "bf16",
+            "codec_precision": "fp32"
+          },
+          "actionable": true
+        },
+        {
+          "technique": "絵文字感情制御",
+          "description": "👂ウィスパー、😮‍💨呼吸、⏸️ポーズ、🤭忍び笑い、😏からかいなど",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2026-04-21",
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260423_019",
+      "url": "https://github.com/iron-mukakin/Emoji-TTS",
+      "title": "GitHub - iron-mukakin/Emoji-TTS: Irodori-TTSのフォーク",
+      "source_type": "github",
+      "discovered_date": "2026-04-23",
+      "fetch_date": "2026-04-23",
+      "categories": [
+        "CFG Tuning",
+        "LoRA Fine-tuning",
+        "Inference Parameters",
+        "Emoji Control",
+        "Style Presets"
+      ],
+      "relevance_score": 0.6,
+      "quality_score": 0.65,
+      "combined_score": 0.62,
+      "content_hash": "sha256:450edee787eb6eb9",
+      "summary": "Emoji-TTS（Irodori-TTSフォーク）のREADME。詳細なCFGパラメータテーブル、LoRAスケール調整、感情スタイルプリセット、マルチ候補生成（最大8候補）等を含む。",
+      "extracted_knowhow": [
+        {
+          "technique": "感情スタイルプリセット",
+          "description": "Normal/Strong/Calm/Bright/WhisperボタンでCFGとスタイルパラメータを自動設定",
+          "actionable": true
+        },
+        {
+          "technique": "CFG詳細パラメータ",
+          "description": "包括的なCFGチューニング",
+          "params": {
+            "cfg_scale_text": 3.0,
+            "cfg_scale_speaker": 5.0,
+            "guidance_mode": "independent",
+            "cfg_min_t": 0.5,
+            "cfg_max_t": 1.0
+          },
+          "actionable": true
+        },
+        {
+          "technique": "LoRAスケール調整",
+          "description": "LoRAアダプターの注入強度を0.0〜2.0で調整。0.0=ベースモデルのみ、>1.0=強調",
+          "params": {
+            "lora_scale_range": "0.0-2.0",
+            "lora_scale_default": 1.0
+          },
+          "actionable": true
+        },
+        {
+          "technique": "マルチ候補生成",
+          "description": "1回の実行で最大8つの音声候補を生成して最良を選択",
+          "params": {
+            "max_candidates": 8
+          },
+          "actionable": true
+        },
+        {
+          "technique": "トランケーション係数",
+          "description": "表現範囲制御のための潜在トランケーション（truncation-factor）",
+          "actionable": true
+        },
+        {
+          "technique": "話者KVアテンションスケール",
+          "description": "話者KVアテンションの強度・適用タイムステップ・レイヤー数を制御",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2025-01-01",
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260423_020",
+      "url": "https://github.com/Aratako/Irodori-TTS",
+      "title": "GitHub - Aratako/Irodori-TTS: A Flow Matching-based TTS Model",
+      "source_type": "github",
+      "discovered_date": "2026-04-23",
+      "fetch_date": "2026-04-23",
+      "categories": [
+        "Architecture",
+        "Inference Parameters",
+        "LoRA Fine-tuning",
+        "Training"
+      ],
+      "relevance_score": 0.65,
+      "quality_score": 0.65,
+      "combined_score": 0.65,
+      "content_hash": "sha256:ccb1fd595a87c3b8",
+      "summary": "Irodori-TTS公式GitHubリポジトリ。v2コードベースの詳細なパラメータテーブル、PEFT LoRAファインチューニング、Multi-GPU分散学習の実装情報を含む。",
+      "extracted_knowhow": [
+        {
+          "technique": "推論パラメータ一覧",
+          "description": "主要推論パラメータのデフォルト値",
+          "params": {
+            "num_steps": 40,
+            "cfg_scale_text": 3.0,
+            "cfg_scale_speaker": 5.0,
+            "guidance_mode": "independent",
+            "cfg_min_t": 0.5,
+            "cfg_max_t": 1.0
+          },
+          "actionable": true
+        },
+        {
+          "technique": "VoiceDesignキャプション",
+          "description": "キャプション引数でスタイル指定",
+          "example": "落ち着いた、近い距離感の女性話者",
+          "actionable": true
+        },
+        {
+          "technique": "PEFT LoRAファインチューニング",
+          "description": "PEFT/LoRAによるパラメータ効率的なアダプター学習。リリース済みチェックポイントにも適用可能",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2025-01-01",
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260423_021",
+      "url": "https://discuss.huggingface.co/t/speech-synthesis-model-with-styles-like-emoticons-or-emphasis/132891",
+      "title": "Speech synthesis model with Styles Like Emoticons or emphasis - HF Forums",
+      "source_type": "huggingface",
+      "discovered_date": "2026-04-23",
+      "fetch_date": "2026-04-23",
+      "categories": [
+        "Emotion Control",
+        "Speaker Cloning",
+        "Multi-model Techniques"
+      ],
+      "relevance_score": 0.15,
+      "quality_score": 0.4,
+      "combined_score": 0.25,
+      "content_hash": "sha256:99fe87a9e073e7e6",
+      "summary": "絵文字スタイル制御のTTSについてのHuggingFace議論。XTTS-v2による感情音声のマルチサンプル合成とBarkの特殊トークン手法を比較。",
+      "extracted_knowhow": [
+        {
+          "technique": "マルチサンプル感情合成",
+          "description": "異なる感情の参照音声ファイルでセグメントごとに生成し結合",
+          "actionable": true
+        },
+        {
+          "technique": "Bark特殊トークン",
+          "description": "[laughter][sighs][gasps]等のトークン、CAPITALIZATION強調、—や...でためらい表現",
+          "actionable": true
+        },
+        {
+          "technique": "XTTS-v2話者適応",
+          "description": "数秒の参照音声でEmotion/style transfer。speaker_wav引数で参照音声を指定",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2024-12-25",
+      "excluded": true,
+      "exclusion_reason": "combined_score 0.25 < 0.5"
+    },
+    {
+      "id": "art_20260423_022",
+      "url": "https://zenn.dev/megyo9/articles/b273c4c85ad451",
+      "title": "ローカルで動かせる日本語TTSをいろいろ試す（その２）",
+      "source_type": "blog",
+      "discovered_date": "2026-04-23",
+      "fetch_date": "2026-04-23",
+      "categories": [
+        "TTS Comparison",
+        "Japanese TTS",
+        "Voice Cloning"
+      ],
+      "relevance_score": 0.2,
+      "quality_score": 0.6,
+      "combined_score": 0.36,
+      "content_hash": "sha256:4caadc9085130e25",
+      "summary": "日本語TTS比較評価記事（Style-Bert-VITS2、Fish Speech、Tsukasa_Speech）。感情別モデル切り替え、参照音源指定、英語混在対応等の実践的ノウハウ。",
+      "extracted_knowhow": [
+        {
+          "technique": "感情別モデル切り替え",
+          "description": "Style-Bert-VITS2では感情ごとに音声モデルを選択。jvnv-F1-jpで複数感情対応",
+          "actionable": true
+        },
+        {
+          "technique": "参照音源の固定化",
+          "description": "Fish Speechはランダム生成音声から最適な1個をリファレンスとして固定し一貫性確保",
+          "actionable": true
+        },
+        {
+          "technique": "英語混在テキスト対応",
+          "description": "Fish Speechが英語混在で最良。他ツールではアルファベット誤読（MV→メガボルト）が発生",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2025-05-03",
+      "excluded": true,
+      "exclusion_reason": "combined_score 0.36 < 0.5"
+    },
+    {
+      "id": "art_20260425_023",
+      "url": "https://note.com/gensnotes/n/na48b222358c4",
+      "title": "「声をテキストで作る時代」が来た——Irodori-TTS（彩りTTS）がヤバすぎる件",
+      "source_type": "blog",
+      "discovered_date": "2026-04-25",
+      "fetch_date": "2026-04-25",
+      "categories": [
+        "caption_design",
+        "emoji_technique",
+        "voice_quality"
+      ],
+      "relevance_score": 0.85,
+      "quality_score": 0.95,
+      "combined_score": 0.89,
+      "content_hash": "sha256:e4fb3d5fa86588d4",
+      "summary": "Irodori-TTSは文章のみで声をデザイン可能な日本語特化型TTS。絵文字による感情制御と48kHzの高音質出力が特徴。",
+      "extracted_knowhow": [
+        {
+          "type": "caption_technique",
+          "finding": "漢字読み方の精度向上のため、ひらがな入力を推奨。確実な発音制御が必要な箇所では特に有効。",
+          "params": {
+            "input_format": "hiragana",
+            "use_case": "accurate_pronunciation"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "emoji_technique",
+          "finding": "絵文字を読み上げテキストに挿入することで感情と効果音を制御。例：😊で笑い声、🔥で苛立った感じ。",
+          "params": {
+            "emoji_smile": "laugh_effect",
+            "emoji_fire": "angry_tone"
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "voice_quality",
+          "finding": "48kHz出力品質でCD（44.1kHz）を上回る解像度。日本語イントネーション精度が優秀。",
+          "params": {
+            "sample_rate": 48000,
+            "ref_standard": 44100
+          },
+          "confidence": "high",
+          "actionable": true
+        },
+        {
+          "type": "caption_technique",
+          "finding": "テキストのみで声色を指定可能。例：「落ち着いた30代女性の声で、低めに、囁く雰囲気」で音声生成。参照音声不要。",
+          "params": {
+            "age": 30,
+            "gender": "female",
+            "tone": "whisper"
+          },
+          "confidence": "high",
+          "actionable": true
+        }
+      ],
+      "publish_date": "2026-04-17",
+      "excluded": false,
+      "exclusion_reason": null
+    }
+  ]
+}
