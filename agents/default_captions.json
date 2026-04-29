@@ -193,6 +193,28 @@
       "num_steps": 40,
       "lora_path": "D:/irodori/emoji/lora/voice_kawashima_rino_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
+    },
+    "奈々_標準": {
+      "_comment": "voice_aikawa_nana_v1 LoRA - 落ち着いた大人のお姉さん（BGM除外学習）",
+      "caption": "落ち着いた大人の女性が、穏やかでしっとりとした声で話している。",
+      "cfg_text": 5.0,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "joint",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/voice_aikawa_nana_v1/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
+    },
+    "マリア_標準": {
+      "_comment": "maria_v1 LoRA - 優しい大人のお姉さん（1000steps）",
+      "caption": "優しく穏やかな大人の女性が、温かみのある柔らかい声で話している。",
+      "cfg_text": 5.0,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "joint",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/maria_v1/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
     }
   }
 }
