@@ -215,6 +215,83 @@
       "num_steps": 40,
       "lora_path": "D:/irodori/emoji/lora/maria_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
+    },
+    "りんご_標準": {
+      "_comment": "aoba_ringo_v1 LoRA - 甘い声の女の子",
+      "caption": "甘く可愛らしい女の子が、明るく元気な声で話している。",
+      "cfg_text": 5.0,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "alternating",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/aoba_ringo_v1/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
+    },
+    "ゆか_標準": {
+      "_comment": "kanamatsu_yuka_v1 LoRA - セクシーな声の大人のお姉さん",
+      "caption": "セクシーで色っぽい大人の女性が、低めの艶のある声で余裕を持って話している。",
+      "cfg_text": 5.0,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "alternating",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/kanamatsu_yuka_v1/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
+    },
+    "まお_標準": {
+      "_comment": "mao_v1 LoRA - 優しい大人のお姉さん",
+      "caption": "優しく穏やかな大人の女性が、温かみのある柔らかい声で話している。",
+      "cfg_text": 5.0,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "joint",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/mao_v1/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
+    },
+    "あむ_標準": {
+      "_comment": "mochiri_amu_v1 LoRA - 甘ったるい声の女の子",
+      "caption": "甘えるような甘ったるい声の女の子が、とろけるような口調で話している。",
+      "cfg_text": 5.0,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "alternating",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/mochiri_amu_v1/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
+    },
+    "みかん_標準": {
+      "_comment": "nonaka_mikan_v1 LoRA - 優しい声の大人のお姉さん",
+      "caption": "優しく穏やかな大人の女性が、柔らかく親しみやすい声で話している。",
+      "cfg_text": 5.0,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "joint",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/nonaka_mikan_v1/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
+    },
+    "ぽぷら_標準": {
+      "_comment": "sawano_popura_v1 LoRA - 甘くてセクシーな大人のお姉さん",
+      "caption": "甘くセクシーな大人の女性が、とろけるような艶っぽい声で話している。",
+      "cfg_text": 5.0,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "alternating",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/sawano_popura_v1/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
+    },
+    "さゆみ_標準": {
+      "_comment": "suzushiro_sayumi_v1 LoRA - きれいな声のお姉さん",
+      "caption": "清潔感のある凛とした女性が、澄んだ美しい声で丁寧に話している。",
+      "cfg_text": 5.0,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "joint",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/suzushiro_sayumi_v1/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
     }
   }
 }
