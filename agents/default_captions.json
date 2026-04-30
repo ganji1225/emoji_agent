@@ -292,6 +292,61 @@
       "num_steps": 40,
       "lora_path": "D:/irodori/emoji/lora/suzushiro_sayumi_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
+    },
+    "fai_標準": {
+      "_comment": "f_ai_v1 LoRA - 気だるげなお姉さん（3000steps）",
+      "caption": "気だるげな女性が、低くかすれた色気のある声でゆったりと話している。",
+      "cfg_text": 5.0,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "joint",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/f_ai_v1/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
+    },
+    "ゆうこ_標準": {
+      "_comment": "minaguchi_yuko_v1 LoRA - 優しい声の大人のお姉さん（3000steps）",
+      "caption": "優しく穏やかな大人の女性が、柔らかく親しみやすい声で話している。",
+      "cfg_text": 5.0,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "joint",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/minaguchi_yuko_v1/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
+    },
+    "かおり_標準": {
+      "_comment": "mizuhashi_kaori_v1 LoRA - 低い声の大人のお姉さん（2000steps）",
+      "caption": "低く落ち着いた声の大人の女性が、余裕を持って静かに話している。",
+      "cfg_text": 5.0,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "joint",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/mizuhashi_kaori_v1/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
+    },
+    "まみこ_標準": {
+      "_comment": "noto_mamiko_v1 LoRA - 優しい声の大人のお姉さん（3000steps）",
+      "caption": "優しく穏やかな大人の女性が、温かみのある柔らかい声で話している。",
+      "cfg_text": 5.0,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "joint",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/noto_mamiko_v1/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
+    },
+    "あけの_標準": {
+      "_comment": "watanabe_akeno_v1 LoRA - 低い声の大人のお姉さん（2000steps）",
+      "caption": "低く落ち着いた声の大人の女性が、余裕を持って静かに話している。",
+      "cfg_text": 5.0,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "joint",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/watanabe_akeno_v1/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
     }
   }
 }
