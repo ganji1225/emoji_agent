@@ -78,10 +78,14 @@ def record_project(project_name: str, model: str = "voicedesign", dry_run: bool 
         text = row["text_with_emoji"]
         caption = row.get("caption", "")
         num_candidates = int(row.get("num_candidates") or 3)
-        num_steps = int(row.get("num_steps") or 30)
+        num_steps = int(row.get("num_steps") or 40)
         cfg_text = float(row.get("cfg_text") or 3.0)
         cfg_caption = float(row.get("cfg_caption") or 3.0)
         cfg_speaker = float(row.get("cfg_speaker") or 5.0)
+        cfg_guidance_mode = (row.get("cfg_guidance_mode") or "alternating").strip()
+        lora_path = (row.get("lora_path") or "").strip()
+        lora_scale_raw = (row.get("lora_scale") or "").strip()
+        lora_scale = float(lora_scale_raw) if lora_scale_raw else 1.0
         seed = row.get("seed", "").strip()
 
         # 出力ディレクトリ
@@ -102,6 +106,7 @@ def record_project(project_name: str, model: str = "voicedesign", dry_run: bool 
             "--num-candidates", str(num_candidates),
             "--cfg-scale-text", str(cfg_text),
             "--cfg-scale-speaker", str(cfg_speaker),
+            "--cfg-guidance-mode", cfg_guidance_mode,
             "--model-precision", "bf16",
             "--output-wav", output_wav,
             "--no-show-timings",
@@ -115,6 +120,11 @@ def record_project(project_name: str, model: str = "voicedesign", dry_run: bool 
         # seed指定
         if seed:
             cmd.extend(["--seed", seed])
+
+        # LoRA 指定（lora_path が設定されている行のみ）
+        if lora_path:
+            cmd.extend(["--lora-path", lora_path])
+            cmd.extend(["--lora-scale", str(lora_scale)])
 
         # 実行（リトライ付き）
         success = False

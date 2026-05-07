@@ -1,0 +1,750 @@
+{
+  "s1_mid/line_001": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_mid/line_002": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_mid/line_003": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_mid/line_004": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_mid/line_005": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_mid/line_006": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_mid/line_007": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_mid/line_008": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_mid/line_009": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_mid/line_010": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_mid/line_011": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_mid/line_012": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_mid/line_013": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_mid/line_014": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_mid/line_015": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_mid/line_016": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss/line_001": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss/line_002": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss/line_003": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss/line_004": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss/line_005": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss/line_006": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss/line_007": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss/line_008": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss/line_009": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss/line_010": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss/line_011": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss/line_012": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss/line_013": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss/line_014": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss/line_015": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss/line_016": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss/line_017": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_mid/line_001": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_mid/line_002": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_mid/line_003": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_mid/line_004": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_mid/line_005": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_mid/line_006": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_mid/line_007": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_mid/line_008": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_mid/line_009": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_mid/line_010": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_mid/line_011": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_mid/line_012": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_mid/line_013": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_mid/line_014": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_boss/line_001": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_boss/line_002": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_boss/line_003": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_boss/line_004": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_boss/line_005": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_boss/line_006": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_boss/line_007": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_boss/line_008": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_boss/line_009": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_boss/line_010": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_boss/line_011": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_boss/line_012": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_mid/line_001": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_mid/line_002": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_mid/line_003": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_mid/line_004": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_mid/line_005": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_mid/line_006": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_mid/line_007": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_mid/line_008": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_mid/line_009": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_mid/line_010": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_mid/line_011": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss/line_001": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss/line_002": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss/line_003": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss/line_004": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss/line_005": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss/line_006": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss/line_007": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss/line_008": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss/line_009": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss/line_010": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss/line_011": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss/line_012": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss/line_013": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_ev1/line_001": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_ev1/line_002": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_ev1/line_003": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_ev1/line_004": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_ev1/line_005": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_ev1/line_006": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_ev2/line_001": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_ev2/line_002": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_ev2/line_003": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_ev2/line_004": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_ev2/line_005": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_ev2/line_006": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss_ev1/line_001": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss_ev1/line_002": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss_ev1/line_003": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss_ev1/line_004": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss_ev1/line_005": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss_ev1/line_006": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss_ev2/line_001": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss_ev2/line_002": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss_ev2/line_003": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss_ev2/line_004": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s1_boss_ev2/line_005": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_ev1/line_001": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_ev1/line_002": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_ev1/line_003": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_ev1/line_004": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_ev1/line_005": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_ev1/line_006": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_ev2/line_001": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_ev2/line_002": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_ev2/line_003": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_ev2/line_004": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_ev2/line_005": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_ev3/line_001": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_ev3/line_002": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_ev3/line_003": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_ev3/line_004": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s2_ev3/line_005": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_ev1/line_001": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_ev1/line_002": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_ev1/line_003": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_ev1/line_004": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_ev1/line_005": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_ev2/line_001": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_ev2/line_002": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_ev2/line_003": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_ev2/line_004": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_ev2/line_005": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_ev3/line_001": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_ev3/line_002": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_ev3/line_003": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_ev3/line_004": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_ev3/line_005": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_ev3/line_006": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss_ev1/line_001": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss_ev1/line_002": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss_ev1/line_003": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss_ev1/line_004": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss_ev1/line_005": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss_ev1/line_006": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss_ev2/line_001": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss_ev2/line_002": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss_ev2/line_003": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss_ev2/line_004": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss_ev2/line_005": {
+    "status": "done",
+    "approved_candidate": ""
+  },
+  "s3_boss_ev2/line_006": {
+    "status": "approved",
+    "approved_candidate": "1"
+  },
+  "s3_boss_ev2/line_007": {
+    "status": "approved",
+    "approved_candidate": "1"
+  },
+  "s1_ev3/line_001": {
+    "status": "approved",
+    "approved_candidate": "2"
+  },
+  "s1_ev3/line_002": {
+    "status": "approved",
+    "approved_candidate": "1"
+  },
+  "s1_ev3/line_003": {
+    "status": "approved",
+    "approved_candidate": "2"
+  },
+  "s1_ev3/line_004": {
+    "status": "approved",
+    "approved_candidate": "2"
+  },
+  "s1_ev3/line_005": {
+    "status": "approved",
+    "approved_candidate": "2"
+  },
+  "s1_ev3/line_006": {
+    "status": "approved",
+    "approved_candidate": "3"
+  },
+  "s1_ev3/line_007": {
+    "status": "approved",
+    "approved_candidate": "3"
+  },
+  "s1_ev3/line_008": {
+    "status": "approved",
+    "approved_candidate": "2"
+  },
+  "s1_ev3/line_009": {
+    "status": "approved",
+    "approved_candidate": "3"
+  },
+  "s1_ev3/line_010": {
+    "status": "approved",
+    "approved_candidate": "3"
+  },
+  "s1_ev3/line_011": {
+    "status": "approved",
+    "approved_candidate": "2"
+  },
+  "s2_boss_ev1/line_001": {
+    "status": "approved",
+    "approved_candidate": "3"
+  },
+  "s2_boss_ev1/line_002": {
+    "status": "approved",
+    "approved_candidate": "1"
+  },
+  "s2_boss_ev1/line_003": {
+    "status": "approved",
+    "approved_candidate": "2"
+  },
+  "s2_boss_ev1/line_004": {
+    "status": "approved",
+    "approved_candidate": "2"
+  },
+  "s2_boss_ev1/line_005": {
+    "status": "approved",
+    "approved_candidate": "2"
+  },
+  "s2_boss_ev1/line_006": {
+    "status": "approved",
+    "approved_candidate": "3"
+  },
+  "s2_boss_ev1/line_007": {
+    "status": "approved",
+    "approved_candidate": "3"
+  },
+  "s2_boss_ev1/line_008": {
+    "status": "approved",
+    "approved_candidate": "3"
+  },
+  "s2_boss_ev2/line_001": {
+    "status": "approved",
+    "approved_candidate": "2"
+  },
+  "s2_boss_ev2/line_002": {
+    "status": "approved",
+    "approved_candidate": "3"
+  },
+  "s2_boss_ev2/line_003": {
+    "status": "approved",
+    "approved_candidate": "3"
+  },
+  "s2_boss_ev2/line_004": {
+    "status": "approved",
+    "approved_candidate": "1"
+  },
+  "s2_boss_ev2/line_005": {
+    "status": "approved",
+    "approved_candidate": "2"
+  },
+  "s2_boss_ev2/line_006": {
+    "status": "approved",
+    "approved_candidate": "3"
+  },
+  "s2_boss_ev2/line_007": {
+    "status": "approved",
+    "approved_candidate": "3"
+  },
+  "s2_boss_ev2/line_008": {
+    "status": "approved",
+    "approved_candidate": "1"
+  },
+  "ending_clear_2/line_001": {
+    "status": "approved",
+    "approved_candidate": "1"
+  },
+  "ending_clear_2/line_002": {
+    "status": "approved",
+    "approved_candidate": "3"
+  },
+  "ending_clear_2/line_003": {
+    "status": "approved",
+    "approved_candidate": "2"
+  },
+  "ending_clear_2/line_004": {
+    "status": "approved",
+    "approved_candidate": "3"
+  },
+  "ending_clear_2/line_005": {
+    "status": "approved",
+    "approved_candidate": "2"
+  },
+  "ending_clear_2_b/line_001": {
+    "status": "approved",
+    "approved_candidate": "2"
+  },
+  "ending_clear_2_b/line_002": {
+    "status": "approved",
+    "approved_candidate": "3"
+  },
+  "ending_clear_2_b/line_003": {
+    "status": "approved",
+    "approved_candidate": "3"
+  },
+  "ending_clear_2_b/line_004": {
+    "status": "approved",
+    "approved_candidate": "2"
+  }
+}

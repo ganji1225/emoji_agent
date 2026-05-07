@@ -53,7 +53,7 @@ def init_project(project_name: str) -> Path:
             "profiles": {
                 "日常会話": {
                     "caption": "若い女性が、リラックスした自然な口調で、明るく話している。",
-                    "cfg_text": 3.0, "cfg_caption": 3.0, "cfg_speaker": 5.0, "num_steps": 30
+                    "cfg_text": 3.0, "cfg_caption": 3.0, "cfg_speaker": 5.0, "num_steps": 40
                 }
             },
             "scene_mapping": {}

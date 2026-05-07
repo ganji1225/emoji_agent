@@ -20,6 +20,42 @@ LINE_SILENCE_SEC = 0.8     # セリフ間の無音（秒）
 SCENE_SILENCE_SEC = 2.0    # シーン間の無音（秒）
 SAMPLE_RATE = 48000         # 出力サンプルレート
 
+# Trailing silence trimming（参考: Emoji-TTS README, 2026-04-21）
+TRIM_TAIL_THRESHOLD = 0.005  # RMSがこれ以下を無音とみなす
+TRIM_TAIL_FRAME_MS = 20      # 無音判定の窓サイズ（ミリ秒）
+TRIM_TAIL_KEEP_SEC = 0.10    # 末尾に残す自然な余韻（秒）
+
+
+def trim_trailing_silence(data: np.ndarray, sr: int,
+                          threshold: float = TRIM_TAIL_THRESHOLD,
+                          frame_ms: int = TRIM_TAIL_FRAME_MS,
+                          keep_sec: float = TRIM_TAIL_KEEP_SEC) -> np.ndarray:
+    """音声データの末尾無音をトリムする（flattening heuristic）
+
+    末尾から後ろに向かってRMSを計測し、threshold を超える地点までカット。
+    自然な余韻を残すため keep_sec 分の無音を末尾に残す。
+    """
+    if len(data) == 0:
+        return data
+
+    frame_size = max(1, int(sr * frame_ms / 1000))
+    # 末尾から逆向きに走査
+    last_voice_idx = 0
+    for i in range(len(data) - frame_size, 0, -frame_size):
+        frame = data[i:i + frame_size]
+        rms = float(np.sqrt(np.mean(frame ** 2)))
+        if rms > threshold:
+            last_voice_idx = i + frame_size
+            break
+
+    if last_voice_idx == 0:
+        return data  # 全部無音（異常）→ そのまま返す
+
+    # 余韻を確保
+    keep_samples = int(sr * keep_sec)
+    end_idx = min(len(data), last_voice_idx + keep_samples)
+    return data[:end_idx]
+
 
 def copy_approved(project_name: str, audio_subdir: str = "audio") -> int:
     """approved_candidate に基づいて候補を approved/ フォルダにコピーする"""
@@ -139,6 +175,8 @@ def concat_scenes(project_name: str, line_silence: float = LINE_SILENCE_SEC,
             data, sr = sf.read(str(wav_path))
             if len(data.shape) > 1:
                 data = data.mean(axis=1)
+            # 各セリフの末尾無音をトリム（自然な余韻だけ残す）
+            data = trim_trailing_silence(data, sr)
             scene_audio.append(data)
 
             # セリフ間無音（最後のセリフ以外）

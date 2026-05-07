@@ -54,7 +54,12 @@ def apply_captions(project_name: str) -> str:
             row["cfg_text"] = str(prof.get("cfg_text", 3.0))
             row["cfg_caption"] = str(prof.get("cfg_caption", 3.0))
             row["cfg_speaker"] = str(prof.get("cfg_speaker", 5.0))
-            row["num_steps"] = str(prof.get("num_steps", 30))
+            row["cfg_guidance_mode"] = prof.get("cfg_guidance_mode", "alternating")
+            row["num_steps"] = str(prof.get("num_steps", 40))
+            # LoRA はプロファイルで指定された場合のみ書き込む（指定なしは空のまま）
+            if "lora_path" in prof:
+                row["lora_path"] = prof.get("lora_path", "")
+                row["lora_scale"] = str(prof.get("lora_scale", 1.0)) if prof.get("lora_path") else ""
             updated_count += 1
         else:
             if scene_id not in unmapped_scenes:
@@ -94,7 +99,7 @@ def show_profiles(project_name: str):
         print(f"\n[{name}]")
         print(f"  caption: {prof['caption']}")
         print(f"  cfg: text={prof.get('cfg_text', 3.0)} caption={prof.get('cfg_caption', 3.0)} speaker={prof.get('cfg_speaker', 5.0)}")
-        print(f"  steps: {prof.get('num_steps', 30)}")
+        print(f"  steps: {prof.get('num_steps', 40)}")
 
     print(f"\n=== シーンマッピング ===")
     if mapping:

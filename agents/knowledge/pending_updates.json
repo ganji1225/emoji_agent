@@ -301,6 +301,363 @@
       "status": "rejected",
       "created": "2026-04-17",
       "reject_note": "不採用。Gradioは使用しない。recorder.pyによる独自バッチ処理で同等機能を実装済み"
+    },
+    {
+      "id": "upd_20260417_art_20260417_005b",
+      "target": "recorder.py",
+      "operation": "review_generation_technique",
+      "data": {
+        "finding": "複数回生成で当たり音声を引ける実用レベルの品質を実現。ガチャ要素あり（試行必要）。",
+        "params": {
+          "consistency": "ガチャ要素あり（試行必要）"
+        }
+      },
+      "source_article": "art_20260417_005",
+      "source_url": "https://note.com/aaafrog/n/n2021733405ad",
+      "confidence": "high",
+      "status": "rejected",
+      "created": "2026-04-17",
+      "reject_note": "既知・実装済み。num_candidates=3の複数候補生成で対応済み（recorder.py）。ガチャ要素はシステム設計に織り込み済み"
+    },
+    {
+      "id": "upd_20260422_listening_test_001",
+      "target": "script_processor.py + default_captions.json",
+      "operation": "emoji_cfg_tuning",
+      "data": {
+        "finding": "絵文字4+4構成 × CFG=6 の組み合わせで、感情表現を4+4レベルに維持しつつ声のかすれを抑制できる。3+3/CFG=7 比較: 感情表現↑・かすれ↓",
+        "params": {
+          "emoji_prefix": 4,
+          "emoji_suffix": 4,
+          "cfg_text": 6.0,
+          "cfg_caption": 6.0,
+          "previous_cfg": "絶頂・叫び=7.0 / 極限・崩壊=8.0",
+          "test_line": "hakuu_game_voices/s3_boss_ev2/line_006"
+        }
+      },
+      "source_article": "listening_test_20260422",
+      "source_url": null,
+      "confidence": "high",
+      "status": "applied",
+      "created": "2026-04-22",
+      "applied": "2026-04-22",
+      "apply_note": "build_sandwich()のextremeを4+4に変更。default_captions.jsonの絶頂・叫び(7→6)・極限・崩壊(8→6)を更新済み"
+    },
+    {
+      "id": "upd_20260417_art_20260417_006b",
+      "target": "system_knowledge",
+      "operation": "review_model_architecture",
+      "data": {
+        "finding": "V2モデルはコーデックを日本語専用版（Semantic-DACVAE-Japanese-32dim）に切り替え、学習ステップをV1比で2.5倍増加、データフィルタリングを厳格化",
+        "params": {
+          "codec_v2": "Semantic-DACVAE-Japanese-32dim",
+          "training_multiplier": 2.5
+        }
+      },
+      "source_article": "art_20260417_006",
+      "source_url": "https://note.com/jscdisk/n/n6352441b050f",
+      "confidence": "high",
+      "status": "noted",
+      "created": "2026-04-17",
+      "apply_note": "背景知識として記録。--codec-repo Aratako/Semantic-DACVAE-Japanese-32dim は既にrecorder.pyの収録CLIに組み込み済み。追加アクション不要"
+    },
+    {
+      "id": "upd_20260421_art_20260421_008",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "呼吸・息遣い系制御：👂(囁き)、😮‍💨(吐息)、🌬️(息切れ)、🥱(あくび)で息遣いの質感を変更可能",
+        "params": {
+          "whisper_emoji": "👂",
+          "breath_emoji": "😮‍💨",
+          "heavy_breathing_emoji": "🌬️",
+          "yawn_emoji": "🥱"
+        }
+      },
+      "source_article": "art_20260421_008",
+      "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M/blob/main/EMOJI_ANNOTATIONS.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-21"
+    },
+    {
+      "id": "upd_20260421_art_20260421_008",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "感情表現制御：😆(喜び)、😠(怒り)、😭(悲しみ)、😱(恐怖)、😊(楽しい)など多様な感情パターンに対応",
+        "params": {
+          "joy_emoji": "😆",
+          "anger_emoji": "😠",
+          "sadness_emoji": "😭",
+          "fear_emoji": "😱",
+          "cheerful_emoji": "😊"
+        }
+      },
+      "source_article": "art_20260421_008",
+      "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M/blob/main/EMOJI_ANNOTATIONS.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-21"
+    },
+    {
+      "id": "upd_20260421_art_20260421_008",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "話速制御：⏩(早口)、🐢(ゆっくり)で話速を調整。その他⏸️(沈黙/間)で強調効果を生成",
+        "params": {
+          "fast_speaking_emoji": "⏩",
+          "slow_speaking_emoji": "🐢",
+          "pause_emoji": "⏸️"
+        }
+      },
+      "source_article": "art_20260421_008",
+      "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M/blob/main/EMOJI_ANNOTATIONS.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-21"
+    },
+    {
+      "id": "upd_20260421_art_20260421_008",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "音声加工効果：📢(エコー・リバーブ)、📞(電話越し/スピーカー越し)で音声を空間的に加工可能",
+        "params": {
+          "echo_reverb_emoji": "📢",
+          "phone_speaker_emoji": "📞"
+        }
+      },
+      "source_article": "art_20260421_008",
+      "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M/blob/main/EMOJI_ANNOTATIONS.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-21"
+    },
+    {
+      "id": "upd_20260421_art_20260421_008",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "口腔音・咀嚼音：👅(舐める音/咀嚼)、💋(リップノイズ)、🥤(嚥下音)、🤧(咳/鼻すすり)で細かい音声テクスチャーを制御",
+        "params": {
+          "licking_chewing_emoji": "👅",
+          "lip_smack_emoji": "💋",
+          "swallow_emoji": "🥤",
+          "cough_emoji": "🤧"
+        }
+      },
+      "source_article": "art_20260421_008",
+      "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M/blob/main/EMOJI_ANNOTATIONS.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-21"
+    },
+    {
+      "id": "upd_20260421_art_20260421_009",
+      "target": "default_captions.json",
+      "operation": "review_cfg_values",
+      "data": {
+        "finding": "モデル精度をfloat32からbf16に設定することで推論時間を約58%削減（1.786秒→0.733秒）。",
+        "params": {
+          "model_precision": "bf16",
+          "codec_precision": "bf16",
+          "speed_improvement": "58%",
+          "baseline_time_ms": 1786,
+          "optimized_time_ms": 733
+        }
+      },
+      "source_article": "art_20260421_009",
+      "source_url": "https://zenn.dev/kun432/scraps/87d7776909e4d9",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-21"
+    },
+    {
+      "id": "upd_20260421_art_20260421_010",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "絵文字には全体効果型（👂で囁き声化）と単体音声型（🤭で含み笑い）の2種類が存在",
+        "params": {
+          "emoji_👂": "全体的に囁き声効果",
+          "emoji_🤭": "単体で笑い声を出力"
+        }
+      },
+      "source_article": "art_20260421_010",
+      "source_url": "https://note.com/totchira/n/n1b9eb0c64080",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-21"
+    },
+    {
+      "id": "upd_20260421_art_20260421_010",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "複数絵文字（🤭🤭🤭）の使用で複数人会話表現に変換される可能性がある",
+        "params": {
+          "emoji_count": "3以上で複数音声化傾向"
+        }
+      },
+      "source_article": "art_20260421_010",
+      "source_url": "https://note.com/totchira/n/n1b9eb0c64080",
+      "confidence": "medium",
+      "status": "pending_review",
+      "created": "2026-04-21"
+    },
+    {
+      "id": "upd_20260421_art_20260421_010",
+      "target": "default_captions.json",
+      "operation": "review_caption_technique",
+      "data": {
+        "finding": "三点リーダーは文脈の雰囲気を保持するが、絵文字は台詞化する傾向。効果は文脈依存的",
+        "params": {
+          "context_sensitivity": "high"
+        }
+      },
+      "source_article": "art_20260421_010",
+      "source_url": "https://note.com/totchira/n/n1b9eb0c64080",
+      "confidence": "medium",
+      "status": "pending_review",
+      "created": "2026-04-21"
+    },
+    {
+      "id": "upd_20260421_art_20260421_011",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "Emoji caption feature extracts acoustic features (pitch, energy, speech rate, MFCC delta, ZCR) and calls LLM API to annotate text with 38 emotion emoji types including whisper, strong, calm, laugh, crying, scream, fast-speaking, slow, humming.",
+        "params": {
+          "emoji_types": 38,
+          "acoustic_features": [
+            "pitch",
+            "energy",
+            "speech_rate",
+            "mfcc_delta",
+            "zcr"
+          ]
+        }
+      },
+      "source_article": "art_20260421_011",
+      "source_url": "https://github.com/iron-mukakin/Emoji-TTS/blob/main/README.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-21"
+    },
+    {
+      "id": "upd_20260421_art_20260421_011",
+      "target": "default_captions.json",
+      "operation": "review_cfg_values",
+      "data": {
+        "finding": "Independent CFG guidance: cfg-scale-text=3.0, cfg-scale-speaker=5.0 as defaults. Guidance modes: independent, joint, alternating. cfg_min_t=0.5, cfg_max_t=1.0",
+        "params": {
+          "cfg_scale_text_default": 3.0,
+          "cfg_scale_speaker_default": 5.0,
+          "guidance_modes": [
+            "independent",
+            "joint",
+            "alternating"
+          ],
+          "cfg_min_t": 0.5,
+          "cfg_max_t": 1.0
+        }
+      },
+      "source_article": "art_20260421_011",
+      "source_url": "https://github.com/iron-mukakin/Emoji-TTS/blob/main/README.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-21"
+    },
+    {
+      "id": "upd_20260421_art_20260421_011",
+      "target": "ma_agent.py",
+      "operation": "review_postprocess_technique",
+      "data": {
+        "finding": "Trailing silence trimming via flattening heuristic enabled by default (trim-tail: True) to clean generated audio.",
+        "params": {
+          "trim_tail": true,
+          "method": "flattening_heuristic"
+        }
+      },
+      "source_article": "art_20260421_011",
+      "source_url": "https://github.com/iron-mukakin/Emoji-TTS/blob/main/README.md",
+      "confidence": "medium",
+      "status": "pending_review",
+      "created": "2026-04-21"
+    },
+    {
+      "id": "upd_20260421_art_20260421_012",
+      "target": "default_captions.json",
+      "operation": "review_caption_technique",
+      "data": {
+        "finding": "全角「？」使用時にmio-tts-cppで不自然な音声生成が発生。半角「?」への変換で改善確認",
+        "params": {
+          "system": "mio-tts-cpp",
+          "problematic_character": "fullwidth_question_mark",
+          "solution": "halfwidth_conversion"
+        }
+      },
+      "source_article": "art_20260421_012",
+      "source_url": "https://zenn.dev/megyo9/articles/548448f7c8fc83",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-21"
+    },
+    {
+      "id": "upd_20260421_art_20260421_013",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "同じ絵文字を複数回使用することで効果を強調・増幅できる（stackable emoji control）",
+        "params": {
+          "technique": "emoji_repetition",
+          "effect": "emphasis_amplification"
+        }
+      },
+      "source_article": "art_20260421_013",
+      "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v2/blob/main/EMOJI_ANNOTATIONS.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-21"
+    },
+    {
+      "id": "upd_20260421_art_20260421_013",
+      "target": "default_captions.json",
+      "operation": "review_caption_technique",
+      "data": {
+        "finding": "生理音・音声特性制御: 👂(囁き)、😮‍💨(吐息)、⏸️(沈黙)、🥤(嚥下音)、🤧(咳)など細かい音響要素を個別制御",
+        "params": {
+          "whisper": "👂",
+          "breath": "😮‍💨",
+          "pause": "⏸️",
+          "swallow": "🥤",
+          "cough": "🤧"
+        }
+      },
+      "source_article": "art_20260421_013",
+      "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v2/blob/main/EMOJI_ANNOTATIONS.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-21"
+    },
+    {
+      "id": "upd_20260425_art_20260425_023",
+      "target": "default_captions.json",
+      "operation": "review_caption_technique",
+      "data": {
+        "finding": "テキストのみで声色を指定可能。例：「落ち着いた30代女性の声で、低めに、囁く雰囲気」で音声生成。参照音声不要。",
+        "params": {
+          "age": 30,
+          "gender": "female",
+          "tone": "whisper"
+        }
+      },
+      "source_article": "art_20260425_023",
+      "source_url": "https://note.com/gensnotes/n/na48b222358c4",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-04-25"
     }
   ]
 }

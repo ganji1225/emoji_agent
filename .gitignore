@@ -15,6 +15,9 @@ emoji/
 *.flac
 *.ogg
 
+# Voice clone reference files (temporary, not for version control)
+voice_refs/
+
 # Excel temp files
 ~$*.xlsx
 

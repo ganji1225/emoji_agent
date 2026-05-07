@@ -170,6 +170,83 @@ def content_hash(text: str) -> str:
     return "sha256:" + hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
 
 
+def _normalize_finding(text: str) -> set[str]:
+    """findingテキストを正規化してtri-gram集合を返す（類似度比較用）
+
+    方針: 絵文字・記号・英数字を除去して日本語コアの形だけを比較する。
+    短い表記ゆれ（~した/~される 等）を吸収するため tri-gram 単位で比較する。
+    """
+    if not text:
+        return set()
+    # 1) 絵文字・カラーコード・サロゲート・記号類を除去
+    cleaned = re.sub(r"[A-Za-z0-9ー～〜ｰ\W_]+", "", text, flags=re.UNICODE)
+    # 2) 空白・記号で潰したあとに残った日本語のみを連結
+    if len(cleaned) < 3:
+        return set()
+    # 3) tri-gram 化
+    return {cleaned[i:i+3] for i in range(len(cleaned) - 2)}
+
+
+def _similarity(a: str, b: str) -> float:
+    """2つのfindingテキストの「包含率」を返す（0.0-1.0）
+
+    短い方が長い方にどれだけ含まれているかを計算する。
+    （長さの違う説明同士でも、同じ概念ならスコアが高くなる）
+
+    同概念の言い換えで 0.5-0.8、完全な重複で 0.9+、無関係で 0.1 未満。
+    """
+    set_a = _normalize_finding(a)
+    set_b = _normalize_finding(b)
+    if not set_a or not set_b:
+        return 0.0
+    intersection = len(set_a & set_b)
+    smaller = min(len(set_a), len(set_b))
+    return intersection / smaller if smaller > 0 else 0.0
+
+
+def _is_invalid_finding(finding: str) -> bool:
+    """findingが無効（N/A・空・短すぎる）かを判定"""
+    if not finding:
+        return True
+    f = finding.strip()
+    if not f or f.upper() in ("N/A", "NA", "NONE", "NULL", "-"):
+        return True
+    if len(f) < 10:  # 10文字未満は意味のある内容ではないとみなす
+        return True
+    return False
+
+
+def _params_to_finding(kh: dict) -> str:
+    """params から finding テキストを自動生成する（finding が無効な場合のフォールバック）"""
+    params = kh.get("params", {})
+    kh_type = kh.get("type", "")
+    if not params:
+        return ""
+    type_label = {
+        "caption_technique": "キャプション設定",
+        "caption_design": "キャプション設定",
+        "emoji_technique": "絵文字テクニック",
+        "cfg_tuning": "CFG設定",
+        "audio_postprocess": "音声後処理",
+        "voice_quality": "声質パラメータ",
+        "training_tips": "学習設定",
+    }.get(kh_type, "パラメータ")
+    params_str = ", ".join(f"{k}={v}" for k, v in params.items())
+    return f"{type_label}: {params_str}"
+
+
+def _find_similar_finding(new_finding: str, kb: dict, threshold: float = 0.45) -> str | None:
+    """既存KB内に類似度 threshold 以上の finding があれば最初のものを返す"""
+    for art in kb.get("articles", []):
+        for kh in art.get("extracted_knowhow", []):
+            existing = kh.get("finding", "")
+            if not existing:
+                continue
+            if _similarity(new_finding, existing) >= threshold:
+                return existing
+    return None
+
+
 # ============================================================
 # 1. search: URL収集結果を登録する
 # ============================================================
@@ -177,6 +254,18 @@ def get_todays_queries() -> list[str]:
     """今日の曜日に対応する検索クエリを返す"""
     weekday = datetime.now(JST).weekday()
     return SEARCH_QUERIES.get(weekday, SEARCH_QUERIES[0])
+
+
+def get_weekly_queries() -> list[str]:
+    """全曜日のクエリを結合して返す（週次実行用）"""
+    seen = set()
+    result = []
+    for queries in SEARCH_QUERIES.values():
+        for q in queries:
+            if q not in seen:
+                seen.add(q)
+                result.append(q)
+    return result
 
 
 def register_urls(urls: list[dict]) -> dict:
@@ -282,6 +371,36 @@ def register_article(article_data: dict) -> bool:
     # 記事ID生成
     article_count = len(kb.get("articles", []))
     article_id = f"art_{today.replace('-', '')}_{article_count + 1:03d}"
+
+    # extracted_knowhow を前処理: 無効findingは params から再生成、類似重複は除外
+    raw_knowhow = article_data.get("extracted_knowhow", [])
+    cleaned_knowhow = []
+    skipped_invalid = 0
+    skipped_similar = 0
+    for kh in raw_knowhow:
+        finding = (kh.get("finding") or "").strip()
+
+        # 1) 無効 finding を params から自動生成
+        if _is_invalid_finding(finding):
+            fallback = _params_to_finding(kh)
+            if _is_invalid_finding(fallback):
+                skipped_invalid += 1
+                continue  # finding も params も空 → このエントリ自体を破棄
+            finding = fallback
+            kh = {**kh, "finding": finding, "auto_generated_finding": True}
+
+        # 2) 既存KBとの類似度チェック（包含率 0.45以上は重複扱い）
+        similar = _find_similar_finding(finding, kb, threshold=0.45)
+        if similar:
+            skipped_similar += 1
+            continue
+
+        cleaned_knowhow.append(kh)
+
+    if skipped_invalid or skipped_similar:
+        print(f"[fetch] knowhow フィルタ: 無効={skipped_invalid}件, 類似重複={skipped_similar}件 を除外")
+
+    article_data = {**article_data, "extracted_knowhow": cleaned_knowhow}
 
     # 関連性スコア計算
     indicators = article_data.get("relevance_indicators", {})
@@ -476,7 +595,14 @@ def generate_report(target_date: str = None) -> str:
         lines.append(f"\n## {cat_labels.get(category, category)}\n")
 
         for art, kh in items:
-            lines.append(f"### {kh.get('finding', 'N/A')[:80]}")
+            finding = (kh.get("finding") or "").strip()
+            if _is_invalid_finding(finding):
+                # 既存データに残っている "N/A" を救済する最終フォールバック
+                fallback = _params_to_finding(kh)
+                if _is_invalid_finding(fallback):
+                    continue  # 両方ダメな旧データは出力しない
+                finding = fallback
+            lines.append(f"### {finding[:120]}")
             lines.append(f"- Source: [{art.get('title', 'N/A')}]({art.get('url', '')})")
             if art.get("publish_date"):
                 lines.append(f"- Date: {art['publish_date']}")
@@ -789,7 +915,7 @@ def get_fetch_prompt() -> str:
   "extracted_knowhow": [
     {
       "type": "caption_technique|emoji_technique|cfg_tuning|audio_postprocess|voice_quality|training_tips",
-      "finding": "具体的な発見内容",
+      "finding": "具体的な発見内容（必ず日本語で記述。30文字以上の説明文。空文字や 'N/A' は禁止）",
       "params": {"パラメータ名": 値},
       "confidence": "high|medium|low",
       "actionable": true
@@ -805,9 +931,12 @@ def get_fetch_prompt() -> str:
   "publish_date": "YYYY-MM-DD or null"
 }
 
-対象TTS: Irodori-TTS, Emoji-TTS, VoiceDesign TTS のみ。
-インストール手順、ライセンス、一般概要は無視。
-具体的なパラメータ値やテクニックを重点的に抽出。"""
+【重要ルール】
+1. **finding は必ず日本語で記述すること**。英語の元記事も日本語に翻訳して記録する。
+2. **finding が "N/A" や空文字になることは禁止**。具体的な内容が抽出できない場合はその knowhow エントリ自体を作らない。
+3. **既知のテクニックの重複は避ける**。「絵文字で感情表現できる」のような一般論は actionable=false にする。
+4. 対象TTS: Irodori-TTS, Emoji-TTS, VoiceDesign TTS のみ。
+5. インストール手順、ライセンス、一般概要は無視。具体的なパラメータ値やテクニックを重点的に抽出。"""
 
 
 # ============================================================
@@ -823,11 +952,12 @@ Usage:
   python knowledge_collector.py propose                     -- パイプライン更新提案を生成
   python knowledge_collector.py status                      -- 収集統計表示
   python knowledge_collector.py queries                     -- 今日の検索クエリ一覧
+  python knowledge_collector.py weekly                      -- 週次全クエリ一覧（全曜日まとめ）
 
 注意:
   WebSearch/WebFetch は Claude MCP ツールです。
   このスクリプトは状態管理を担当し、Web操作はClaudeセッションが実行します。
-  毎日9:00のスケジュールタスクで自動実行されます。
+  毎週月曜9:00のスケジュールタスクで自動実行されます。
 """
 
 if __name__ == "__main__":
@@ -842,6 +972,13 @@ if __name__ == "__main__":
         weekday_names = ["月", "火", "水", "木", "金", "土", "日"]
         weekday = datetime.now(JST).weekday()
         print(f"\n今日（{weekday_names[weekday]}曜日）の検索クエリ:")
+        for q in queries:
+            print(f"  - {q}")
+        print(f"\n合計: {len(queries)}クエリ")
+
+    elif cmd == "weekly":
+        queries = get_weekly_queries()
+        print(f"\n週次全クエリ（全曜日まとめ）:")
         for q in queries:
             print(f"  - {q}")
         print(f"\n合計: {len(queries)}クエリ")

@@ -128,6 +128,7 @@ def run_qc(project_name: str) -> dict:
     pass_count = 0
     warn_count = 0
     fail_count = 0
+    best_candidates = {}  # { "scene_id/line_id": candidate_num }
 
     for idx, (row_idx, row) in enumerate(generated):
         scene_id = row["scene_id"]
@@ -182,6 +183,9 @@ def run_qc(project_name: str) -> dict:
             rows[row_idx]["status"] = "qc_fail"
             fail_count += 1
 
+        if best_candidate is not None:
+            best_candidates[f"{scene_id}/{line_id}"] = best_candidate
+
         status_emoji = "OK" if rows[row_idx]["status"] == "qc_pass" else "NG"
         print(f"  [{status_emoji}] {scene_id}/{line_id} (best=c{best_candidate})")
 
@@ -201,10 +205,20 @@ def run_qc(project_name: str) -> dict:
         writer.writeheader()
         writer.writerows(rows)
 
+    # approvals_template.json 書き出し（QC推奨候補が入った承認テンプレート）
+    import json
+    approvals_path = project_dir / "approvals_template.json"
+    with open(approvals_path, "w", encoding="utf-8") as f:
+        json.dump(best_candidates, f, ensure_ascii=False, indent=2)
+
     print(f"\n{'='*50}")
     print(f"QC完了！")
     print(f"  合格: {pass_count}  不合格: {fail_count}")
     print(f"  QCレポート: {qc_report_path}")
+    print(f"  承認テンプレート: {approvals_path}")
+    print(f"\n次のステップ:")
+    print(f"  1. audio/ フォルダで音声を確認し approvals_template.json の数字を編集")
+    print(f"  2. python D:/irodori/agents/approve.py {project_dir.name}")
 
     return {"pass": pass_count, "warn": warn_count, "fail": fail_count}
 

@@ -305,7 +305,12 @@ def _apply_captions(project_dir: Path, captions_path: Path, num_candidates: int 
         row["cfg_text"] = str(profile.get("cfg_text", 3.0))
         row["cfg_caption"] = str(profile.get("cfg_caption", 3.0))
         row["cfg_speaker"] = str(profile.get("cfg_speaker", 5.0))
-        row["num_steps"] = str(profile.get("num_steps", 30))
+        row["cfg_guidance_mode"] = profile.get("cfg_guidance_mode", "alternating")
+        row["num_steps"] = str(profile.get("num_steps", 40))
+        # LoRA はプロファイルで指定された場合のみ書き込む（指定なしは空のまま）
+        if "lora_path" in profile:
+            row["lora_path"] = profile.get("lora_path", "")
+            row["lora_scale"] = str(profile.get("lora_scale", 1.0)) if profile.get("lora_path") else ""
         row["num_candidates"] = str(num_candidates)
 
         stats[intensity] = stats.get(intensity, 0) + 1

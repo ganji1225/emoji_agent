@@ -1,6 +1,14 @@
 {
   "_comment": "提案リジェクトのフィードバック記録。knowledge_collector.pyが参照し同種の提案を再生成しない",
-  "_updated": "2026-04-17",
+  "_updated": "2026-04-19",
+  "_deferred_improvements": {
+    "scoring_novelty_penalty": {
+      "description": "重複knowhowに対するcombined_scoreペナルティ（-0.3）機能",
+      "reason": "記事数が少ない現段階ではスコアリング調整よりrejection_feedback.jsonのパターン蓄積を優先",
+      "deferred_until": "記事数が十分に蓄積された段階（目安: 30件以上）で再検討",
+      "deferred_on": "2026-04-19"
+    }
+  },
 
   "known_implementations": {
     "_desc": "既にパイプラインに実装済みのため提案不要な項目",
@@ -23,6 +31,11 @@
       "description": "CSVからの一括音声生成バッチ処理",
       "implemented_in": "agents/recorder.py record_project()",
       "skip_if_finding_contains": ["一括音声生成", "バッチ処理", "1行1セリフ", "batch processing"]
+    },
+    "multi_candidate_gacha": {
+      "description": "複数候補生成による「ガチャ」品質対応",
+      "implemented_in": "agents/recorder.py num_candidates=3 (production.csv)",
+      "skip_if_finding_contains": ["ガチャ要素", "複数回生成", "当たり音声", "試行.*必要", "num_candidates"]
     }
   },
 

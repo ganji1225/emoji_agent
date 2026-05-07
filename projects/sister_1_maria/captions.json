@@ -1,0 +1,17 @@
+{
+  "profiles": {
+    "マリア_標準": {
+      "caption": "優しく穏やかな大人の女性が、温かみのある柔らかい声で話している。",
+      "cfg_text": 3.0,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "alternating",
+      "num_steps": 50,
+      "lora_path": "D:/irodori/emoji/lora/maria_v1/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
+    }
+  },
+  "scene_mapping": {
+    "confessional_futanari": "マリア_標準"
+  }
+}

@@ -179,10 +179,11 @@ def build_sandwich(text: str, emojis: list[str], intensity: str, stacking: bool 
         if "💦" not in suffix:
             suffix += "💦"
     else:  # extreme
-        # prefix 3, suffix 2 + 💦
-        prefix = "".join(emojis[:3])
-        suffix_emojis = emojis[-2:] if len(emojis) >= 2 else emojis
-        suffix = "".join(suffix_emojis) + "💦"
+        # prefix 4, suffix 4（2026-04-22 聴き比べ: 4+4 × CFG=6 で感情表現↑・かすれ抑制）
+        # CFGはcaptions.jsonで6.0を設定すること（8.0→6.0）
+        e = (emojis * 4)[:8]  # 8個分に拡張（絵文字が足りなければ繰り返し）
+        prefix = "".join(e[:4])
+        suffix = "".join(e[4:8])
 
     result = f"{prefix} {text}"
     if suffix:
@@ -613,9 +614,12 @@ def process_script(project_name: str, ignore_grok_emoji: bool = False,
             "cfg_text": "",
             "cfg_caption": "",
             "cfg_speaker": "",
+            "cfg_guidance_mode": "",
             "num_steps": "",
             "num_candidates": "3",
             "seed": "",
+            "lora_path": "",
+            "lora_scale": "",
             "status": "pending",
             "approved_candidate": "",
             "notes": f"intensity={intensity}",
@@ -718,9 +722,12 @@ def process_game_text(project_name: str, game_text_paths: list[str]) -> str:
             "cfg_text": "",
             "cfg_caption": "",
             "cfg_speaker": "",
+            "cfg_guidance_mode": "",
             "num_steps": "",
             "num_candidates": "3",
             "seed": "",
+            "lora_path": "",
+            "lora_scale": "",
             "status": "pending",
             "approved_candidate": "",
             "notes": f"intensity={intensity},type={row.get('line_type', '')},src={row.get('source', '')}",
