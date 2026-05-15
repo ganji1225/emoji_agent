@@ -1,7 +1,8 @@
 {
   "_comment": "絵文字パターンライブラリ - Grok提案 + CFGテスト結果 + 公式EMOJI_ANNOTATIONSベース",
-  "_updated": "2026-04-25",
+  "_updated": "2026-05-15",
   "_note_2026-04-25": "🥱あくび絵文字を voice_effects に追加",
+  "_note_2026-05-15": "upstream v3対応マージで6種追加: 😴寝言/いびき, 💥勢いよく, 😎得意げに, 💪力を込めて, 👃匂い嗅ぐ, 📖ナレーション",
   "_source": "script_raw_grok.xlsx (2026-04-13) + HuggingFace EMOJI_ANNOTATIONS.md (公式, 2026-03-24)",
   "_pattern_format": "サンドイッチ方式: prefix + テキスト + suffix",
   "touch": {
