@@ -1,69 +1,47 @@
-# 絵文字の量×位置 比較テスト結果
-日時: 2026-04-13
-シード: 42
-モデル: VoiceDesign (Aratako/Irodori-TTS-500M-v2-VoiceDesign)
+﻿# 邨ｵ譁・ｭ励・驥湘嶺ｽ咲ｽｮ 豈碑ｼ・ユ繧ｹ繝育ｵ先棡
+譌･譎・ 2026-04-13
+繧ｷ繝ｼ繝・ 42
+繝｢繝・Ν: VoiceDesign (Aratako/Irodori-TTS-500M-v2-VoiceDesign)
 
-## パターン説明
-| パターン | 説明 |
+## 繝代ち繝ｼ繝ｳ隱ｬ譏・| 繝代ち繝ｼ繝ｳ | 隱ｬ譏・|
 |---|---|
-| A_prefix_少 | 絵文字1個を前方のみ |
-| B_sandwich | 絵文字2-3個を前後に配置（サンドイッチ） |
-| C_prefix_多 | 絵文字3-5個を全て前方に配置 |
-| D_sandwich_多 | 絵文字5個以上を前後に多めに配置 |
+| A_prefix_蟆・| 邨ｵ譁・ｭ・蛟九ｒ蜑肴婿縺ｮ縺ｿ |
+| B_sandwich | 邨ｵ譁・ｭ・-3蛟九ｒ蜑榊ｾ後↓驟咲ｽｮ・医し繝ｳ繝峨う繝・メ・・|
+| C_prefix_螟・| 邨ｵ譁・ｭ・-5蛟九ｒ蜈ｨ縺ｦ蜑肴婿縺ｫ驟咲ｽｮ |
+| D_sandwich_螟・| 邨ｵ譁・ｭ・蛟倶ｻ･荳翫ｒ蜑榊ｾ後↓螟壹ａ縺ｫ驟咲ｽｮ |
 
-## 生成結果
-| レベル | パターン | ファイル | 生成時間 | サイズ | 状態 |
+## 逕滓・邨先棡
+| 繝ｬ繝吶Ν | 繝代ち繝ｼ繝ｳ | 繝輔ぃ繧､繝ｫ | 逕滓・譎る俣 | 繧ｵ繧､繧ｺ | 迥ｶ諷・|
 |---|---|---|---|---|---|
-| light | A_prefix_少 | light_A_prefix_少.wav | 105.1s | 623KB | OK |
+| light | A_prefix_蟆・| light_A_prefix_蟆・wav | 105.1s | 623KB | OK |
 | light | B_sandwich | light_B_sandwich.wav | 18.9s | 716KB | OK |
-| light | C_prefix_多 | light_C_prefix_多.wav | 17.5s | 623KB | OK |
-| light | D_sandwich_多 | light_D_sandwich_多.wav | 16.3s | 716KB | OK |
-| medium | A_prefix_少 | medium_A_prefix_少.wav | 17.0s | 784KB | OK |
+| light | C_prefix_螟・| light_C_prefix_螟・wav | 17.5s | 623KB | OK |
+| light | D_sandwich_螟・| light_D_sandwich_螟・wav | 16.3s | 716KB | OK |
+| medium | A_prefix_蟆・| medium_A_prefix_蟆・wav | 17.0s | 784KB | OK |
 | medium | B_sandwich | medium_B_sandwich.wav | 16.8s | 784KB | OK |
-| medium | C_prefix_多 | medium_C_prefix_多.wav | 16.6s | 1065KB | OK |
-| medium | D_sandwich_多 | medium_D_sandwich_多.wav | 16.3s | 1440KB | OK |
-| heavy | A_prefix_少 | heavy_A_prefix_少.wav | 16.7s | 911KB | OK |
+| medium | C_prefix_螟・| medium_C_prefix_螟・wav | 16.6s | 1065KB | OK |
+| medium | D_sandwich_螟・| medium_D_sandwich_螟・wav | 16.3s | 1440KB | OK |
+| heavy | A_prefix_蟆・| heavy_A_prefix_蟆・wav | 16.7s | 911KB | OK |
 | heavy | B_sandwich | heavy_B_sandwich.wav | 17.5s | 1046KB | OK |
-| heavy | C_prefix_多 | heavy_C_prefix_多.wav | 14.8s | 1046KB | OK |
-| heavy | D_sandwich_多 | heavy_D_sandwich_多.wav | 17.9s | 1440KB | OK |
+| heavy | C_prefix_螟・| heavy_C_prefix_螟・wav | 14.8s | 1046KB | OK |
+| heavy | D_sandwich_螟・| heavy_D_sandwich_螟・wav | 17.9s | 1440KB | OK |
 
-## 聴き比べ結果（ユーザー評価）
+## 閨ｴ縺肴ｯ斐∋邨先棡・医Θ繝ｼ繧ｶ繝ｼ隧穂ｾ｡・・
+### 諢滓ュ縺ｮ縲悟・繧翫搾ｼ亥・鬆ｭ縺ｮ陦ｨ迴ｾ蜉幢ｼ・- light: B_sandwich = C_prefix_螟・> A_prefix_蟆・= D_sandwich_螟・- medium: D_sandwich_螟・> C_prefix_螟・> B_sandwich > A_prefix_蟆・- heavy: D_sandwich_螟・> C_prefix_螟・> B_sandwich > A_prefix_蟆・
+### 諢滓ュ縺ｮ縲悟・縲搾ｼ域忰蟆ｾ縺ｮ菴咎渊繝ｻ逹蝨ｰ・・- light: D_sandwich_螟・= B_sandwich > C_prefix_螟・> A_prefix_蟆・- medium: D_sandwich_螟・> B_sandwich > C_prefix_螟・> A_prefix_蟆・- heavy: D_sandwich_螟・> B_sandwich > C_prefix_螟・> A_prefix_蟆・
+### 蜈ｨ菴薙・諢滓ュ蠑ｷ蠎ｦ
+- light: D_sandwich_螟・= B_sandwich > C_prefix_螟・> A_prefix_蟆・- medium: D_sandwich_螟・> C_prefix_螟・> B_sandwich > A_prefix_蟆・- heavy: D_sandwich_螟・> B_sandwich > C_prefix_螟・> A_prefix_蟆・
+### 荳崎・辟ｶ縺ｪ繝弱う繧ｺ繝ｻ繧｢繝ｼ繝・ぅ繝輔ぃ繧ｯ繝茨ｼ亥､壹＞鬆・= 謔ｪ縺・・ｼ・- light: D_sandwich_螟・> C_prefix_螟・> B_sandwich > A_prefix_蟆・- medium: D_sandwich_螟・> C_prefix_螟・> B_sandwich > A_prefix_蟆・- heavy: D_sandwich_螟・> C_prefix_螟・> B_sandwich = A_prefix_蟆・
+### 髢難ｼ医∪・峨・閾ｪ辟ｶ縺・- light: B_sandwich = D_sandwich_螟・> C_prefix_螟・> A_prefix_蟆・- medium: C_prefix_螟・= B_sandwich > D_sandwich_螟・> A_prefix_蟆・- heavy: D_sandwich_螟・> B_sandwich > C_prefix_螟・> A_prefix_蟆・
+## 邨占ｫ厄ｼ壽怙驕ｩ繝代ち繝ｼ繝ｳ
 
-### 感情の「入り」（冒頭の表現力）
-- light: B_sandwich = C_prefix_多 > A_prefix_少 = D_sandwich_多
-- medium: D_sandwich_多 > C_prefix_多 > B_sandwich > A_prefix_少
-- heavy: D_sandwich_多 > C_prefix_多 > B_sandwich > A_prefix_少
-
-### 感情の「出」（末尾の余韻・着地）
-- light: D_sandwich_多 = B_sandwich > C_prefix_多 > A_prefix_少
-- medium: D_sandwich_多 > B_sandwich > C_prefix_多 > A_prefix_少
-- heavy: D_sandwich_多 > B_sandwich > C_prefix_多 > A_prefix_少
-
-### 全体の感情強度
-- light: D_sandwich_多 = B_sandwich > C_prefix_多 > A_prefix_少
-- medium: D_sandwich_多 > C_prefix_多 > B_sandwich > A_prefix_少
-- heavy: D_sandwich_多 > B_sandwich > C_prefix_多 > A_prefix_少
-
-### 不自然なノイズ・アーティファクト（多い順 = 悪い順）
-- light: D_sandwich_多 > C_prefix_多 > B_sandwich > A_prefix_少
-- medium: D_sandwich_多 > C_prefix_多 > B_sandwich > A_prefix_少
-- heavy: D_sandwich_多 > C_prefix_多 > B_sandwich = A_prefix_少
-
-### 間（ま）の自然さ
-- light: B_sandwich = D_sandwich_多 > C_prefix_多 > A_prefix_少
-- medium: C_prefix_多 = B_sandwich > D_sandwich_多 > A_prefix_少
-- heavy: D_sandwich_多 > B_sandwich > C_prefix_多 > A_prefix_少
-
-## 結論：最適パターン
-
-| 感情レベル | 推奨パターン | 理由 |
+| 諢滓ュ繝ｬ繝吶Ν | 謗ｨ螂ｨ繝代ち繝ｼ繝ｳ | 逅・罰 |
 |---|---|---|
-| **弱（日常・自信・威圧）** | **B_sandwich** | 表現力◎ ノイズ少 間◎ lightで総合1位 |
-| **中（恥じらい・喘ぎ弱）** | **B_sandwich / C_prefix_多** | 間が自然でノイズ控えめ |
-| **強（絶頂・叫び）** | **D_sandwich_多** | 圧倒的表現力、ノイズは激しい場面で許容 |
-| **極限（連続絶頂・出産）** | **D_sandwich_多（最大盛り）** | 全指標で最高、ノイズも演技の一部 |
+| **蠑ｱ・域律蟶ｸ繝ｻ閾ｪ菫｡繝ｻ螽∝悸・・* | **B_sandwich** | 陦ｨ迴ｾ蜉帚落 繝弱う繧ｺ蟆・髢凪落 light縺ｧ邱丞粋1菴・|
+| **荳ｭ・域▼縺倥ｉ縺・・蝟倥℃蠑ｱ・・* | **B_sandwich / C_prefix_螟・* | 髢薙′閾ｪ辟ｶ縺ｧ繝弱う繧ｺ謗ｧ縺医ａ |
+| **蠑ｷ・育ｵｶ鬆ゅ・蜿ｫ縺ｳ・・* | **D_sandwich_螟・* | 蝨ｧ蛟堤噪陦ｨ迴ｾ蜉帙√ヮ繧､繧ｺ縺ｯ豼縺励＞蝣ｴ髱｢縺ｧ險ｱ螳ｹ |
+| **讌ｵ髯撰ｼ磯｣邯夂ｵｶ鬆ゅ・蜃ｺ逕｣・・* | **D_sandwich_螟夲ｼ域怙螟ｧ逶帙ｊ・・* | 蜈ｨ謖・ｨ吶〒譛鬮倥√ヮ繧､繧ｺ繧よｼ疲橿縺ｮ荳驛ｨ |
 
-→ script_processor.py に反映済み（build_sandwich関数で自動制御）
-
-## 音声ファイル場所
-`D:\irodori\tests\emoji_position_results`
+竊・script_processor.py 縺ｫ蜿肴丐貂医∩・・uild_sandwich髢｢謨ｰ縺ｧ閾ｪ蜍募宛蠕｡・・
+## 髻ｳ螢ｰ繝輔ぃ繧､繝ｫ蝣ｴ謇
+`E:\irodori\tests\emoji_position_results`

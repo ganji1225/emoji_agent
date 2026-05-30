@@ -1,5 +1,5 @@
-#!/usr/bin/env python3
-"""MA/ミキシングエージェント - 承認済み音声をシーン/作品単位で結合"""
+﻿#!/usr/bin/env python3
+"""MA/繝溘く繧ｷ繝ｳ繧ｰ繧ｨ繝ｼ繧ｸ繧ｧ繝ｳ繝・- 謇ｿ隱肴ｸ医∩髻ｳ螢ｰ繧偵す繝ｼ繝ｳ/菴懷刀蜊倅ｽ阪〒邨仙粋"""
 import csv
 import os
 import sys
@@ -13,33 +13,22 @@ if sys.platform == "win32":
 import numpy as np
 import soundfile as sf
 
-PROJECTS_DIR = Path("D:/irodori/projects")
+PROJECTS_DIR = Path("E:/irodori/projects")
 
-# デフォルト設定
-LINE_SILENCE_SEC = 0.8     # セリフ間の無音（秒）
-SCENE_SILENCE_SEC = 2.0    # シーン間の無音（秒）
-SAMPLE_RATE = 48000         # 出力サンプルレート
-
-# Trailing silence trimming（参考: Emoji-TTS README, 2026-04-21）
-TRIM_TAIL_THRESHOLD = 0.005  # RMSがこれ以下を無音とみなす
-TRIM_TAIL_FRAME_MS = 20      # 無音判定の窓サイズ（ミリ秒）
-TRIM_TAIL_KEEP_SEC = 0.10    # 末尾に残す自然な余韻（秒）
-
+# 繝・ヵ繧ｩ繝ｫ繝郁ｨｭ螳・LINE_SILENCE_SEC = 0.8     # 繧ｻ繝ｪ繝暮俣縺ｮ辟｡髻ｳ・育ｧ抵ｼ・SCENE_SILENCE_SEC = 2.0    # 繧ｷ繝ｼ繝ｳ髢薙・辟｡髻ｳ・育ｧ抵ｼ・SAMPLE_RATE = 48000         # 蜃ｺ蜉帙し繝ｳ繝励Ν繝ｬ繝ｼ繝・
+# Trailing silence trimming・亥盾閠・ Emoji-TTS README, 2026-04-21・・TRIM_TAIL_THRESHOLD = 0.005  # RMS縺後％繧御ｻ･荳九ｒ辟｡髻ｳ縺ｨ縺ｿ縺ｪ縺・TRIM_TAIL_FRAME_MS = 20      # 辟｡髻ｳ蛻､螳壹・遯薙し繧､繧ｺ・医Α繝ｪ遘抵ｼ・TRIM_TAIL_KEEP_SEC = 0.10    # 譛ｫ蟆ｾ縺ｫ谿九☆閾ｪ辟ｶ縺ｪ菴咎渊・育ｧ抵ｼ・
 
 def trim_trailing_silence(data: np.ndarray, sr: int,
                           threshold: float = TRIM_TAIL_THRESHOLD,
                           frame_ms: int = TRIM_TAIL_FRAME_MS,
                           keep_sec: float = TRIM_TAIL_KEEP_SEC) -> np.ndarray:
-    """音声データの末尾無音をトリムする（flattening heuristic）
-
-    末尾から後ろに向かってRMSを計測し、threshold を超える地点までカット。
-    自然な余韻を残すため keep_sec 分の無音を末尾に残す。
-    """
+    """髻ｳ螢ｰ繝・・繧ｿ縺ｮ譛ｫ蟆ｾ辟｡髻ｳ繧偵ヨ繝ｪ繝縺吶ｋ・・lattening heuristic・・
+    譛ｫ蟆ｾ縺九ｉ蠕後ｍ縺ｫ蜷代°縺｣縺ｦRMS繧定ｨ域ｸｬ縺励》hreshold 繧定ｶ・∴繧句慍轤ｹ縺ｾ縺ｧ繧ｫ繝・ヨ縲・    閾ｪ辟ｶ縺ｪ菴咎渊繧呈ｮ九☆縺溘ａ keep_sec 蛻・・辟｡髻ｳ繧呈忰蟆ｾ縺ｫ谿九☆縲・    """
     if len(data) == 0:
         return data
 
     frame_size = max(1, int(sr * frame_ms / 1000))
-    # 末尾から逆向きに走査
+    # 譛ｫ蟆ｾ縺九ｉ騾・髄縺阪↓襍ｰ譟ｻ
     last_voice_idx = 0
     for i in range(len(data) - frame_size, 0, -frame_size):
         frame = data[i:i + frame_size]
@@ -49,16 +38,15 @@ def trim_trailing_silence(data: np.ndarray, sr: int,
             break
 
     if last_voice_idx == 0:
-        return data  # 全部無音（異常）→ そのまま返す
+        return data  # 蜈ｨ驛ｨ辟｡髻ｳ・育焚蟶ｸ・俄・ 縺昴・縺ｾ縺ｾ霑斐☆
 
-    # 余韻を確保
-    keep_samples = int(sr * keep_sec)
+    # 菴咎渊繧堤｢ｺ菫・    keep_samples = int(sr * keep_sec)
     end_idx = min(len(data), last_voice_idx + keep_samples)
     return data[:end_idx]
 
 
 def copy_approved(project_name: str, audio_subdir: str = "audio") -> int:
-    """approved_candidate に基づいて候補を approved/ フォルダにコピーする"""
+    """approved_candidate 縺ｫ蝓ｺ縺･縺・※蛟呵｣懊ｒ approved/ 繝輔か繝ｫ繝縺ｫ繧ｳ繝斐・縺吶ｋ"""
     project_dir = PROJECTS_DIR / project_name
     prod_csv = project_dir / "production.csv"
     audio_dir = project_dir / audio_subdir
@@ -85,27 +73,25 @@ def copy_approved(project_name: str, audio_subdir: str = "audio") -> int:
         dst = dst_dir / f"{line_id}.wav"
 
         if not src.exists():
-            print(f"[warn] ソースが見つかりません: {src}")
+            print(f"[warn] 繧ｽ繝ｼ繧ｹ縺瑚ｦ九▽縺九ｊ縺ｾ縺帙ｓ: {src}")
             continue
 
-        # コピー（soundfileで読み書きして統一）
-        data, sr = sf.read(str(src))
+        # 繧ｳ繝斐・・・oundfile縺ｧ隱ｭ縺ｿ譖ｸ縺阪＠縺ｦ邨ｱ荳・・        data, sr = sf.read(str(src))
         sf.write(str(dst), data, sr)
-        row["status"] = "approved"  # ステータスを approved に更新
+        row["status"] = "approved"  # 繧ｹ繝・・繧ｿ繧ｹ繧・approved 縺ｫ譖ｴ譁ｰ
         copied += 1
 
-    # CSV 書き戻し
-    with open(prod_csv, "w", encoding="utf-8-sig", newline="") as f:
+    # CSV 譖ｸ縺肴綾縺・    with open(prod_csv, "w", encoding="utf-8-sig", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
 
-    print(f"[ok] {copied}ファイルを approved/ にコピーしました")
+    print(f"[ok] {copied}繝輔ぃ繧､繝ｫ繧・approved/ 縺ｫ繧ｳ繝斐・縺励∪縺励◆")
     return copied
 
 
 def auto_approve_first(project_name: str) -> int:
-    """全ての qc_pass 行で候補1を自動承認する（テスト用）"""
+    """蜈ｨ縺ｦ縺ｮ qc_pass 陦後〒蛟呵｣・繧定・蜍墓価隱阪☆繧具ｼ医ユ繧ｹ繝育畑・・""
     project_dir = PROJECTS_DIR / project_name
     prod_csv = project_dir / "production.csv"
 
@@ -126,13 +112,13 @@ def auto_approve_first(project_name: str) -> int:
         writer.writeheader()
         writer.writerows(rows)
 
-    print(f"[ok] {count}行を自動承認しました（候補1）")
+    print(f"[ok] {count}陦後ｒ閾ｪ蜍墓価隱阪＠縺ｾ縺励◆・亥呵｣・・・)
     return count
 
 
 def concat_scenes(project_name: str, line_silence: float = LINE_SILENCE_SEC,
                   scene_silence: float = SCENE_SILENCE_SEC) -> list[str]:
-    """承認済み音声をシーン単位で結合する"""
+    """謇ｿ隱肴ｸ医∩髻ｳ螢ｰ繧偵す繝ｼ繝ｳ蜊倅ｽ阪〒邨仙粋縺吶ｋ"""
     project_dir = PROJECTS_DIR / project_name
     prod_csv = project_dir / "production.csv"
     approved_dir = project_dir / "approved"
@@ -143,7 +129,7 @@ def concat_scenes(project_name: str, line_silence: float = LINE_SILENCE_SEC,
         reader = csv.DictReader(f)
         rows = list(reader)
 
-    # シーンごとにグループ化
+    # 繧ｷ繝ｼ繝ｳ縺斐→縺ｫ繧ｰ繝ｫ繝ｼ繝怜喧
     scenes = {}
     for row in rows:
         if row.get("status") != "approved":
@@ -154,7 +140,7 @@ def concat_scenes(project_name: str, line_silence: float = LINE_SILENCE_SEC,
         scenes[scene_id].append(row)
 
     if not scenes:
-        print("[warn] approved のセリフがありません")
+        print("[warn] approved 縺ｮ繧ｻ繝ｪ繝輔′縺ゅｊ縺ｾ縺帙ｓ")
         return []
 
     scene_files = []
@@ -169,18 +155,16 @@ def concat_scenes(project_name: str, line_silence: float = LINE_SILENCE_SEC,
             wav_path = approved_dir / scene_id / f"{line_id}.wav"
 
             if not wav_path.exists():
-                print(f"[warn] {scene_id}/{line_id}.wav が見つかりません")
+                print(f"[warn] {scene_id}/{line_id}.wav 縺瑚ｦ九▽縺九ｊ縺ｾ縺帙ｓ")
                 continue
 
             data, sr = sf.read(str(wav_path))
             if len(data.shape) > 1:
                 data = data.mean(axis=1)
-            # 各セリフの末尾無音をトリム（自然な余韻だけ残す）
-            data = trim_trailing_silence(data, sr)
+            # 蜷・そ繝ｪ繝輔・譛ｫ蟆ｾ辟｡髻ｳ繧偵ヨ繝ｪ繝・郁・辟ｶ縺ｪ菴咎渊縺縺第ｮ九☆・・            data = trim_trailing_silence(data, sr)
             scene_audio.append(data)
 
-            # セリフ間無音（最後のセリフ以外）
-            if i < len(scene_rows) - 1:
+            # 繧ｻ繝ｪ繝暮俣辟｡髻ｳ・域怙蠕後・繧ｻ繝ｪ繝穂ｻ･螟厄ｼ・            if i < len(scene_rows) - 1:
                 silence = np.zeros(int(sr * line_silence))
                 scene_audio.append(silence)
 
@@ -190,38 +174,37 @@ def concat_scenes(project_name: str, line_silence: float = LINE_SILENCE_SEC,
             sf.write(str(scene_path), scene_concat, sr)
             scene_files.append(str(scene_path))
             duration = len(scene_concat) / sr
-            print(f"[ok] {scene_id}.wav ({duration:.1f}秒, {len(scene_rows)}行)")
+            print(f"[ok] {scene_id}.wav ({duration:.1f}遘・ {len(scene_rows)}陦・")
 
             all_audio.append(scene_concat)
-            # シーン間無音
+            # 繧ｷ繝ｼ繝ｳ髢鍋┌髻ｳ
             all_audio.append(np.zeros(int(sr * scene_silence)))
 
-    # 全シーン結合
+    # 蜈ｨ繧ｷ繝ｼ繝ｳ邨仙粋
     if all_audio:
-        # 最後のシーン間無音を除去
+        # 譛蠕後・繧ｷ繝ｼ繝ｳ髢鍋┌髻ｳ繧帝勁蜴ｻ
         if len(all_audio) > 1:
             all_audio = all_audio[:-1]
         full = np.concatenate(all_audio)
         full_path = master_dir / "full_work.wav"
         sf.write(str(full_path), full, sr)
         full_duration = len(full) / sr
-        print(f"\n[ok] full_work.wav ({full_duration:.1f}秒, 全{sum(len(v) for v in scenes.values())}行)")
+        print(f"\n[ok] full_work.wav ({full_duration:.1f}遘・ 蜈ｨ{sum(len(v) for v in scenes.values())}陦・")
         scene_files.append(str(full_path))
 
     return scene_files
 
 
 def wav_to_mp3(project_name: str, source_dir: str = "master") -> list[str]:
-    """WAVファイルをMP3に変換する（配布用）
-
-    参考: https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku
-    ffmpeg VBR qscale:a 2 ≒ 190kbps
+    """WAV繝輔ぃ繧､繝ｫ繧樽P3縺ｫ螟画鋤縺吶ｋ・磯・蟶・畑・・
+    蜿り・ https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku
+    ffmpeg VBR qscale:a 2 竕・190kbps
     """
     import subprocess
     import shutil
 
     if not shutil.which("ffmpeg"):
-        print("[error] ffmpeg が見つかりません。PATH に ffmpeg を追加してください")
+        print("[error] ffmpeg 縺瑚ｦ九▽縺九ｊ縺ｾ縺帙ｓ縲１ATH 縺ｫ ffmpeg 繧定ｿｽ蜉縺励※縺上□縺輔＞")
         return []
 
     project_dir = PROJECTS_DIR / project_name
@@ -231,7 +214,7 @@ def wav_to_mp3(project_name: str, source_dir: str = "master") -> list[str]:
 
     wav_files = sorted(src_dir.glob("*.wav"))
     if not wav_files:
-        print(f"[warn] {src_dir} に WAV ファイルがありません")
+        print(f"[warn] {src_dir} 縺ｫ WAV 繝輔ぃ繧､繝ｫ縺後≠繧翫∪縺帙ｓ")
         return []
 
     mp3_files = []
@@ -246,54 +229,53 @@ def wav_to_mp3(project_name: str, source_dir: str = "master") -> list[str]:
         try:
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
             if result.returncode == 0:
-                # ファイルサイズ表示
+                # 繝輔ぃ繧､繝ｫ繧ｵ繧､繧ｺ陦ｨ遉ｺ
                 wav_size = wav_path.stat().st_size / 1024 / 1024
                 mp3_size = mp3_path.stat().st_size / 1024 / 1024
                 ratio = mp3_size / wav_size * 100 if wav_size > 0 else 0
-                print(f"[ok] {wav_path.name} → {mp3_path.name} ({wav_size:.1f}MB → {mp3_size:.1f}MB, {ratio:.0f}%)")
+                print(f"[ok] {wav_path.name} 竊・{mp3_path.name} ({wav_size:.1f}MB 竊・{mp3_size:.1f}MB, {ratio:.0f}%)")
                 mp3_files.append(str(mp3_path))
             else:
                 print(f"[error] {wav_path.name}: {result.stderr[-100:]}")
         except Exception as e:
             print(f"[error] {wav_path.name}: {e}")
 
-    print(f"\n[ok] MP3変換完了: {len(mp3_files)}/{len(wav_files)}ファイル → {mp3_dir}")
+    print(f"\n[ok] MP3螟画鋤螳御ｺ・ {len(mp3_files)}/{len(wav_files)}繝輔ぃ繧､繝ｫ 竊・{mp3_dir}")
     return mp3_files
 
 
 def run_ma(project_name: str, export_mp3: bool = False,
            audio_subdir: str = "audio") -> list[str]:
-    """MA全工程を実行する"""
-    print(f"=== MAエージェント ===")
+    """MA蜈ｨ蟾･遞九ｒ螳溯｡後☆繧・""
+    print(f"=== MA繧ｨ繝ｼ繧ｸ繧ｧ繝ｳ繝・===")
     if audio_subdir != "audio":
-        print(f"音声ソース: {audio_subdir}/")
+        print(f"髻ｳ螢ｰ繧ｽ繝ｼ繧ｹ: {audio_subdir}/")
 
-    # 1. 承認済み音声をコピー
+    # 1. 謇ｿ隱肴ｸ医∩髻ｳ螢ｰ繧偵さ繝斐・
     copied = copy_approved(project_name, audio_subdir=audio_subdir)
     if copied == 0:
-        print("[info] 承認済み音声がありません")
+        print("[info] 謇ｿ隱肴ｸ医∩髻ｳ螢ｰ縺後≠繧翫∪縺帙ｓ")
         return []
 
-    # 2. シーン結合 + 全体結合
+    # 2. 繧ｷ繝ｼ繝ｳ邨仙粋 + 蜈ｨ菴鍋ｵ仙粋
     files = concat_scenes(project_name)
 
-    # 3. MP3変換（オプション）
-    if export_mp3:
+    # 3. MP3螟画鋤・医が繝励す繝ｧ繝ｳ・・    if export_mp3:
         mp3_files = wav_to_mp3(project_name)
         files.extend(mp3_files)
 
     print(f"\n{'='*50}")
-    print(f"MA完了！出力: D:/irodori/projects/{project_name}/master/")
+    print(f"MA螳御ｺ・ｼ∝・蜉・ E:/irodori/projects/{project_name}/master/")
     return files
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage:")
-        print("  python ma_agent.py <project_name>              -- MA実行")
-        print("  python ma_agent.py <project_name> --auto        -- 自動承認+MA実行")
-        print("  python ma_agent.py <project_name> --mp3         -- MA実行+MP3書き出し")
-        print("  python ma_agent.py <project_name> --mp3-only    -- MP3変換のみ")
+        print("  python ma_agent.py <project_name>              -- MA螳溯｡・)
+        print("  python ma_agent.py <project_name> --auto        -- 閾ｪ蜍墓価隱・MA螳溯｡・)
+        print("  python ma_agent.py <project_name> --mp3         -- MA螳溯｡・MP3譖ｸ縺榊・縺・)
+        print("  python ma_agent.py <project_name> --mp3-only    -- MP3螟画鋤縺ｮ縺ｿ")
         sys.exit(1)
 
     project_name = sys.argv[1]

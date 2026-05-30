@@ -1,17 +1,17 @@
-{
+﻿{
   "profiles": {
-    "りんご_標準": {
-      "caption": "甘く可愛らしい女の子が、明るく元気な声で話している。",
+    "繧翫ｓ縺農讓呎ｺ・: {
+      "caption": "逕倥￥蜿ｯ諢帙ｉ縺励＞螂ｳ縺ｮ蟄舌′縲∵・繧九￥蜈・ｰ励↑螢ｰ縺ｧ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "alternating",
       "num_steps": 50,
-      "lora_path": "D:/irodori/emoji/lora/aoba_ringo_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/aoba_ringo_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     }
   },
   "scene_mapping": {
-    "confessional_futanari": "りんご_標準"
+    "confessional_futanari": "繧翫ｓ縺農讓呎ｺ・
   }
 }

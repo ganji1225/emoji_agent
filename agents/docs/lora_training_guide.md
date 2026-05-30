@@ -1,106 +1,84 @@
-# LoRA 学習ガイド（Irodori-TTS / Emoji-TTS）
-
-参照音声から「固定の声」を作るための LoRA ファインチューニング手順。
-2026-04-25 に voice_ganyu_v1 を作成した時の知見ベース。
-
+﻿# LoRA 蟄ｦ鄙偵ぎ繧､繝会ｼ・rodori-TTS / Emoji-TTS・・
+蜿ら・髻ｳ螢ｰ縺九ｉ縲悟崋螳壹・螢ｰ縲阪ｒ菴懊ｋ縺溘ａ縺ｮ LoRA 繝輔ぃ繧､繝ｳ繝√Η繝ｼ繝九Φ繧ｰ謇矩・・2026-04-25 縺ｫ voice_ganyu_v1 繧剃ｽ懈・縺励◆譎ゅ・遏･隕九・繝ｼ繧ｹ縲・
 ---
 
-## 0. 概要
+## 0. 讎りｦ・
+### LoRA 縺ｧ菴輔′縺ｧ縺阪ｋ縺・- 謨ｰ蜊∵悽縺ｮ蜿ら・髻ｳ螢ｰ縺九ｉ **繧ｭ繝｣繝ｩ蝗ｺ譛峨・螢ｰ** 繧貞ｭｦ鄙・- 繝吶・繧ｹ繝｢繝・Ν・・ratako/Irodori-TTS-500M-v2-VoiceDesign・峨↓ **6.4MB 縺ｮ蟆上＆縺ｪ蟾ｮ蛻・い繝繝励ち** 繧剃ｽ懊ｋ
+- 謗ｨ隲匁凾縺ｫ `--lora-path` 縺ｧ隱ｭ縺ｿ霎ｼ繧縺縺代〒驕ｩ逕ｨ蜿ｯ閭ｽ
+- `--lora-scale 0.0縲・.0` 縺ｧ繝吶・繧ｹ螢ｰ蟇・ｊ or LoRA蟇・ｊ縺ｫ隱ｿ謨ｴ縺ｧ縺阪ｋ
 
-### LoRA で何ができるか
-- 数十本の参照音声から **キャラ固有の声** を学習
-- ベースモデル（Aratako/Irodori-TTS-500M-v2-VoiceDesign）に **6.4MB の小さな差分アダプタ** を作る
-- 推論時に `--lora-path` で読み込むだけで適用可能
-- `--lora-scale 0.0〜2.0` でベース声寄り or LoRA寄りに調整できる
+### 繧ｼ繝ｭ繧ｷ繝ｧ繝・ヨ蜿ら・髻ｳ螢ｰ vs LoRA
 
-### ゼロショット参照音声 vs LoRA
-
-| 観点 | ゼロショット（--ref-wav） | LoRA |
+| 隕ｳ轤ｹ | 繧ｼ繝ｭ繧ｷ繝ｧ繝・ヨ・・-ref-wav・・| LoRA |
 |------|------------------------|------|
-| 必要素材 | 参照音声1本 | 学習用音声 50本前後 |
-| 学習時間 | 不要 | 30〜60分 |
-| 一貫性 | △ ガチャ要素強い | ◎ ほぼ固定 |
-| ストレージ | 0 | ~6MB（アダプタのみ） |
+| 蠢・ｦ∫ｴ譚・| 蜿ら・髻ｳ螢ｰ1譛ｬ | 蟄ｦ鄙堤畑髻ｳ螢ｰ 50譛ｬ蜑榊ｾ・|
+| 蟄ｦ鄙呈凾髢・| 荳崎ｦ・| 30縲・0蛻・|
+| 荳雋ｫ諤ｧ | 笆ｳ 繧ｬ繝√Ε隕∫ｴ蠑ｷ縺・| 笳・縺ｻ縺ｼ蝗ｺ螳・|
+| 繧ｹ繝医Ξ繝ｼ繧ｸ | 0 | ~6MB・医い繝繝励ち縺ｮ縺ｿ・・|
 
-「同じ声で量産したい」なら **LoRA一択**。
-
+縲悟酔縺伜｣ｰ縺ｧ驥冗肇縺励◆縺・阪↑繧・**LoRA荳謚・*縲・
 ---
 
-## 1. 前提環境
-
-### ハードウェア
-- **VRAM 16GB 以上推奨**（RTX 4060 Ti / 5060 Ti クラス）
-- **batch_size=2 + gradient_accumulation=4** が安全圏（実効バッチ=8）
-
-### 必須ライブラリ
+## 1. 蜑肴署迺ｰ蠅・
+### 繝上・繝峨え繧ｧ繧｢
+- **VRAM 16GB 莉･荳頑耳螂ｨ**・・TX 4060 Ti / 5060 Ti 繧ｯ繝ｩ繧ｹ・・- **batch_size=2 + gradient_accumulation=4** 縺悟ｮ牙・蝨擾ｼ亥ｮ溷柑繝舌ャ繝・8・・
+### 蠢・医Λ繧､繝悶Λ繝ｪ
 ```bash
-# Emoji-TTS の venv に必要
-pip install peft faster-whisper librosa soundfile torch
+# Emoji-TTS 縺ｮ venv 縺ｫ蠢・ｦ・pip install peft faster-whisper librosa soundfile torch
 ```
 
-### モデルチェックポイント
-- ベース: `D:/irodori/emoji/checkpoints/Aratako_Irodori-TTS-500M-v2-VoiceDesign/model.safetensors`
-- コーデック: `Aratako/Semantic-DACVAE-Japanese-32dim`（HuggingFace から自動DL）
-
-### `lora_train.py` の修正済みバージョンが必要
-2026-04-25 時点でフォーク版に **VoiceDesign 対応バグが7件** あり、`D:/irodori/emoji/lora_train.py` を修正済み。詳細は §6 トラブルシューティング を参照。
-
+### 繝｢繝・Ν繝√ぉ繝・け繝昴う繝ｳ繝・- 繝吶・繧ｹ: `E:/irodori/emoji/checkpoints/Aratako_Irodori-TTS-500M-v2-VoiceDesign/model.safetensors`
+- 繧ｳ繝ｼ繝・ャ繧ｯ: `Aratako/Semantic-DACVAE-Japanese-32dim`・・uggingFace 縺九ｉ閾ｪ蜍疋L・・
+### `lora_train.py` 縺ｮ菫ｮ豁｣貂医∩繝舌・繧ｸ繝ｧ繝ｳ縺悟ｿ・ｦ・2026-04-25 譎らせ縺ｧ繝輔か繝ｼ繧ｯ迚医↓ **VoiceDesign 蟇ｾ蠢懊ヰ繧ｰ縺・莉ｶ** 縺ゅｊ縲～E:/irodori/emoji/lora_train.py` 繧剃ｿｮ豁｣貂医∩縲りｩｳ邏ｰ縺ｯ ﾂｧ6 繝医Λ繝悶Ν繧ｷ繝･繝ｼ繝・ぅ繝ｳ繧ｰ 繧貞盾辣ｧ縲・
 ---
 
-## 2. パイプライン全体図
+## 2. 繝代う繝励Λ繧､繝ｳ蜈ｨ菴灘峙
 
 ```
-[音声素材].wav
-    ↓ ① スライス（librosa独自）
-[2〜12秒のセグメント].wav × N本
-    ↓ ② Whisper キャプション
-metadata.csv（file_name, text, caption）
-    ↓ ③ DACVAE 潜在変換
+[髻ｳ螢ｰ邏譚疹.wav
+    竊・竭 繧ｹ繝ｩ繧､繧ｹ・・ibrosa迢ｬ閾ｪ・・[2縲・2遘偵・繧ｻ繧ｰ繝｡繝ｳ繝・.wav ﾃ・N譛ｬ
+    竊・竭｡ Whisper 繧ｭ繝｣繝励す繝ｧ繝ｳ
+metadata.csv・・ile_name, text, caption・・    竊・竭｢ DACVAE 貎懷惠螟画鋤
 manifest.jsonl + latents/*.pt
-    ↓ ④ LoRA 学習
-lora_checkpoint_final_ema/
-    ↓ ⑤ 推論で読み込み
-完成音声.wav
+    竊・竭｣ LoRA 蟄ｦ鄙・lora_checkpoint_final_ema/
+    竊・竭､ 謗ｨ隲悶〒隱ｭ縺ｿ霎ｼ縺ｿ
+螳梧・髻ｳ螢ｰ.wav
 ```
 
 ---
 
-## 3. データ準備
+## 3. 繝・・繧ｿ貅門ｙ
 
-### Step 1: 音声素材の置き場所
+### Step 1: 髻ｳ螢ｰ邏譚舌・鄂ｮ縺榊ｴ謇
 ```
-D:/irodori/emoji/input/{voice_name}/*.wav
+E:/irodori/emoji/input/{voice_name}/*.wav
 ```
 
-**素材の目安：**
-| 観点 | 推奨 |
+**邏譚舌・逶ｮ螳会ｼ・*
+| 隕ｳ轤ｹ | 謗ｨ螂ｨ |
 |------|------|
-| 合計時間 | 5〜30分 |
-| 1ファイル長 | 何分でも可（後でスライス） |
-| サンプルレート | 48kHz推奨（自動でリサンプル） |
-| バリエーション | 平静・喜怒哀楽が混ざってると◎ |
+| 蜷郁ｨ域凾髢・| 5縲・0蛻・|
+| 1繝輔ぃ繧､繝ｫ髟ｷ | 菴募・縺ｧ繧ょ庄・亥ｾ後〒繧ｹ繝ｩ繧､繧ｹ・・|
+| 繧ｵ繝ｳ繝励Ν繝ｬ繝ｼ繝・| 48kHz謗ｨ螂ｨ・郁・蜍輔〒繝ｪ繧ｵ繝ｳ繝励Ν・・|
+| 繝舌Μ繧ｨ繝ｼ繧ｷ繝ｧ繝ｳ | 蟷ｳ髱吶・蝟懈貞凍讌ｽ縺梧ｷｷ縺悶▲縺ｦ繧九→笳・|
 
-### Step 2: 作業ディレクトリ作成
+### Step 2: 菴懈･ｭ繝・ぅ繝ｬ繧ｯ繝医Μ菴懈・
 ```bash
-mkdir -p D:/irodori/emoji/data/{voice_name}/slices
-mkdir -p D:/irodori/emoji/data/{voice_name}/latents
+mkdir -p E:/irodori/emoji/data/{voice_name}/slices
+mkdir -p E:/irodori/emoji/data/{voice_name}/latents
 ```
 
-### Step 3: スライス（librosa 独自スクリプト）
-
-**注意：** Emoji-TTS の `dataset_tools.py slice` は torchcodec を使うが、**FFmpeg 8.0 環境では動作しない**。代替として以下を実行：
-
+### Step 3: 繧ｹ繝ｩ繧､繧ｹ・・ibrosa 迢ｬ閾ｪ繧ｹ繧ｯ繝ｪ繝励ヨ・・
+**豕ｨ諢擾ｼ・* Emoji-TTS 縺ｮ `dataset_tools.py slice` 縺ｯ torchcodec 繧剃ｽｿ縺・′縲・*FFmpeg 8.0 迺ｰ蠅・〒縺ｯ蜍穂ｽ懊＠縺ｪ縺・*縲ゆｻ｣譖ｿ縺ｨ縺励※莉･荳九ｒ螳溯｡鯉ｼ・
 ```python
-# librosa_slicer.py（インラインで実行可）
-import os, glob
+# librosa_slicer.py・医う繝ｳ繝ｩ繧､繝ｳ縺ｧ螳溯｡悟庄・・import os, glob
 import numpy as np, soundfile as sf, librosa
 
-INPUT_DIR = 'D:/irodori/emoji/input/{voice_name}'
-OUTPUT_DIR = 'D:/irodori/emoji/data/{voice_name}/slices'
+INPUT_DIR = 'E:/irodori/emoji/input/{voice_name}'
+OUTPUT_DIR = 'E:/irodori/emoji/data/{voice_name}/slices'
 MIN_SEC = 2.0
 MAX_SEC = 12.0
-TOP_DB = 35  # 無音判定（dB）
-
+TOP_DB = 35  # 辟｡髻ｳ蛻､螳夲ｼ・B・・
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 files = sorted(glob.glob(f'{INPUT_DIR}/*.wav'))
 
@@ -118,7 +96,7 @@ for f in files:
         total_out += 1
         continue
 
-    # 12秒超: 無音区間で分割
+    # 12遘定ｶ・ 辟｡髻ｳ蛹ｺ髢薙〒蛻・牡
     intervals = librosa.effects.split(data, top_db=TOP_DB, frame_length=2048, hop_length=512)
     segments = []
     cur_start, cur_end = None, None
@@ -167,40 +145,38 @@ for f in files:
         sf.write(f'{OUTPUT_DIR}/{base}_{i+1:03d}.wav', data[s_pad:e_pad], sr)
         total_out += 1
 
-print(f'スライス出力: {total_out}本')
+print(f'繧ｹ繝ｩ繧､繧ｹ蜃ｺ蜉・ {total_out}譛ｬ')
 ```
 
-### Step 4: Whisper でキャプション生成
+### Step 4: Whisper 縺ｧ繧ｭ繝｣繝励す繝ｧ繝ｳ逕滓・
 
 ```bash
-cd D:/irodori/emoji && .venv/Scripts/python.exe dataset_tools.py caption \
+cd E:/irodori/emoji && .venv/Scripts/python.exe dataset_tools.py caption \
   --input data/{voice_name}/slices \
   --output-manifest data/{voice_name}/manifest_raw.csv \
   --format csv \
   --model large-v3 \
   --language ja \
   --voice-design \
-  --voice-design-caption "{キャラの声を表現するキャプション文}" \
+  --voice-design-caption "{繧ｭ繝｣繝ｩ縺ｮ螢ｰ繧定｡ｨ迴ｾ縺吶ｋ繧ｭ繝｣繝励す繝ｧ繝ｳ譁・" \
   --device cuda
 ```
 
-**voice-design-caption の例：**
-- 落ち着いた女性: `"穏やかで優しい若い女性が、落ち着いた静かな声で丁寧に話している。"`
-- 元気な少女: `"明るく元気な少女が、はきはきとよく通る声で話している。"`
-- クールな大人: `"クールで知的な女性が、低めの落ち着いた声で淡々と話している。"`
+**voice-design-caption 縺ｮ萓具ｼ・*
+- 關ｽ縺｡逹縺・◆螂ｳ諤ｧ: `"遨上ｄ縺九〒蜆ｪ縺励＞闍･縺・･ｳ諤ｧ縺後∬誠縺｡逹縺・◆髱吶°縺ｪ螢ｰ縺ｧ荳∝ｯｧ縺ｫ隧ｱ縺励※縺・ｋ縲・`
+- 蜈・ｰ励↑蟆大･ｳ: `"譏弱ｋ縺丞・豌励↑蟆大･ｳ縺後√・縺阪・縺阪→繧医￥騾壹ｋ螢ｰ縺ｧ隧ｱ縺励※縺・ｋ縲・`
+- 繧ｯ繝ｼ繝ｫ縺ｪ螟ｧ莠ｺ: `"繧ｯ繝ｼ繝ｫ縺ｧ遏･逧・↑螂ｳ諤ｧ縺後∽ｽ弱ａ縺ｮ關ｽ縺｡逹縺・◆螢ｰ縺ｧ豺｡縲・→隧ｱ縺励※縺・ｋ縲・`
 
-### Step 5: audiofolder 形式に整形
+### Step 5: audiofolder 蠖｢蠑上↓謨ｴ蠖｢
 
 ```bash
 cp data/{voice_name}/manifest_raw.csv data/{voice_name}/slices/metadata.csv
 ```
 
-### Step 6: DACVAE 潜在変換（torchcodec バイパス版）
-
-`D:/irodori/emoji/custom_prepare_manifest.py` を使う（このスクリプトは2026-04-25に作成、torchcodec/HF datasets を経由しない簡易版）。
-
+### Step 6: DACVAE 貎懷惠螟画鋤・・orchcodec 繝舌う繝代せ迚茨ｼ・
+`E:/irodori/emoji/custom_prepare_manifest.py` 繧剃ｽｿ縺・ｼ医％縺ｮ繧ｹ繧ｯ繝ｪ繝励ヨ縺ｯ2026-04-25縺ｫ菴懈・縲》orchcodec/HF datasets 繧堤ｵ檎罰縺励↑縺・ｰ｡譏鍋沿・峨・
 ```bash
-cd D:/irodori/emoji && .venv/Scripts/python.exe custom_prepare_manifest.py \
+cd E:/irodori/emoji && .venv/Scripts/python.exe custom_prepare_manifest.py \
   --csv data/{voice_name}/manifest_raw.csv \
   --audio-dir data/{voice_name}/slices \
   --output-manifest data/{voice_name}/manifest.jsonl \
@@ -209,18 +185,14 @@ cd D:/irodori/emoji && .venv/Scripts/python.exe custom_prepare_manifest.py \
   --device cuda
 ```
 
-### Step 7: manifest.jsonl のパス確認
-
-`latent_path` が **manifest.jsonl と同じディレクトリからの相対パス** になっているか確認。`data/{voice_name}/latents/...` のような階層が含まれている場合は、`latents/{filename}.pt` だけに修正する。
-
+### Step 7: manifest.jsonl 縺ｮ繝代せ遒ｺ隱・
+`latent_path` 縺・**manifest.jsonl 縺ｨ蜷後§繝・ぅ繝ｬ繧ｯ繝医Μ縺九ｉ縺ｮ逶ｸ蟇ｾ繝代せ** 縺ｫ縺ｪ縺｣縺ｦ縺・ｋ縺狗｢ｺ隱阪Ａdata/{voice_name}/latents/...` 縺ｮ繧医≧縺ｪ髫主ｱ､縺悟性縺ｾ繧後※縺・ｋ蝣ｴ蜷医・縲～latents/{filename}.pt` 縺縺代↓菫ｮ豁｣縺吶ｋ縲・
 ---
 
-## 4. LoRA 学習
-
-### コマンド（推奨パラメータ）
-
+## 4. LoRA 蟄ｦ鄙・
+### 繧ｳ繝槭Φ繝会ｼ域耳螂ｨ繝代Λ繝｡繝ｼ繧ｿ・・
 ```bash
-cd D:/irodori/emoji && .venv/Scripts/python.exe lora_train.py \
+cd E:/irodori/emoji && .venv/Scripts/python.exe lora_train.py \
   --base-model checkpoints/Aratako_Irodori-TTS-500M-v2-VoiceDesign/model.safetensors \
   --manifest data/{voice_name}/manifest.jsonl \
   --output-dir lora/voice_{voice_name}_v1 \
@@ -240,44 +212,39 @@ cd D:/irodori/emoji && .venv/Scripts/python.exe lora_train.py \
   --log-every 50
 ```
 
-### ⚠️ 重要な注意点
+### 笞・・驥崎ｦ√↑豕ｨ諢冗せ
 
-| 項目 | 設定 | 理由 |
+| 鬆・岼 | 險ｭ螳・| 逅・罰 |
 |------|------|------|
-| `--grad-checkpoint` | **使わない** | VoiceDesignモデルの caption 引数と非互換 |
-| `--batch-size` | **2** | grad_checkpoint なしだと VRAM 余裕が必要 |
-| `--gradient-accumulation-steps` | **4** | 実効バッチを 8 に保つ |
-| `--max-steps` | **3000** | 50件前後のデータで適切。多すぎると過学習 |
+| `--grad-checkpoint` | **菴ｿ繧上↑縺・* | VoiceDesign繝｢繝・Ν縺ｮ caption 蠑墓焚縺ｨ髱樔ｺ呈鋤 |
+| `--batch-size` | **2** | grad_checkpoint 縺ｪ縺励□縺ｨ VRAM 菴呵｣輔′蠢・ｦ・|
+| `--gradient-accumulation-steps` | **4** | 螳溷柑繝舌ャ繝√ｒ 8 縺ｫ菫昴▽ |
+| `--max-steps` | **3000** | 50莉ｶ蜑榊ｾ後・繝・・繧ｿ縺ｧ驕ｩ蛻・ょ､壹☆縺弱ｋ縺ｨ驕主ｭｦ鄙・|
 
-### 学習中の指標
-- 初期 loss: 0.85〜0.95
-- 終盤 loss: 0.45〜0.55 程度まで下がれば学習成功
-- 速度: RTX 5060 Ti で 1.7 steps/sec、3000 step = 約30分
-
-### 出力ファイル
+### 蟄ｦ鄙剃ｸｭ縺ｮ謖・ｨ・- 蛻晄悄 loss: 0.85縲・.95
+- 邨ら乢 loss: 0.45縲・.55 遞句ｺｦ縺ｾ縺ｧ荳九′繧後・蟄ｦ鄙呈・蜉・- 騾溷ｺｦ: RTX 5060 Ti 縺ｧ 1.7 steps/sec縲・000 step = 邏・0蛻・
+### 蜃ｺ蜉帙ヵ繧｡繧､繝ｫ
 ```
 lora/voice_{voice_name}_v1/
-  ├─ lora_checkpoint_0000500_ema/
-  ├─ lora_checkpoint_0001000_ema/
-  ├─ lora_checkpoint_0001500_ema/
-  ├─ lora_checkpoint_0002000_ema/
-  ├─ lora_checkpoint_0002500_ema/
-  ├─ lora_checkpoint_0003000_ema/
-  └─ lora_checkpoint_final_ema/   ← これを使う
-```
+  笏懌楳 lora_checkpoint_0000500_ema/
+  笏懌楳 lora_checkpoint_0001000_ema/
+  笏懌楳 lora_checkpoint_0001500_ema/
+  笏懌楳 lora_checkpoint_0002000_ema/
+  笏懌楳 lora_checkpoint_0002500_ema/
+  笏懌楳 lora_checkpoint_0003000_ema/
+  笏披楳 lora_checkpoint_final_ema/   竊・縺薙ｌ繧剃ｽｿ縺・```
 
 ---
 
-## 5. 推論で使う
-
-### 単発生成
+## 5. 謗ｨ隲悶〒菴ｿ縺・
+### 蜊倡匱逕滓・
 
 ```bash
-cd D:/irodori/emoji && .venv/Scripts/python.exe infer.py \
+cd E:/irodori/emoji && .venv/Scripts/python.exe infer.py \
   --hf-checkpoint Aratako/Irodori-TTS-500M-v2-VoiceDesign \
   --codec-repo Aratako/Semantic-DACVAE-Japanese-32dim \
-  --text "セリフテキスト" \
-  --caption "声のキャラ説明文" \
+  --text "繧ｻ繝ｪ繝輔ユ繧ｭ繧ｹ繝・ \
+  --caption "螢ｰ縺ｮ繧ｭ繝｣繝ｩ隱ｬ譏取枚" \
   --no-ref \
   --num-steps 40 \
   --num-candidates 3 \
@@ -292,140 +259,114 @@ cd D:/irodori/emoji && .venv/Scripts/python.exe infer.py \
   --no-show-timings
 ```
 
-### `--lora-scale` の調整目安
-
-| スケール | 効果 |
+### `--lora-scale` 縺ｮ隱ｿ謨ｴ逶ｮ螳・
+| 繧ｹ繧ｱ繝ｼ繝ｫ | 蜉ｹ譫・|
 |---------|------|
-| 0.0 | LoRA 無効化（ベース声のみ） |
-| 0.5 | ベース寄り、LoRA はうっすら |
-| 1.0 | 標準。学習通りの声 |
-| 1.5 | LoRA 強調。声質固定が強い |
-| 2.0 以上 | ノイズ・崩壊リスク高い |
+| 0.0 | LoRA 辟｡蜉ｹ蛹厄ｼ医・繝ｼ繧ｹ螢ｰ縺ｮ縺ｿ・・|
+| 0.5 | 繝吶・繧ｹ蟇・ｊ縲´oRA 縺ｯ縺・▲縺吶ｉ |
+| 1.0 | 讓呎ｺ悶ょｭｦ鄙帝壹ｊ縺ｮ螢ｰ |
+| 1.5 | LoRA 蠑ｷ隱ｿ縲ょ｣ｰ雉ｪ蝗ｺ螳壹′蠑ｷ縺・|
+| 2.0 莉･荳・| 繝弱う繧ｺ繝ｻ蟠ｩ螢翫Μ繧ｹ繧ｯ鬮倥＞ |
 
 ---
 
-## 6. トラブルシューティング（2026-04-25 で発生した実績）
+## 6. 繝医Λ繝悶Ν繧ｷ繝･繝ｼ繝・ぅ繝ｳ繧ｰ・・026-04-25 縺ｧ逋ｺ逕溘＠縺溷ｮ溽ｸｾ・・
+### 繝舌げ竭 `max_caption_len` got an unexpected keyword
+**逞・憾:** `TypeError: ModelConfig.__init__() got an unexpected keyword argument 'max_caption_len'`
+**蜴溷屏:** VoiceDesign 縺ｮ safetensors metadata 縺ｫ `max_caption_len` (TrainConfig 繝輔ぅ繝ｼ繝ｫ繝・ 縺梧ｷｷ蜈･
+**菫ｮ豁｣:** `lora_train.py` `_load_base_model()` 縺ｮ `_INF_KEYS` 縺ｫ `max_caption_len` 繧定ｿｽ蜉縺励～fields(ModelConfig)` 縺ｧ繝輔ぅ繝ｫ繧ｿ
 
-### バグ① `max_caption_len` got an unexpected keyword
-**症状:** `TypeError: ModelConfig.__init__() got an unexpected keyword argument 'max_caption_len'`
-**原因:** VoiceDesign の safetensors metadata に `max_caption_len` (TrainConfig フィールド) が混入
-**修正:** `lora_train.py` `_load_base_model()` の `_INF_KEYS` に `max_caption_len` を追加し、`fields(ModelConfig)` でフィルタ
+### 繝舌げ竭｡ `latent_patch_size` 蠑墓焚縺檎┌縺・**逞・憾:** `TypeError: LatentTextDataset.__init__() got an unexpected keyword argument 'latent_patch_size'`
+**蜴溷屏:** dataset.py 縺ｮAPI螟画峩・・latent_patch_size` 蠑墓焚縺悟炎髯､・・**菫ｮ豁｣:** `lora_train.py` 縺ｮ `LatentTextDataset(...)` 3邂・園縺九ｉ `latent_patch_size=...` 繧貞炎髯､
 
-### バグ② `latent_patch_size` 引数が無い
-**症状:** `TypeError: LatentTextDataset.__init__() got an unexpected keyword argument 'latent_patch_size'`
-**原因:** dataset.py のAPI変更（`latent_patch_size` 引数が削除）
-**修正:** `lora_train.py` の `LatentTextDataset(...)` 3箇所から `latent_patch_size=...` を削除
-
-### バグ③ caption_tokenizer が必須
-**症状:** `TypeError: TTSCollator.__init__() missing 1 required positional argument: 'caption_tokenizer'`
-**修正:** VoiceDesign 用に `PretrainedTextTokenizer.from_pretrained()` で caption tokenizer を構築して渡す
-
-### バグ④ caption_input_ids が渡ってない
-**症状:** `ValueError: caption_input_ids and caption_mask are required when caption conditioning is enabled.`
-**修正:** 学習ループで `batch["caption_ids"]` / `batch["caption_mask"]` を取り出して `model()` に渡す
-
-### バグ⑤ gradient_checkpoint で caption 非対応
-**症状:** `TypeError: ... checkpointed() got an unexpected keyword argument 'caption_state'`
-**回避策:** `--grad-checkpoint` を**使わない**。代わりに `batch_size=2 / gradient-accumulation=4` で対応
-
-### バグ⑥ torchcodec が FFmpeg 8 と非互換
-**症状:** `OSError: Could not load this library: ... libtorchcodec_core8.dll`
-**回避策:** `dataset_tools.py slice` は使わず **librosa 独自スライサー** を使う、`prepare_manifest.py` も使わず **`custom_prepare_manifest.py`** を使う
-
-### バグ⑦ manifest の latent_path が二重結合
-**症状:** `FileNotFoundError: ...\data\ganyu_v1\data\ganyu_v1\latents\xxx.pt`
-**原因:** prepare_manifest 実行時に相対パスで指定するとパスが二重結合される
-**修正:** manifest.jsonl の `latent_path` を `latents/{filename}.pt` だけの相対パスに書き換える
+### 繝舌げ竭｢ caption_tokenizer 縺悟ｿ・・**逞・憾:** `TypeError: TTSCollator.__init__() missing 1 required positional argument: 'caption_tokenizer'`
+**菫ｮ豁｣:** VoiceDesign 逕ｨ縺ｫ `PretrainedTextTokenizer.from_pretrained()` 縺ｧ caption tokenizer 繧呈ｧ狗ｯ峨＠縺ｦ貂｡縺・
+### 繝舌げ竭｣ caption_input_ids 縺梧ｸ｡縺｣縺ｦ縺ｪ縺・**逞・憾:** `ValueError: caption_input_ids and caption_mask are required when caption conditioning is enabled.`
+**菫ｮ豁｣:** 蟄ｦ鄙偵Ν繝ｼ繝励〒 `batch["caption_ids"]` / `batch["caption_mask"]` 繧貞叙繧雁・縺励※ `model()` 縺ｫ貂｡縺・
+### 繝舌げ竭､ gradient_checkpoint 縺ｧ caption 髱槫ｯｾ蠢・**逞・憾:** `TypeError: ... checkpointed() got an unexpected keyword argument 'caption_state'`
+**蝗樣∩遲・** `--grad-checkpoint` 繧・*菴ｿ繧上↑縺・*縲ゆｻ｣繧上ｊ縺ｫ `batch_size=2 / gradient-accumulation=4` 縺ｧ蟇ｾ蠢・
+### 繝舌げ竭･ torchcodec 縺・FFmpeg 8 縺ｨ髱樔ｺ呈鋤
+**逞・憾:** `OSError: Could not load this library: ... libtorchcodec_core8.dll`
+**蝗樣∩遲・** `dataset_tools.py slice` 縺ｯ菴ｿ繧上★ **librosa 迢ｬ閾ｪ繧ｹ繝ｩ繧､繧ｵ繝ｼ** 繧剃ｽｿ縺・～prepare_manifest.py` 繧ゆｽｿ繧上★ **`custom_prepare_manifest.py`** 繧剃ｽｿ縺・
+### 繝舌げ竭ｦ manifest 縺ｮ latent_path 縺御ｺ碁㍾邨仙粋
+**逞・憾:** `FileNotFoundError: ...\data\ganyu_v1\data\ganyu_v1\latents\xxx.pt`
+**蜴溷屏:** prepare_manifest 螳溯｡梧凾縺ｫ逶ｸ蟇ｾ繝代せ縺ｧ謖・ｮ壹☆繧九→繝代せ縺御ｺ碁㍾邨仙粋縺輔ｌ繧・**菫ｮ豁｣:** manifest.jsonl 縺ｮ `latent_path` 繧・`latents/{filename}.pt` 縺縺代・逶ｸ蟇ｾ繝代せ縺ｫ譖ｸ縺肴鋤縺医ｋ
 
 ---
 
-## 7. ファイル整理
-
-### 中間チェックポイントの削除
-学習完了後、`lora_checkpoint_final_ema` 以外は通常不要：
-
+## 7. 繝輔ぃ繧､繝ｫ謨ｴ逅・
+### 荳ｭ髢薙メ繧ｧ繝・け繝昴う繝ｳ繝医・蜑企勁
+蟄ｦ鄙貞ｮ御ｺ・ｾ後～lora_checkpoint_final_ema` 莉･螟悶・騾壼ｸｸ荳崎ｦ・ｼ・
 ```bash
-rm -rf D:/irodori/emoji/lora/voice_{voice_name}_v1/lora_checkpoint_0000500_ema \
-       D:/irodori/emoji/lora/voice_{voice_name}_v1/lora_checkpoint_0001000_ema \
-       D:/irodori/emoji/lora/voice_{voice_name}_v1/lora_checkpoint_0001500_ema \
-       D:/irodori/emoji/lora/voice_{voice_name}_v1/lora_checkpoint_0002000_ema \
-       D:/irodori/emoji/lora/voice_{voice_name}_v1/lora_checkpoint_0002500_ema \
-       D:/irodori/emoji/lora/voice_{voice_name}_v1/lora_checkpoint_0003000_ema
+rm -rf E:/irodori/emoji/lora/voice_{voice_name}_v1/lora_checkpoint_0000500_ema \
+       E:/irodori/emoji/lora/voice_{voice_name}_v1/lora_checkpoint_0001000_ema \
+       E:/irodori/emoji/lora/voice_{voice_name}_v1/lora_checkpoint_0001500_ema \
+       E:/irodori/emoji/lora/voice_{voice_name}_v1/lora_checkpoint_0002000_ema \
+       E:/irodori/emoji/lora/voice_{voice_name}_v1/lora_checkpoint_0002500_ema \
+       E:/irodori/emoji/lora/voice_{voice_name}_v1/lora_checkpoint_0003000_ema
 ```
 
-**残す理由がある場合：**
-- 過学習が疑わしい → 中盤（1500step）と比較したい
-- A/B テストしたい → 各ステップを並べて聴き比べ
+**谿九☆逅・罰縺後≠繧句ｴ蜷茨ｼ・*
+- 驕主ｭｦ鄙偵′逍代ｏ縺励＞ 竊・荳ｭ逶､・・500step・峨→豈碑ｼ・＠縺溘＞
+- A/B 繝・せ繝医＠縺溘＞ 竊・蜷・せ繝・ャ繝励ｒ荳ｦ縺ｹ縺ｦ閨ｴ縺肴ｯ斐∋
 
-### スライス・潜在ファイル
-学習が完了して LoRA が問題なく動いていれば、スライスと潜在も削除可（再学習する時はまた作り直し）：
-
+### 繧ｹ繝ｩ繧､繧ｹ繝ｻ貎懷惠繝輔ぃ繧､繝ｫ
+蟄ｦ鄙偵′螳御ｺ・＠縺ｦ LoRA 縺悟撫鬘後↑縺丞虚縺・※縺・ｌ縺ｰ縲√せ繝ｩ繧､繧ｹ縺ｨ貎懷惠繧ょ炎髯､蜿ｯ・亥・蟄ｦ鄙偵☆繧区凾縺ｯ縺ｾ縺滉ｽ懊ｊ逶ｴ縺暦ｼ会ｼ・
 ```bash
-# 容量逼迫してから消すで十分
-rm -rf D:/irodori/emoji/data/{voice_name}/
+# 螳ｹ驥城ｼ霑ｫ縺励※縺九ｉ豸医☆縺ｧ蜊∝・
+rm -rf E:/irodori/emoji/data/{voice_name}/
 ```
 
 ---
 
-## 8. パイプラインへの組み込み（実装済み 2026-04-25）
-
-production.csv に `lora_path` / `lora_scale` 列が追加されており、recorder.py が自動的に読み取って infer.py に渡す。**Claude エージェント経由 / CLI 直接実行どちらでも適用される**。
-
-### 使い方 A: set_lora.py で一括設定（推奨）
-
+## 8. 繝代う繝励Λ繧､繝ｳ縺ｸ縺ｮ邨・∩霎ｼ縺ｿ・亥ｮ溯｣・ｸ医∩ 2026-04-25・・
+production.csv 縺ｫ `lora_path` / `lora_scale` 蛻励′霑ｽ蜉縺輔ｌ縺ｦ縺翫ｊ縲〉ecorder.py 縺瑚・蜍慕噪縺ｫ隱ｭ縺ｿ蜿悶▲縺ｦ infer.py 縺ｫ貂｡縺吶・*Claude 繧ｨ繝ｼ繧ｸ繧ｧ繝ｳ繝育ｵ檎罰 / CLI 逶ｴ謗･螳溯｡後←縺｡繧峨〒繧る←逕ｨ縺輔ｌ繧・*縲・
+### 菴ｿ縺・婿 A: set_lora.py 縺ｧ荳諡ｬ險ｭ螳夲ｼ域耳螂ｨ・・
 ```bash
-# 全行に適用
-python D:/irodori/agents/set_lora.py {project_name} --lora voice_ganyu_v1 --scale 1.0
+# 蜈ｨ陦後↓驕ｩ逕ｨ
+python E:/irodori/agents/set_lora.py {project_name} --lora voice_ganyu_v1 --scale 1.0
 
-# 特定シーンだけ
-python D:/irodori/agents/set_lora.py {project_name} --lora voice_ganyu_v1 --scenes scene_01,scene_02
+# 迚ｹ螳壹す繝ｼ繝ｳ縺縺・python E:/irodori/agents/set_lora.py {project_name} --lora voice_ganyu_v1 --scenes scene_01,scene_02
 
-# 特定 status の行だけ
-python D:/irodori/agents/set_lora.py {project_name} --lora voice_ganyu_v1 --status pending
+# 迚ｹ螳・status 縺ｮ陦後□縺・python E:/irodori/agents/set_lora.py {project_name} --lora voice_ganyu_v1 --status pending
 
-# 解除
-python D:/irodori/agents/set_lora.py {project_name} --clear
+# 隗｣髯､
+python E:/irodori/agents/set_lora.py {project_name} --clear
 
-# 現在の設定確認
-python D:/irodori/agents/set_lora.py {project_name} --show
+# 迴ｾ蝨ｨ縺ｮ險ｭ螳夂｢ｺ隱・python E:/irodori/agents/set_lora.py {project_name} --show
 ```
 
-LoRA 名の解決：
-1. 絶対パス指定 → そのまま
-2. 名前のみ指定 → `D:/irodori/emoji/lora/{name}/lora_checkpoint_final_ema` を自動探索
+LoRA 蜷阪・隗｣豎ｺ・・1. 邨ｶ蟇ｾ繝代せ謖・ｮ・竊・縺昴・縺ｾ縺ｾ
+2. 蜷榊燕縺ｮ縺ｿ謖・ｮ・竊・`E:/irodori/emoji/lora/{name}/lora_checkpoint_final_ema` 繧定・蜍墓爾邏｢
 
-### 使い方 B: default_captions.json プロファイルで紐付け
+### 菴ｿ縺・婿 B: default_captions.json 繝励Ο繝輔ぃ繧､繝ｫ縺ｧ邏蝉ｻ倥￠
 
 ```json
-"日常会話_甘雨": {
-  "caption": "穏やかで優しい若い女性が、落ち着いた静かな声で丁寧に話している。",
+"譌･蟶ｸ莨夊ｩｱ_逕倬岑": {
+  "caption": "遨上ｄ縺九〒蜆ｪ縺励＞闍･縺・･ｳ諤ｧ縺後∬誠縺｡逹縺・◆髱吶°縺ｪ螢ｰ縺ｧ荳∝ｯｧ縺ｫ隧ｱ縺励※縺・ｋ縲・,
   "cfg_text": 3.0,
   "cfg_caption": 3.0,
   "cfg_speaker": 5.0,
   "cfg_guidance_mode": "joint",
   "num_steps": 40,
-  "lora_path": "D:/irodori/emoji/lora/voice_ganyu_v1/lora_checkpoint_final_ema",
+  "lora_path": "E:/irodori/emoji/lora/voice_ganyu_v1/lora_checkpoint_final_ema",
   "lora_scale": 1.0
 }
 ```
 
-→ casting apply / grok_bridge process 時に自動で production.csv に書き込まれる。
-
-### 起動経路に関わらず適用される
-
-- ✅ Claude エージェント（recorder）経由
-- ✅ CLI 直接（`python recorder.py {project_name}`）
-
-判断は production.csv の `lora_path` 列1箇所に集約されているため、起動経路を問わず同じ動作になる。
-
+竊・casting apply / grok_bridge process 譎ゅ↓閾ｪ蜍輔〒 production.csv 縺ｫ譖ｸ縺崎ｾｼ縺ｾ繧後ｋ縲・
+### 襍ｷ蜍慕ｵ瑚ｷｯ縺ｫ髢｢繧上ｉ縺夐←逕ｨ縺輔ｌ繧・
+- 笨・Claude 繧ｨ繝ｼ繧ｸ繧ｧ繝ｳ繝茨ｼ・ecorder・臥ｵ檎罰
+- 笨・CLI 逶ｴ謗･・・python recorder.py {project_name}`・・
+蛻､譁ｭ縺ｯ production.csv 縺ｮ `lora_path` 蛻・邂・園縺ｫ髮・ｴ・＆繧後※縺・ｋ縺溘ａ縲∬ｵｷ蜍慕ｵ瑚ｷｯ繧貞撫繧上★蜷後§蜍穂ｽ懊↓縺ｪ繧九・
 ---
 
-## 9. 参考資料
+## 9. 蜿り・ｳ・侭
 
-- [Emoji-TTS README_ja.md](D:/irodori/emoji/README_ja.md)
+- [Emoji-TTS README_ja.md](E:/irodori/emoji/README_ja.md)
 - [HuggingFace - Aratako/Irodori-TTS-500M-v2-VoiceDesign](https://huggingface.co/Aratako/Irodori-TTS-500M-v2-VoiceDesign)
 - [PEFT (Parameter-Efficient Fine-Tuning)](https://github.com/huggingface/peft)
 
 ---
 
-**最終更新: 2026-04-25 / 初版作成: voice_ganyu_v1 制作時**
+**譛邨よ峩譁ｰ: 2026-04-25 / 蛻晉沿菴懈・: voice_ganyu_v1 蛻ｶ菴懈凾**

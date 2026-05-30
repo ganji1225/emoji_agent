@@ -1,28 +1,23 @@
-#!/usr/bin/env python3
-"""LoRA 設定スクリプト - production.csv の lora_path / lora_scale 列を一括設定する
-
-使い方:
-  # 全行に適用
+﻿#!/usr/bin/env python3
+"""LoRA 險ｭ螳壹せ繧ｯ繝ｪ繝励ヨ - production.csv 縺ｮ lora_path / lora_scale 蛻励ｒ荳諡ｬ險ｭ螳壹☆繧・
+菴ｿ縺・婿:
+  # 蜈ｨ陦後↓驕ｩ逕ｨ
   python set_lora.py <project_name> --lora <lora_name_or_path> [--scale 1.0]
 
-  # 特定シーンだけ適用
+  # 迚ｹ螳壹す繝ｼ繝ｳ縺縺鷹←逕ｨ
   python set_lora.py <project_name> --lora <lora_name_or_path> --scenes scene_01,scene_02
 
-  # 特定 status の行だけ適用（デフォルトは全 status 対象）
-  python set_lora.py <project_name> --lora <lora_name_or_path> --status pending
+  # 迚ｹ螳・status 縺ｮ陦後□縺鷹←逕ｨ・医ョ繝輔か繝ｫ繝医・蜈ｨ status 蟇ｾ雎｡・・  python set_lora.py <project_name> --lora <lora_name_or_path> --status pending
 
-  # クリア（LoRA 解除）
-  python set_lora.py <project_name> --clear
+  # 繧ｯ繝ｪ繧｢・・oRA 隗｣髯､・・  python set_lora.py <project_name> --clear
   python set_lora.py <project_name> --clear --scenes scene_01
 
-  # 現在の設定を確認
-  python set_lora.py <project_name> --show
+  # 迴ｾ蝨ｨ縺ｮ險ｭ螳壹ｒ遒ｺ隱・  python set_lora.py <project_name> --show
 
-LoRA 名の解決ルール:
-  1. 絶対パス（D:/... または C:/...）→ そのまま
-  2. ディレクトリが存在する相対パス → 絶対パスに変換
-  3. それ以外 → 'D:/irodori/emoji/lora/{name}/lora_checkpoint_final_ema' を試す
-"""
+LoRA 蜷阪・隗｣豎ｺ繝ｫ繝ｼ繝ｫ:
+  1. 邨ｶ蟇ｾ繝代せ・・:/... 縺ｾ縺溘・ C:/...・俄・ 縺昴・縺ｾ縺ｾ
+  2. 繝・ぅ繝ｬ繧ｯ繝医Μ縺悟ｭ伜惠縺吶ｋ逶ｸ蟇ｾ繝代せ 竊・邨ｶ蟇ｾ繝代せ縺ｫ螟画鋤
+  3. 縺昴ｌ莉･螟・竊・'E:/irodori/emoji/lora/{name}/lora_checkpoint_final_ema' 繧定ｩｦ縺・"""
 import csv
 import os
 import sys
@@ -33,59 +28,56 @@ if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-PROJECTS_DIR = Path("D:/irodori/projects")
-LORA_BASE_DIR = Path("D:/irodori/emoji/lora")
+PROJECTS_DIR = Path("E:/irodori/projects")
+LORA_BASE_DIR = Path("E:/irodori/emoji/lora")
 
 
 def resolve_lora_path(lora_arg: str) -> str:
-    """LoRA 引数を絶対パスに解決する"""
+    """LoRA 蠑墓焚繧堤ｵｶ蟇ｾ繝代せ縺ｫ隗｣豎ｺ縺吶ｋ"""
     p = Path(lora_arg)
 
-    # 絶対パスならそのまま
+    # 邨ｶ蟇ｾ繝代せ縺ｪ繧峨◎縺ｮ縺ｾ縺ｾ
     if p.is_absolute() and p.exists():
         return str(p).replace("\\", "/")
 
-    # 相対パスでも存在すれば絶対化
-    if p.exists():
+    # 逶ｸ蟇ｾ繝代せ縺ｧ繧ょｭ伜惠縺吶ｌ縺ｰ邨ｶ蟇ｾ蛹・    if p.exists():
         return str(p.resolve()).replace("\\", "/")
 
-    # デフォルト探索: D:/irodori/emoji/lora/{name}/lora_checkpoint_final_ema
+    # 繝・ヵ繧ｩ繝ｫ繝域爾邏｢: E:/irodori/emoji/lora/{name}/lora_checkpoint_final_ema
     candidate = LORA_BASE_DIR / lora_arg / "lora_checkpoint_final_ema"
     if candidate.exists():
         return str(candidate).replace("\\", "/")
 
-    # 名前だけ指定で final_ema を探す
-    candidate2 = LORA_BASE_DIR / lora_arg
+    # 蜷榊燕縺縺第欠螳壹〒 final_ema 繧呈爾縺・    candidate2 = LORA_BASE_DIR / lora_arg
     if candidate2.exists() and (candidate2 / "lora_checkpoint_final_ema").exists():
         return str(candidate2 / "lora_checkpoint_final_ema").replace("\\", "/")
 
-    print(f"[error] LoRA が見つかりません: {lora_arg}")
-    print(f"  試したパス:")
+    print(f"[error] LoRA 縺瑚ｦ九▽縺九ｊ縺ｾ縺帙ｓ: {lora_arg}")
+    print(f"  隧ｦ縺励◆繝代せ:")
     print(f"    {p}")
     print(f"    {candidate}")
     sys.exit(1)
 
 
 def show_settings(project_name: str) -> None:
-    """現在の LoRA 設定状況を表示"""
+    """迴ｾ蝨ｨ縺ｮ LoRA 險ｭ螳夂憾豕√ｒ陦ｨ遉ｺ"""
     csv_path = PROJECTS_DIR / project_name / "production.csv"
     if not csv_path.exists():
-        print(f"[error] production.csv が見つかりません: {csv_path}")
+        print(f"[error] production.csv 縺瑚ｦ九▽縺九ｊ縺ｾ縺帙ｓ: {csv_path}")
         sys.exit(1)
 
     rows = list(csv.DictReader(csv_path.open(encoding="utf-8-sig")))
     if not rows:
-        print("[info] production.csv が空です")
+        print("[info] production.csv 縺檎ｩｺ縺ｧ縺・)
         return
 
     has_lora_field = "lora_path" in rows[0]
     if not has_lora_field:
-        print("[warn] このプロジェクトの production.csv には lora_path 列がありません")
-        print("       grok_bridge process を再実行すると追加されます")
+        print("[warn] 縺薙・繝励Ο繧ｸ繧ｧ繧ｯ繝医・ production.csv 縺ｫ縺ｯ lora_path 蛻励′縺ゅｊ縺ｾ縺帙ｓ")
+        print("       grok_bridge process 繧貞・螳溯｡後☆繧九→霑ｽ蜉縺輔ｌ縺ｾ縺・)
         return
 
-    # 集計
-    from collections import Counter
+    # 髮・ｨ・    from collections import Counter
     lora_counter: Counter = Counter()
     scenes_with_lora: dict = {}
     for r in rows:
@@ -96,15 +88,15 @@ def show_settings(project_name: str) -> None:
         if lp:
             scenes_with_lora.setdefault(r["scene_id"], []).append(r["line_id"])
 
-    print(f"=== LoRA 設定状況 ({project_name}) ===")
-    print(f"全行数: {len(rows)}")
+    print(f"=== LoRA 險ｭ螳夂憾豕・({project_name}) ===")
+    print(f"蜈ｨ陦梧焚: {len(rows)}")
     for key, count in lora_counter.most_common():
-        print(f"  {count}行: {key}")
+        print(f"  {count}陦・ {key}")
     if scenes_with_lora:
         print()
-        print(f"LoRA 適用シーン:")
+        print(f"LoRA 驕ｩ逕ｨ繧ｷ繝ｼ繝ｳ:")
         for s, lines in sorted(scenes_with_lora.items()):
-            print(f"  {s}: {len(lines)}行")
+            print(f"  {s}: {len(lines)}陦・)
 
 
 def apply_settings(
@@ -115,22 +107,22 @@ def apply_settings(
     target_status: str | None,
     clear: bool,
 ) -> None:
-    """LoRA 設定を一括適用する"""
+    """LoRA 險ｭ螳壹ｒ荳諡ｬ驕ｩ逕ｨ縺吶ｋ"""
     csv_path = PROJECTS_DIR / project_name / "production.csv"
     if not csv_path.exists():
-        print(f"[error] production.csv が見つかりません: {csv_path}")
+        print(f"[error] production.csv 縺瑚ｦ九▽縺九ｊ縺ｾ縺帙ｓ: {csv_path}")
         sys.exit(1)
 
     rows = list(csv.DictReader(csv_path.open(encoding="utf-8-sig")))
     if not rows:
-        print("[error] production.csv が空です")
+        print("[error] production.csv 縺檎ｩｺ縺ｧ縺・)
         sys.exit(1)
 
     fieldnames = list(rows[0].keys())
 
-    # lora_path / lora_scale 列が無い場合は追加
+    # lora_path / lora_scale 蛻励′辟｡縺・ｴ蜷医・霑ｽ蜉
     if "lora_path" not in fieldnames:
-        # 適切な位置（seed の後）に挿入
+        # 驕ｩ蛻・↑菴咲ｽｮ・・eed 縺ｮ蠕鯉ｼ峨↓謖ｿ蜈･
         if "seed" in fieldnames:
             idx = fieldnames.index("seed") + 1
             fieldnames.insert(idx, "lora_path")
@@ -141,17 +133,17 @@ def apply_settings(
         for r in rows:
             r.setdefault("lora_path", "")
             r.setdefault("lora_scale", "")
-        print(f"[info] lora_path / lora_scale 列を追加しました")
+        print(f"[info] lora_path / lora_scale 蛻励ｒ霑ｽ蜉縺励∪縺励◆")
 
-    # 適用
+    # 驕ｩ逕ｨ
     updated = 0
     skipped = 0
     for r in rows:
-        # シーン絞り込み
+        # 繧ｷ繝ｼ繝ｳ邨槭ｊ霎ｼ縺ｿ
         if target_scenes is not None and r["scene_id"] not in target_scenes:
             skipped += 1
             continue
-        # ステータス絞り込み
+        # 繧ｹ繝・・繧ｿ繧ｹ邨槭ｊ霎ｼ縺ｿ
         if target_status is not None and r.get("status") != target_status:
             skipped += 1
             continue
@@ -164,25 +156,24 @@ def apply_settings(
             r["lora_scale"] = str(lora_scale) if lora_path else ""
         updated += 1
 
-    # 書き戻し
-    with open(csv_path, "w", encoding="utf-8-sig", newline="") as f:
+    # 譖ｸ縺肴綾縺・    with open(csv_path, "w", encoding="utf-8-sig", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
 
-    action = "クリア" if clear else "設定"
-    print(f"=== LoRA {action} 完了 ===")
-    print(f"  更新: {updated}行 / スキップ: {skipped}行")
+    action = "繧ｯ繝ｪ繧｢" if clear else "險ｭ螳・
+    print(f"=== LoRA {action} 螳御ｺ・===")
+    print(f"  譖ｴ譁ｰ: {updated}陦・/ 繧ｹ繧ｭ繝・・: {skipped}陦・)
     if not clear:
         print(f"  lora_path: {lora_path}")
         print(f"  lora_scale: {lora_scale}")
     if target_scenes:
-        print(f"  対象シーン: {sorted(target_scenes)}")
+        print(f"  蟇ｾ雎｡繧ｷ繝ｼ繝ｳ: {sorted(target_scenes)}")
     if target_status:
-        print(f"  対象 status: {target_status}")
+        print(f"  蟇ｾ雎｡ status: {target_status}")
     print()
-    print(f"次のステップ:")
-    print(f"  python D:/irodori/agents/recorder.py {project_name}")
+    print(f"谺｡縺ｮ繧ｹ繝・ャ繝・")
+    print(f"  python E:/irodori/agents/recorder.py {project_name}")
 
 
 def main():
@@ -193,13 +184,11 @@ def main():
     project_name = sys.argv[1]
     args = sys.argv[2:]
 
-    # --show で確認
-    if "--show" in args:
+    # --show 縺ｧ遒ｺ隱・    if "--show" in args:
         show_settings(project_name)
         return
 
-    # 引数解析
-    clear = "--clear" in args
+    # 蠑墓焚隗｣譫・    clear = "--clear" in args
     lora_arg = None
     scale = 1.0
     target_scenes = None
@@ -225,13 +214,13 @@ def main():
         else:
             i += 1
 
-    # バリデーション
+    # 繝舌Μ繝・・繧ｷ繝ｧ繝ｳ
     if not clear and not lora_arg:
-        print("[error] --lora または --clear のどちらかを指定してください")
-        print("使い方: python set_lora.py <project_name> --lora <name> [--scale 1.0]")
+        print("[error] --lora 縺ｾ縺溘・ --clear 縺ｮ縺ｩ縺｡繧峨°繧呈欠螳壹＠縺ｦ縺上□縺輔＞")
+        print("菴ｿ縺・婿: python set_lora.py <project_name> --lora <name> [--scale 1.0]")
         sys.exit(1)
 
-    # LoRA パス解決
+    # LoRA 繝代せ隗｣豎ｺ
     lora_path = None
     if not clear:
         lora_path = resolve_lora_path(lora_arg)

@@ -33,7 +33,7 @@ if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-AGENTS_DIR = Path("D:/irodori/agents")
+AGENTS_DIR = Path(__file__).resolve().parent
 KNOWLEDGE_DIR = AGENTS_DIR / "knowledge"
 DAILY_DIR = KNOWLEDGE_DIR / "daily"
 

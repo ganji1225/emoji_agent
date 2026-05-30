@@ -1,7 +1,5 @@
-#!/usr/bin/env python3
-"""脚本処理エージェント - Grokの生台本（JSON/CSV/TXT）やゲームテキスト(.md)を
-絵文字付きproduction.csvに変換する。
-サンドイッチ方式: 感情強度に応じて prefix + テキスト + suffix で絵文字を配置
+﻿#!/usr/bin/env python3
+"""閼壽悽蜃ｦ逅・お繝ｼ繧ｸ繧ｧ繝ｳ繝・- Grok縺ｮ逕溷床譛ｬ・・SON/CSV/TXT・峨ｄ繧ｲ繝ｼ繝繝・く繧ｹ繝・.md)繧・邨ｵ譁・ｭ嶺ｻ倥″production.csv縺ｫ螟画鋤縺吶ｋ縲・繧ｵ繝ｳ繝峨う繝・メ譁ｹ蠑・ 諢滓ュ蠑ｷ蠎ｦ縺ｫ蠢懊§縺ｦ prefix + 繝・く繧ｹ繝・+ suffix 縺ｧ邨ｵ譁・ｭ励ｒ驟咲ｽｮ
 """
 import csv
 import json
@@ -15,90 +13,86 @@ if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-PROJECTS_DIR = Path("D:/irodori/projects")
+PROJECTS_DIR = Path("E:/irodori/projects")
 
 # ============================================================
-# 感情キーワード → 絵文字マッピング（全タグマッチ方式）
-# ============================================================
+# 諢滓ュ繧ｭ繝ｼ繝ｯ繝ｼ繝・竊・邨ｵ譁・ｭ励・繝・ヴ繝ｳ繧ｰ・亥・繧ｿ繧ｰ繝槭ャ繝∵婿蠑擾ｼ・# ============================================================
 EMOTION_EMOJI_MAP = [
-    # 効果音・息遣い系
-    (r"囁き|ささやき|耳元|ひそひそ|ウィスパー", "👂"),
-    (r"吐息|溜息|ため息|寝息", "😮\u200d💨"),
-    (r"喘ぎ\(強\)|喘ぎ（強）", "🥵"),
-    (r"喘ぎ\(弱\)|喘ぎ（弱）", "🥵"),
-    (r"喘ぎ|あえぎ|荒い息|うめき", "🥵"),
-    (r"息切れ|荒い息遣い|はぁはぁ", "😮\u200d💨"),
-    (r"息をのむ|ハッ", "😮"),
-    (r"舐め|ぺろ|ちゅぱ|水音", "👅"),
-    (r"リップ|キス|唇|ちゅ", "💋"),
-    (r"咳|くしゃみ|ゴホ|コホ", "🤧"),
-    (r"嚥下|ごくり|飲み込|ぐびっ", "🥤"),
-    (r"エコー|リバーブ|響く|こだま", "📢"),
-    (r"電話越し|電話口|受話器", "📞"),
-    (r"ゆっくり|丁寧に|噛み締め|一語一語", "🐢"),
-    (r"早口|まくしたて|一気に|矢継ぎ早", "⏩"),
-    # 感情・話し方系
-    (r"笑い|くすくす|ふふ|クスッ|含み笑", "🤭"),
-    (r"甘え", "😏"),
-    (r"からかう|からかい|いたずら|小悪魔", "😏"),
-    (r"恥ずかし|照れ|もじもじ|テレ|恥じらい", "🫣"),
-    (r"震え|おどおど|自信な", "🥺"),
-    (r"泣き|泣く|嗚咽|涙声", "😭"),
-    (r"悲鳴|叫び|絶叫|キャー", "😱"),
-    (r"怒り|怒る|不満|イライラ|拗ね", "😠"),
-    (r"驚き|びっくり|えっ", "😲"),
-    (r"優し|穏やか|慈しみ", "🫶"),
-    (r"眠い|だるい|まどろみ|寝起き", "😪"),
-    (r"慌て|パニック|どもり|焦", "😰"),
-    (r"喜び|嬉し|楽し|ウキウキ", "😆"),
-    (r"懇願|お願い|頼む", "🙏"),
-    (r"酔|ほろ酔い", "🥴"),
-    (r"口を塞|くぐもっ", "🤐"),
-    (r"安堵|ほっ|満足|安心", "😌"),
-    (r"疑問|不思議|首かしげ", "🤔"),
-    (r"苦し|痛|うぅ", "😖"),
-    (r"心配|不安そう", "😟"),
-    (r"呆れ|やれやれ", "🙄"),
-    (r"放心|虚脱|朦朧|脱力", "😌"),
-    (r"拒絶|拒否", "😱"),
-    (r"屈辱|崩壊", "😭"),
-    (r"絶望", "😭"),
-    (r"絶頂", "😱"),
-    (r"動揺", "😰"),
-    (r"恐怖", "😱"),
-    (r"強がり", "😤"),
-    (r"自信|威圧|挑発", "😤"),
-    (r"抵抗", "😖"),
-    (r"困惑", "😖"),
-    # エフェクト
-    (r"💦|汗|濡", "💦"),
-    # 広い感情（最後）
-    (r"明るい|元気|ハキハキ", "😊"),
-    (r"日常|普通|通常|ナレーション", ""),
+    # 蜉ｹ譫憺浹繝ｻ諱ｯ驕｣縺・ｳｻ
+    (r"蝗√″|縺輔＆繧・″|閠ｳ蜈ポ縺ｲ縺昴・縺掟繧ｦ繧｣繧ｹ繝代・", "曹"),
+    (r"蜷先・|貅懈・|縺溘ａ諱ｯ|蟇晄・", "舒\u200d暢"),
+    (r"蝟倥℃\(蠑ｷ\)|蝟倥℃・亥ｼｷ・・, "･ｵ"),
+    (r"蝟倥℃\(蠑ｱ\)|蝟倥℃・亥ｼｱ・・, "･ｵ"),
+    (r"蝟倥℃|縺ゅ∴縺旨闕偵＞諱ｯ|縺・ａ縺・, "･ｵ"),
+    (r"諱ｯ蛻・ｌ|闕偵＞諱ｯ驕｣縺л縺ｯ縺√・縺・, "舒\u200d暢"),
+    (r"諱ｯ繧偵・繧|繝上ャ", "舒"),
+    (r"闊舌ａ|縺ｺ繧鋼縺｡繧・・|豌ｴ髻ｳ", "槽"),
+    (r"繝ｪ繝・・|繧ｭ繧ｹ|蜚・縺｡繧・, "昼"),
+    (r"蜥ｳ|縺上＠繧・∩|繧ｴ繝斈繧ｳ繝・, "､ｧ"),
+    (r"蝴･荳弓縺斐￥繧掛鬟ｲ縺ｿ霎ｼ|縺舌・縺｣", "･､"),
+    (r"繧ｨ繧ｳ繝ｼ|繝ｪ繝舌・繝翻髻ｿ縺楯縺薙□縺ｾ", "討"),
+    (r"髮ｻ隧ｱ雜翫＠|髮ｻ隧ｱ蜿｣|蜿苓ｩｱ蝎ｨ", "到"),
+    (r"繧・▲縺上ｊ|荳∝ｯｧ縺ｫ|蝎帙∩邱繧－荳隱樔ｸ隱・, "世"),
+    (r"譌ｩ蜿｣|縺ｾ縺上＠縺溘※|荳豌励↓|遏｢邯吶℃譌ｩ", "竢ｩ"),
+    # 諢滓ュ繝ｻ隧ｱ縺玲婿邉ｻ
+    (r"隨代＞|縺上☆縺上☆|縺ｵ縺ｵ|繧ｯ繧ｹ繝ポ蜷ｫ縺ｿ隨・, "､ｭ"),
+    (r"逕倥∴", "・"),
+    (r"縺九ｉ縺九≧|縺九ｉ縺九＞|縺・◆縺壹ｉ|蟆乗が鬲・, "・"),
+    (r"諱･縺壹°縺慾辣ｧ繧芸繧ゅ§繧ゅ§|繝・Ξ|諱･縺倥ｉ縺・, "ｫ｣"),
+    (r"髴・∴|縺翫←縺翫←|閾ｪ菫｡縺ｪ", "･ｺ"),
+    (r"豕｣縺鋼豕｣縺楯蝸壼朕|豸吝｣ｰ", "亊"),
+    (r"謔ｲ魑ｴ|蜿ｫ縺ｳ|邨ｶ蜿ｫ|繧ｭ繝｣繝ｼ", "亞"),
+    (r"諤偵ｊ|諤偵ｋ|荳肴ｺ|繧､繝ｩ繧､繝ｩ|諡励・", "丐"),
+    (r"鬩壹″|縺ｳ縺｣縺上ｊ|縺医▲", "亟"),
+    (r"蜆ｪ縺慾遨上ｄ縺弓諷医＠縺ｿ", "ｫｶ"),
+    (r"逵縺л縺繧九＞|縺ｾ縺ｩ繧阪∩|蟇晁ｵｷ縺・, "亂"),
+    (r"諷後※|繝代ル繝・け|縺ｩ繧ゅｊ|辟ｦ", "于"),
+    (r"蝟懊・|螫峨＠|讌ｽ縺慾繧ｦ繧ｭ繧ｦ繧ｭ", "・"),
+    (r"諛・｡・縺企｡倥＞|鬆ｼ繧", "剌"),
+    (r"驟培縺ｻ繧埼・縺・, "･ｴ"),
+    (r"蜿｣繧貞｡桍縺上＄繧ゅ▲", "､・),
+    (r"螳牙ｵ|縺ｻ縺｣|貅雜ｳ|螳牙ｿ・, "・"),
+    (r"逍大撫|荳肴晁ｭｰ|鬥悶°縺励￡", "､・),
+    (r"闍ｦ縺慾逞斈縺・≦", "・"),
+    (r"蠢・・|荳榊ｮ峨◎縺・, "弌"),
+    (r"蜻・ｌ|繧・ｌ繧・ｌ", "刋"),
+    (r"謾ｾ蠢ポ陌夊┳|譛ｦ譛ｧ|閼ｱ蜉・, "・"),
+    (r"諡堤ｵｶ|諡貞凄", "亞"),
+    (r"螻郁ｾｱ|蟠ｩ螢・, "亊"),
+    (r"邨ｶ譛・, "亊"),
+    (r"邨ｶ鬆・, "亞"),
+    (r"蜍墓昭", "于"),
+    (r"諱先・, "亞"),
+    (r"蠑ｷ縺後ｊ", "丶"),
+    (r"閾ｪ菫｡|螽∝悸|謖醍匱", "丶"),
+    (r"謚ｵ謚・, "・"),
+    (r"蝗ｰ諠・, "・"),
+    # 繧ｨ繝輔ぉ繧ｯ繝・    (r"懲|豎慾豼｡", "懲"),
+    # 蠎・＞諢滓ュ・域怙蠕鯉ｼ・    (r"譏弱ｋ縺л蜈・ｰ慾繝上く繝上く", "・"),
+    (r"譌･蟶ｸ|譎ｮ騾嘶騾壼ｸｸ|繝翫Ξ繝ｼ繧ｷ繝ｧ繝ｳ", ""),
 ]
 
 # ============================================================
-# 感情強度の判定キーワード
-# ============================================================
+# 諢滓ュ蠑ｷ蠎ｦ縺ｮ蛻､螳壹く繝ｼ繝ｯ繝ｼ繝・# ============================================================
 INTENSITY_STRONG = {
-    "喘ぎ(強)", "喘ぎ（強）", "絶頂", "叫び", "嗚咽", "荒い息遣い",
-    "崩壊", "絶叫", "連続絶頂",
+    "蝟倥℃(蠑ｷ)", "蝟倥℃・亥ｼｷ・・, "邨ｶ鬆・, "蜿ｫ縺ｳ", "蝸壼朕", "闕偵＞諱ｯ驕｣縺・,
+    "蟠ｩ螢・, "邨ｶ蜿ｫ", "騾｣邯夂ｵｶ鬆・,
 }
 INTENSITY_MEDIUM = {
-    "喘ぎ(弱)", "喘ぎ（弱）", "恥じらい", "困惑", "動揺", "恐怖",
-    "抵抗", "拒絶", "屈辱", "絶望",
+    "蝟倥℃(蠑ｱ)", "蝟倥℃・亥ｼｱ・・, "諱･縺倥ｉ縺・, "蝗ｰ諠・, "蜍墓昭", "諱先・,
+    "謚ｵ謚・, "諡堤ｵｶ", "螻郁ｾｱ", "邨ｶ譛・,
 }
 INTENSITY_EXTREME = {
-    "出産", "全穴同時", "連続絶頂", "妊娠",
+    "蜃ｺ逕｣", "蜈ｨ遨ｴ蜷梧凾", "騾｣邯夂ｵｶ鬆・, "螯雁ｨ",
 }
 
 
 def classify_intensity(emotion_tags: list[str]) -> str:
-    """感情タグリストから強度レベルを判定する"""
+    """諢滓ュ繧ｿ繧ｰ繝ｪ繧ｹ繝医°繧牙ｼｷ蠎ｦ繝ｬ繝吶Ν繧貞愛螳壹☆繧・""
     tag_set = set(emotion_tags)
     if tag_set & INTENSITY_EXTREME:
         return "extreme"
-    # 強いタグが2個以上 or 強いタグ + 中タグ = strong
+    # 蠑ｷ縺・ち繧ｰ縺・蛟倶ｻ･荳・or 蠑ｷ縺・ち繧ｰ + 荳ｭ繧ｿ繧ｰ = strong
     strong_count = len(tag_set & INTENSITY_STRONG)
     medium_count = len(tag_set & INTENSITY_MEDIUM)
     if strong_count >= 2:
@@ -113,13 +107,12 @@ def classify_intensity(emotion_tags: list[str]) -> str:
 
 
 def emotion_to_emojis_all(emotion: str) -> list[str]:
-    """感情テキストから全マッチする絵文字をリストで返す（重複排除）"""
+    """諢滓ュ繝・く繧ｹ繝医°繧牙・繝槭ャ繝√☆繧狗ｵｵ譁・ｭ励ｒ繝ｪ繧ｹ繝医〒霑斐☆・磯㍾隍・賜髯､・・""
     if not emotion:
         return []
     emojis = []
     seen = set()
-    # スペースまたはカンマで分割して各タグを処理
-    tags = re.split(r"[,、\s]+", emotion.strip())
+    # 繧ｹ繝壹・繧ｹ縺ｾ縺溘・繧ｫ繝ｳ繝槭〒蛻・牡縺励※蜷・ち繧ｰ繧貞・逅・    tags = re.split(r"[,縲―s]+", emotion.strip())
     for tag in tags:
         tag = tag.strip()
         if not tag:
@@ -134,29 +127,23 @@ def emotion_to_emojis_all(emotion: str) -> list[str]:
 
 
 def build_sandwich(text: str, emojis: list[str], intensity: str, stacking: bool = False) -> str:
-    """テスト結果に基づいたサンドイッチ方式で絵文字を配置する
+    """繝・せ繝育ｵ先棡縺ｫ蝓ｺ縺･縺・◆繧ｵ繝ｳ繝峨う繝・メ譁ｹ蠑上〒邨ｵ譁・ｭ励ｒ驟咲ｽｮ縺吶ｋ
 
-    聴き比べテスト結果（2026-04-13 + 2026-04-15）:
-      弱: prefix 2, suffix 1 が最適
-      中: prefix 2-3, suffix 1 が安定
-      強: prefix 3, suffix 2 が最適（4個以上はノイズ増）
-      極限: prefix 3, suffix 2（意図的にノイズを入れたい場合のみ4個）
-
-    重要な発見（2026-04-15 聴き比べ）:
-      - 絵文字2-3個が感情幅が大きく安定
-      - 4個以上は不自然な音声やノイズが増加
-      - 絵文字数が多いと吐息・声にならない音声が増える
-
-    スタッキングテクニック（公式EMOJI_ANNOTATIONS.md 2026-03-24確認）:
-      stacking=True の場合、絵文字を2回重ねて効果を強調する
-      例: 👂 → 👂👂 でより強い囁き効果
-      ※ 総数3個以内のルールを維持するため prefix を倍加する
+    閨ｴ縺肴ｯ斐∋繝・せ繝育ｵ先棡・・026-04-13 + 2026-04-15・・
+      蠑ｱ: prefix 2, suffix 1 縺梧怙驕ｩ
+      荳ｭ: prefix 2-3, suffix 1 縺悟ｮ牙ｮ・      蠑ｷ: prefix 3, suffix 2 縺梧怙驕ｩ・・蛟倶ｻ･荳翫・繝弱う繧ｺ蠅暦ｼ・      讌ｵ髯・ prefix 3, suffix 2・域э蝗ｳ逧・↓繝弱う繧ｺ繧貞・繧後◆縺・ｴ蜷医・縺ｿ4蛟具ｼ・
+    驥崎ｦ√↑逋ｺ隕具ｼ・026-04-15 閨ｴ縺肴ｯ斐∋・・
+      - 邨ｵ譁・ｭ・-3蛟九′諢滓ュ蟷・′螟ｧ縺阪￥螳牙ｮ・      - 4蛟倶ｻ･荳翫・荳崎・辟ｶ縺ｪ髻ｳ螢ｰ繧・ヮ繧､繧ｺ縺悟｢怜刈
+      - 邨ｵ譁・ｭ玲焚縺悟､壹＞縺ｨ蜷先・繝ｻ螢ｰ縺ｫ縺ｪ繧峨↑縺・浹螢ｰ縺悟｢励∴繧・
+    繧ｹ繧ｿ繝・く繝ｳ繧ｰ繝・け繝九ャ繧ｯ・亥・蠑拾MOJI_ANNOTATIONS.md 2026-03-24遒ｺ隱搾ｼ・
+      stacking=True 縺ｮ蝣ｴ蜷医∫ｵｵ譁・ｭ励ｒ2蝗樣㍾縺ｭ縺ｦ蜉ｹ譫懊ｒ蠑ｷ隱ｿ縺吶ｋ
+      萓・ 曹 竊・曹曹 縺ｧ繧医ｊ蠑ｷ縺・宦縺榊柑譫・      窶ｻ 邱乗焚3蛟倶ｻ･蜀・・繝ｫ繝ｼ繝ｫ繧堤ｶｭ謖√☆繧九◆繧・prefix 繧貞榊刈縺吶ｋ
     """
     if not emojis:
         return text
 
-    # スタッキングテクニック: 絵文字1個の場合に2回重ねて効果強調
-    # 例: [👂] → prefix="👂👂", suffix="" (総数2個でルール内)
+    # 繧ｹ繧ｿ繝・く繝ｳ繧ｰ繝・け繝九ャ繧ｯ: 邨ｵ譁・ｭ・蛟九・蝣ｴ蜷医↓2蝗樣㍾縺ｭ縺ｦ蜉ｹ譫懷ｼｷ隱ｿ
+    # 萓・ [曹] 竊・prefix="曹曹", suffix="" (邱乗焚2蛟九〒繝ｫ繝ｼ繝ｫ蜀・
     if stacking and len(emojis) == 1:
         prefix = emojis[0] * 2
         suffix = ""
@@ -172,17 +159,13 @@ def build_sandwich(text: str, emojis: list[str], intensity: str, stacking: bool 
         prefix = "".join(emojis[:3])
         suffix = emojis[-1] if len(emojis) >= 2 else ""
     elif intensity == "strong":
-        # prefix 3, suffix 2（上限厳守）
-        prefix = "".join(emojis[:3])
+        # prefix 3, suffix 2・井ｸ企剞蜴ｳ螳茨ｼ・        prefix = "".join(emojis[:3])
         suffix_emojis = emojis[-2:] if len(emojis) >= 2 else emojis[-1:]
         suffix = "".join(suffix_emojis)
-        if "💦" not in suffix:
-            suffix += "💦"
+        if "懲" not in suffix:
+            suffix += "懲"
     else:  # extreme
-        # prefix 4, suffix 4（2026-04-22 聴き比べ: 4+4 × CFG=6 で感情表現↑・かすれ抑制）
-        # CFGはcaptions.jsonで6.0を設定すること（8.0→6.0）
-        e = (emojis * 4)[:8]  # 8個分に拡張（絵文字が足りなければ繰り返し）
-        prefix = "".join(e[:4])
+        # prefix 4, suffix 4・・026-04-22 閨ｴ縺肴ｯ斐∋: 4+4 ﾃ・CFG=6 縺ｧ諢滓ュ陦ｨ迴ｾ竊代・縺九☆繧梧椛蛻ｶ・・        # CFG縺ｯcaptions.json縺ｧ6.0繧定ｨｭ螳壹☆繧九％縺ｨ・・.0竊・.0・・        e = (emojis * 4)[:8]  # 8蛟句・縺ｫ諡｡蠑ｵ・育ｵｵ譁・ｭ励′雜ｳ繧翫↑縺代ｌ縺ｰ郢ｰ繧願ｿ斐＠・・        prefix = "".join(e[:4])
         suffix = "".join(e[4:8])
 
     result = f"{prefix} {text}"
@@ -192,13 +175,12 @@ def build_sandwich(text: str, emojis: list[str], intensity: str, stacking: bool 
 
 
 def normalize_text(text: str) -> str:
-    """テキストを正規化する（TTS向け）"""
+    """繝・く繧ｹ繝医ｒ豁｣隕丞喧縺吶ｋ・・TS蜷代￠・・""
     text = text.strip()
-    text = re.sub(r"\.{3,}", "…", text)
-    text = re.sub(r"。{2,}", "。", text)
-    text = text.strip("「」『』\"")
-    # Grokが埋め込んだ絵文字を除去（text_rawはクリーンに保つ）
-    emoji_pattern = re.compile(
+    text = re.sub(r"\.{3,}", "窶ｦ", text)
+    text = re.sub(r"縲・2,}", "縲・, text)
+    text = text.strip("縲後阪弱十"")
+    # Grok縺悟沂繧∬ｾｼ繧薙□邨ｵ譁・ｭ励ｒ髯､蜴ｻ・・ext_raw縺ｯ繧ｯ繝ｪ繝ｼ繝ｳ縺ｫ菫昴▽・・    emoji_pattern = re.compile(
         "["
         "\U0001F600-\U0001F64F"  # emoticons
         "\U0001F300-\U0001F5FF"  # symbols & pictographs
@@ -215,169 +197,149 @@ def normalize_text(text: str) -> str:
         "]+", flags=re.UNICODE
     )
     text = emoji_pattern.sub("", text).strip()
-    # 漢字読み間違い対策: TTS が誤読しやすい単語をひらがな/カタカナに変換
+    # 貍｢蟄苓ｪｭ縺ｿ髢馴＆縺・ｯｾ遲・ TTS 縺瑚ｪ､隱ｭ縺励ｄ縺吶＞蜊倩ｪ槭ｒ縺ｲ繧峨′縺ｪ/繧ｫ繧ｿ繧ｫ繝翫↓螟画鋤
     text = _fix_kanji_reading(text)
     return text
 
 
-# TTS誤読しやすい漢字 → ひらがな/カタカナ変換テーブル
-# 参考: https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku
+# TTS隱､隱ｭ縺励ｄ縺吶＞貍｢蟄・竊・縺ｲ繧峨′縺ｪ/繧ｫ繧ｿ繧ｫ繝雁､画鋤繝・・繝悶Ν
+# 蜿り・ https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku
 KANJI_FIX_MAP = [
-    (r"今日", "きょう"),
-    (r"昨日", "きのう"),
-    (r"明日", "あした"),
-    (r"一人", "ひとり"),
-    (r"二人", "ふたり"),
-    (r"大人", "おとな"),
-    (r"上手", "じょうず"),
-    (r"下手", "へた"),
-    (r"雑魚", "ザコ"),
-    (r"瘴気", "しょうき"),
-    (r"霊山", "れいざん"),
-    (r"番人", "ばんにん"),
-    (r"蟲", "むし"),
-    (r"贄", "にえ"),
-    (r"苗床", "なえどこ"),
-    (r"孵化", "ふか"),
-    (r"蔓", "つる"),
-    (r"繭", "まゆ"),
-    (r"媚薬", "びやく"),
-    (r"蜘蛛", "くも"),
+    (r"莉頑律", "縺阪ｇ縺・),
+    (r"譏ｨ譌･", "縺阪・縺・),
+    (r"譏取律", "縺ゅ＠縺・),
+    (r"荳莠ｺ", "縺ｲ縺ｨ繧・),
+    (r"莠御ｺｺ", "縺ｵ縺溘ｊ"),
+    (r"螟ｧ莠ｺ", "縺翫→縺ｪ"),
+    (r"荳頑焔", "縺倥ｇ縺・★"),
+    (r"荳区焔", "縺ｸ縺・),
+    (r"髮鷹ｭ・, "繧ｶ繧ｳ"),
+    (r"逖ｴ豌・, "縺励ｇ縺・″"),
+    (r"髴雁ｱｱ", "繧後＞縺悶ｓ"),
+    (r"逡ｪ莠ｺ", "縺ｰ繧薙↓繧・),
+    (r"陝ｲ", "繧縺・),
+    (r"雍・, "縺ｫ縺・),
+    (r"闍怜ｺ・, "縺ｪ縺医←縺・),
+    (r"蟄ｵ蛹・, "縺ｵ縺・),
+    (r"阡・, "縺､繧・),
+    (r"郢ｭ", "縺ｾ繧・),
+    (r"蟐夊脈", "縺ｳ繧・￥"),
+    (r"陷倩屁", "縺上ｂ"),
 ]
 
 
 def _fix_kanji_reading(text: str) -> str:
-    """TTS が誤読しやすい漢字をひらがな/カタカナに変換する"""
+    """TTS 縺瑚ｪ､隱ｭ縺励ｄ縺吶＞貍｢蟄励ｒ縺ｲ繧峨′縺ｪ/繧ｫ繧ｿ繧ｫ繝翫↓螟画鋤縺吶ｋ"""
     for kanji, reading in KANJI_FIX_MAP:
         text = text.replace(kanji, reading)
     return text
 
 
 # ============================================================
-# 間（ま）の自動挿入
+# 髢難ｼ医∪・峨・閾ｪ蜍墓諺蜈･
 # ============================================================
 def insert_pause_markers(text: str, max_pauses: int = 2) -> str:
-    """句読点や「……」の位置に ⏸️（間）マーカーを挿入する
+    """蜿･隱ｭ轤ｹ繧・娯ｦ窶ｦ縲阪・菴咲ｽｮ縺ｫ 竢ｸ・擾ｼ磯俣・峨・繝ｼ繧ｫ繝ｼ繧呈諺蜈･縺吶ｋ
 
-    参考: Irodori-TTS では以下の絵文字が特殊効果として機能する（公式EMOJI_ANNOTATIONS確認済み）
-      ⏸️ = 間・沈黙（感情の変わり目の直前に挿入）
-      ⏩ = 早口・まくしたてる（慌て・興奮シーンに）
-      🐢 = ゆっくり・丁寧に（噛み締めるような語りかけに）
-
+    蜿り・ Irodori-TTS 縺ｧ縺ｯ莉･荳九・邨ｵ譁・ｭ励′迚ｹ谿雁柑譫懊→縺励※讖溯・縺吶ｋ・亥・蠑拾MOJI_ANNOTATIONS遒ｺ隱肴ｸ医∩・・      竢ｸ・・= 髢薙・豐磯ｻ呻ｼ域─諠・・螟峨ｏ繧顔岼縺ｮ逶ｴ蜑阪↓謖ｿ蜈･・・      竢ｩ = 譌ｩ蜿｣繝ｻ縺ｾ縺上＠縺溘※繧具ｼ域・縺ｦ繝ｻ闊亥･ｮ繧ｷ繝ｼ繝ｳ縺ｫ・・      世 = 繧・▲縺上ｊ繝ｻ荳∝ｯｧ縺ｫ・亥剱縺ｿ邱繧√ｋ繧医≧縺ｪ隱槭ｊ縺九￠縺ｫ・・
     Args:
-        text: 対象テキスト
-        max_pauses: 1行あたりの最大⏸️挿入数（デフォルト2）
-            - 0: 挿入なし
-            - 2: デフォルト。感情の変わり目2箇所に絞る（推奨）
-            - 連続再生時はセリフが長く感じるためデフォルト2が最適
-            - 聴き比べフィードバック(2026-04-17): ⏸️多用で長さが気になる
-    """
+        text: 蟇ｾ雎｡繝・く繧ｹ繝・        max_pauses: 1陦後≠縺溘ｊ縺ｮ譛螟ｧ竢ｸ・乗諺蜈･謨ｰ・医ョ繝輔か繝ｫ繝・・・            - 0: 謖ｿ蜈･縺ｪ縺・            - 2: 繝・ヵ繧ｩ繝ｫ繝医よ─諠・・螟峨ｏ繧顔岼2邂・園縺ｫ邨槭ｋ・域耳螂ｨ・・            - 騾｣邯壼・逕滓凾縺ｯ繧ｻ繝ｪ繝輔′髟ｷ縺乗─縺倥ｋ縺溘ａ繝・ヵ繧ｩ繝ｫ繝・縺梧怙驕ｩ
+            - 閨ｴ縺肴ｯ斐∋繝輔ぅ繝ｼ繝峨ヰ繝・け(2026-04-17): 竢ｸ・丞､夂畑縺ｧ髟ｷ縺輔′豌励↓縺ｪ繧・    """
     if max_pauses == 0:
         return text
 
     count = 0
     result = []
-    # 「……」で分割して処理
-    parts = re.split(r"(……)", text)
+    # 縲娯ｦ窶ｦ縲阪〒蛻・牡縺励※蜃ｦ逅・    parts = re.split(r"(窶ｦ窶ｦ)", text)
     for i, part in enumerate(parts):
-        if part == "……":
-            # 末尾（次のパートが空 or 「）」）はスキップ
+        if part == "窶ｦ窶ｦ":
+            # 譛ｫ蟆ｾ・域ｬ｡縺ｮ繝代・繝医′遨ｺ or 縲鯉ｼ峨搾ｼ峨・繧ｹ繧ｭ繝・・
             next_part = parts[i + 1] if i + 1 < len(parts) else ""
-            if next_part and not next_part.startswith("）") and count < max_pauses:
-                result.append("…… ⏸️ ")
+            if next_part and not next_part.startswith("・・) and count < max_pauses:
+                result.append("窶ｦ窶ｦ 竢ｸ・・")
                 count += 1
             else:
-                result.append("……")
+                result.append("窶ｦ窶ｦ")
         else:
             result.append(part)
     return "".join(result)
 
 
 # ============================================================
-# テキスト内容から感情を自動推定する
-# ============================================================
+# 繝・く繧ｹ繝亥・螳ｹ縺九ｉ諢滓ュ繧定・蜍墓耳螳壹☆繧・# ============================================================
 EMOTION_INFERENCE_RULES = [
-    # 極限系（優先）
-    (r"ん゛ほ゛|お゛ほ゛|は゛ん゛|ぐ゛お゛|あ゛ひ゛|ん゛お゛", "喘ぎ(強),絶頂,荒い息遣い"),
-    (r"あ゛あ゛|は゛あ゛|あ゛お゛", "喘ぎ(強),叫び,嗚咽"),
-    (r"イキ狂|壊れた|壊して|溶ける|溶けちゃ|ぶっ壊", "絶頂,叫び,喘ぎ(強),崩壊"),
-    (r"イッちゃう|イっちゃ|イキそう|イク", "絶頂,叫び,喘ぎ(強)"),
-    (r"孕ませて|孕みたい|産ませて|産みたい", "絶頂,嗚咽,懇願"),
-    # 強い系
-    (r"んあぁ|んおぉ|あぁぁ|おぉお", "喘ぎ(強),絶頂"),
-    (r"気持ちいい.*止まら|快楽.*溺れ|快楽.*最高", "喘ぎ(強),絶頂,虚脱"),
-    (r"子宮.*疼|子宮.*痙攣|子宮.*締ま", "喘ぎ(強),恥じらい"),
-    (r"おまんこ.*ヒクヒク|おまんこ.*びくびく", "喘ぎ(弱),恥じらい"),
-    (r"母乳.*噴|母乳.*搾|乳首.*吸", "喘ぎ(強),恥じらい"),
-    (r"卵.*パンパン|お腹.*膨|お腹.*パンパン", "絶頂,喘ぎ(強),嗚咽"),
-    # 中程度
-    (r"はぁ.*はぁ|はぁん", "喘ぎ(弱),荒い息遣い"),
-    (r"んっ.*はぁ|あんっ", "喘ぎ(弱),恥じらい"),
-    (r"気持ちいい|気持ち悪い.*気持ちい", "喘ぎ(弱),困惑"),
-    (r"嫌なのに.*気持ち|嫌.*でも", "困惑,恥じらい"),
-    (r"恥ずかし|恥ずかし", "恥じらい"),
-    (r"熱い.*体|体.*熱い|熱くて", "喘ぎ(弱),困惑"),
-    (r"愛液|濡れ|ぐちょ|ぬるぬる|ぬめ", "喘ぎ(弱),恥じらい"),
-    (r"もっと.*欲し|もっと.*して|もっと.*犯", "喘ぎ(強),甘え,懇願"),
-    (r"誇り.*いらない|誇り.*どうでも|番人.*もう", "絶望,虚脱"),
-    (r"戻りたくない|戻れない|人間じゃ", "虚脱,放心"),
-    # 弱い系
-    (r"やめて|離して|離れなさい|放して", "恐怖,拒絶"),
-    (r"しまった|まずい", "驚き,恐怖"),
-    (r"怖い|恐ろし", "恐怖"),
-    (r"嫌.*やだ|やだ", "恐怖,拒絶"),
-    (r"力が.*入らない|動けない|動かない|抵抗できない", "絶望,恐怖"),
-    (r"もう.*だめ|もう.*限界", "絶望,喘ぎ(弱)"),
-    (r"まだ.*負け|まだ.*戦える|抵抗.*する", "強がり"),
-    # 事後系
-    (r"永遠に.*犯され|永遠に.*溺れ|ずっと.*快楽", "放心,虚脱,甘え"),
-    (r"もう.*いいかな|もう.*いいかも", "放心,虚脱"),
-    (r"壊れた笑み|虚ろな目", "放心,虚脱"),
-    # 身体反応系（弱〜中の補完）
-    (r"おまんこ|まんこ|子宮|クリ", "喘ぎ(弱),恥じらい"),
-    (r"乳首|母乳|乳|胸.*吸", "喘ぎ(弱),恥じらい"),
-    (r"粘液|ぬめ|ぬる|べちゃ", "困惑,恥じらい"),
-    (r"媚薬|媚毒|甘い.*液|分泌液", "困惑,喘ぎ(弱)"),
-    (r"快楽|気持ちいい|気持ちよ", "喘ぎ(弱),困惑"),
-    (r"疼|うず|ヒクヒク|びくびく|痙攣", "喘ぎ(弱),恥じらい"),
-    (r"濡れ|愛液|ぐちょ|じゅわ", "喘ぎ(弱),恥じらい"),
-    (r"触手|蔓|幼虫|蝿|卵", "恐怖,困惑"),
-    (r"這い|絡み|巻き|吸い付|包み込", "恐怖,困惑"),
-    (r"飲まされ|注ぎ込|流し込", "恐怖,困惑"),
-    (r"お尻|アナル|尻穴", "恥じらい,困惑"),
-    (r"苗床|繁殖|肉袋|器.*なる", "絶望,虚脱"),
-    (r"膨ら|パンパン|いっぱい", "喘ぎ(強),恥じらい"),
-    (r"出口.*見え|あと少し|もう少し", "焦り,強がり"),
-    (r"嫌|やだ|こんなの", "恐怖,拒絶"),
-    (r"……っ|くっ|あっ", "驚き,動揺"),
-    # フォールバック
-    (r"……", "動揺"),
+    # 讌ｵ髯千ｳｻ・亥━蜈茨ｼ・    (r"繧薙・縺ｻ繧斈縺翫・縺ｻ繧斈縺ｯ繧帙ｓ繧斈縺舌・縺翫・|縺ゅ・縺ｲ繧斈繧薙・縺翫・", "蝟倥℃(蠑ｷ),邨ｶ鬆・闕偵＞諱ｯ驕｣縺・),
+    (r"縺ゅ・縺ゅ・|縺ｯ繧帙≠繧斈縺ゅ・縺翫・", "蝟倥℃(蠑ｷ),蜿ｫ縺ｳ,蝸壼朕"),
+    (r"繧､繧ｭ迢・螢翫ｌ縺毫螢翫＠縺ｦ|貅ｶ縺代ｋ|貅ｶ縺代■繧ポ縺ｶ縺｣螢・, "邨ｶ鬆・蜿ｫ縺ｳ,蝟倥℃(蠑ｷ),蟠ｩ螢・),
+    (r"繧､繝・■繧・≧|繧､縺｣縺｡繧ポ繧､繧ｭ縺昴≧|繧､繧ｯ", "邨ｶ鬆・蜿ｫ縺ｳ,蝟倥℃(蠑ｷ)"),
+    (r"蟄輔∪縺帙※|蟄輔∩縺溘＞|逕｣縺ｾ縺帙※|逕｣縺ｿ縺溘＞", "邨ｶ鬆・蝸壼朕,諛・｡・),
+    # 蠑ｷ縺・ｳｻ
+    (r"繧薙≠縺－繧薙♀縺榎縺ゅ＝縺－縺翫♂縺・, "蝟倥℃(蠑ｷ),邨ｶ鬆・),
+    (r"豌玲戟縺｡縺・＞.*豁｢縺ｾ繧榎蠢ｫ讌ｽ.*貅ｺ繧芸蠢ｫ讌ｽ.*譛鬮・, "蝟倥℃(蠑ｷ),邨ｶ鬆・陌夊┳"),
+    (r"蟄仙ｮｮ.*逍ｼ|蟄仙ｮｮ.*逞呎肇|蟄仙ｮｮ.*邱縺ｾ", "蝟倥℃(蠑ｷ),諱･縺倥ｉ縺・),
+    (r"縺翫∪繧薙％.*繝偵け繝偵け|縺翫∪繧薙％.*縺ｳ縺上・縺・, "蝟倥℃(蠑ｱ),諱･縺倥ｉ縺・),
+    (r"豈堺ｹｳ.*蝎ｴ|豈堺ｹｳ.*謳ｾ|荵ｳ鬥・*蜷ｸ", "蝟倥℃(蠑ｷ),諱･縺倥ｉ縺・),
+    (r"蜊ｵ.*繝代Φ繝代Φ|縺願・.*閹ｨ|縺願・.*繝代Φ繝代Φ", "邨ｶ鬆・蝟倥℃(蠑ｷ),蝸壼朕"),
+    # 荳ｭ遞句ｺｦ
+    (r"縺ｯ縺・*縺ｯ縺－縺ｯ縺√ｓ", "蝟倥℃(蠑ｱ),闕偵＞諱ｯ驕｣縺・),
+    (r"繧薙▲.*縺ｯ縺－縺ゅｓ縺｣", "蝟倥℃(蠑ｱ),諱･縺倥ｉ縺・),
+    (r"豌玲戟縺｡縺・＞|豌玲戟縺｡謔ｪ縺・*豌玲戟縺｡縺・, "蝟倥℃(蠑ｱ),蝗ｰ諠・),
+    (r"雖後↑縺ｮ縺ｫ.*豌玲戟縺｡|雖・*縺ｧ繧・, "蝗ｰ諠・諱･縺倥ｉ縺・),
+    (r"諱･縺壹°縺慾諱･縺壹°縺・, "諱･縺倥ｉ縺・),
+    (r"辭ｱ縺・*菴倒菴・*辭ｱ縺л辭ｱ縺上※", "蝟倥℃(蠑ｱ),蝗ｰ諠・),
+    (r"諢帶ｶｲ|豼｡繧芸縺舌■繧・縺ｬ繧九〓繧弓縺ｬ繧・, "蝟倥℃(蠑ｱ),諱･縺倥ｉ縺・),
+    (r"繧ゅ▲縺ｨ.*谺ｲ縺慾繧ゅ▲縺ｨ.*縺励※|繧ゅ▲縺ｨ.*迥ｯ", "蝟倥℃(蠑ｷ),逕倥∴,諛・｡・),
+    (r"隱・ｊ.*縺・ｉ縺ｪ縺л隱・ｊ.*縺ｩ縺・〒繧・逡ｪ莠ｺ.*繧ゅ≧", "邨ｶ譛・陌夊┳"),
+    (r"謌ｻ繧翫◆縺上↑縺л謌ｻ繧後↑縺л莠ｺ髢薙§繧・, "陌夊┳,謾ｾ蠢・),
+    # 蠑ｱ縺・ｳｻ
+    (r"繧・ａ縺ｦ|髮｢縺励※|髮｢繧後↑縺輔＞|謾ｾ縺励※", "諱先・諡堤ｵｶ"),
+    (r"縺励∪縺｣縺毫縺ｾ縺壹＞", "鬩壹″,諱先・),
+    (r"諤悶＞|諱舌ｍ縺・, "諱先・),
+    (r"雖・*繧・□|繧・□", "諱先・諡堤ｵｶ"),
+    (r"蜉帙′.*蜈･繧峨↑縺л蜍輔￠縺ｪ縺л蜍輔°縺ｪ縺л謚ｵ謚励〒縺阪↑縺・, "邨ｶ譛・諱先・),
+    (r"繧ゅ≧.*縺繧－繧ゅ≧.*髯千阜", "邨ｶ譛・蝟倥℃(蠑ｱ)"),
+    (r"縺ｾ縺.*雋縺掃縺ｾ縺.*謌ｦ縺医ｋ|謚ｵ謚・*縺吶ｋ", "蠑ｷ縺後ｊ"),
+    # 莠句ｾ檎ｳｻ
+    (r"豌ｸ驕縺ｫ.*迥ｯ縺輔ｌ|豌ｸ驕縺ｫ.*貅ｺ繧芸縺壹▲縺ｨ.*蠢ｫ讌ｽ", "謾ｾ蠢・陌夊┳,逕倥∴"),
+    (r"繧ゅ≧.*縺・＞縺九↑|繧ゅ≧.*縺・＞縺九ｂ", "謾ｾ蠢・陌夊┳"),
+    (r"螢翫ｌ縺溽ｬ代∩|陌壹ｍ縺ｪ逶ｮ", "謾ｾ蠢・陌夊┳"),
+    # 霄ｫ菴灘渚蠢懃ｳｻ・亥ｼｱ縲應ｸｭ縺ｮ陬懷ｮ鯉ｼ・    (r"縺翫∪繧薙％|縺ｾ繧薙％|蟄仙ｮｮ|繧ｯ繝ｪ", "蝟倥℃(蠑ｱ),諱･縺倥ｉ縺・),
+    (r"荵ｳ鬥翻豈堺ｹｳ|荵ｳ|閭ｸ.*蜷ｸ", "蝟倥℃(蠑ｱ),諱･縺倥ｉ縺・),
+    (r"邊俶ｶｲ|縺ｬ繧－縺ｬ繧弓縺ｹ縺｡繧・, "蝗ｰ諠・諱･縺倥ｉ縺・),
+    (r"蟐夊脈|蟐壽ｯ竹逕倥＞.*豸ｲ|蛻・ｳ梧ｶｲ", "蝗ｰ諠・蝟倥℃(蠑ｱ)"),
+    (r"蠢ｫ讌ｽ|豌玲戟縺｡縺・＞|豌玲戟縺｡繧・, "蝟倥℃(蠑ｱ),蝗ｰ諠・),
+    (r"逍ｼ|縺・★|繝偵け繝偵け|縺ｳ縺上・縺楯逞呎肇", "蝟倥℃(蠑ｱ),諱･縺倥ｉ縺・),
+    (r"豼｡繧芸諢帶ｶｲ|縺舌■繧・縺倥ｅ繧・, "蝟倥℃(蠑ｱ),諱･縺倥ｉ縺・),
+    (r"隗ｦ謇弓阡倒蟷ｼ陌ｫ|陜ｿ|蜊ｵ", "諱先・蝗ｰ諠・),
+    (r"騾吶＞|邨｡縺ｿ|蟾ｻ縺鋼蜷ｸ縺・ｻ・蛹・∩霎ｼ", "諱先・蝗ｰ諠・),
+    (r"鬟ｲ縺ｾ縺輔ｌ|豕ｨ縺手ｾｼ|豬√＠霎ｼ", "諱先・蝗ｰ諠・),
+    (r"縺雁ｰｻ|繧｢繝翫Ν|蟆ｻ遨ｴ", "諱･縺倥ｉ縺・蝗ｰ諠・),
+    (r"闍怜ｺ掛郢∵ｮ翻閧芽｢弓蝎ｨ.*縺ｪ繧・, "邨ｶ譛・陌夊┳"),
+    (r"閹ｨ繧榎繝代Φ繝代Φ|縺・▲縺ｱ縺・, "蝟倥℃(蠑ｷ),諱･縺倥ｉ縺・),
+    (r"蜃ｺ蜿｣.*隕九∴|縺ゅ→蟆代＠|繧ゅ≧蟆代＠", "辟ｦ繧・蠑ｷ縺後ｊ"),
+    (r"雖芸繧・□|縺薙ｓ縺ｪ縺ｮ", "諱先・諡堤ｵｶ"),
+    (r"窶ｦ窶ｦ縺｣|縺上▲|縺ゅ▲", "鬩壹″,蜍墓昭"),
+    # 繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ
+    (r"窶ｦ窶ｦ", "蜍墓昭"),
 ]
 
 
 def infer_emotion_from_text(text: str) -> str:
-    """テキスト内容から感情タグを自動推定する"""
+    """繝・く繧ｹ繝亥・螳ｹ縺九ｉ諢滓ュ繧ｿ繧ｰ繧定・蜍墓耳螳壹☆繧・""
     for pattern, emotion in EMOTION_INFERENCE_RULES:
         if re.search(pattern, text):
             return emotion
-    return "日常"
+    return "譌･蟶ｸ"
 
 
 def load_game_text(filepath: Path) -> list[dict]:
-    """ゲームテキスト（.md）を解析してセリフを抽出する
+    """繧ｲ繝ｼ繝繝・く繧ｹ繝茨ｼ・md・峨ｒ隗｣譫舌＠縺ｦ繧ｻ繝ｪ繝輔ｒ謚ｽ蜃ｺ縺吶ｋ
 
-    対象行:
-      - （括弧の独白）→ 採用
-      - 「発話セリフ」→ 採用（括弧を除去）
-    除外行:
-      - # セクションヘッダ → scene_id として利用
-      - 【演出指示】【CG】→ 除外
-      - ★パラメータ → 除外
-      - ——END—— → 除外
-      - --- → 除外
-      - ナレーション（地の文）→ 除外
-      - 空行 → 除外
-    """
+    蟇ｾ雎｡陦・
+      - ・域峡蠑ｧ縺ｮ迢ｬ逋ｽ・俄・ 謗｡逕ｨ
+      - 縲檎匱隧ｱ繧ｻ繝ｪ繝輔坂・ 謗｡逕ｨ・域峡蠑ｧ繧帝勁蜴ｻ・・    髯､螟冶｡・
+      - # 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ繝倥ャ繝 竊・scene_id 縺ｨ縺励※蛻ｩ逕ｨ
+      - 縲先ｼ泌・謖・､ｺ縲代燭G縲鯛・ 髯､螟・      - 笘・ヱ繝ｩ繝｡繝ｼ繧ｿ 竊・髯､螟・      - 窶披忍ND窶披・竊・髯､螟・      - --- 竊・髯､螟・      - 繝翫Ξ繝ｼ繧ｷ繝ｧ繝ｳ・亥慍縺ｮ譁・ｼ俄・ 髯､螟・      - 遨ｺ陦・竊・髯､螟・    """
     with open(filepath, "r", encoding="utf-8") as f:
         lines = f.readlines()
 
@@ -390,43 +352,37 @@ def load_game_text(filepath: Path) -> list[dict]:
         if not l:
             continue
 
-        # セクションヘッダ → scene_id 更新
+        # 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ繝倥ャ繝 竊・scene_id 譖ｴ譁ｰ
         section_match = re.match(r'^#{1,3}\s+(.+)$', l)
         if section_match:
             section_name = section_match.group(1)
-            # scene_id を生成（S1-mid → s1_mid, S2-ev1 → s2_ev1 etc.）
-            sid = re.search(r'(S\d+[-_]\w+)', section_name)
+            # scene_id 繧堤函謌撰ｼ・1-mid 竊・s1_mid, S2-ev1 竊・s2_ev1 etc.・・            sid = re.search(r'(S\d+[-_]\w+)', section_name)
             if sid:
                 scene_count += 1
                 current_scene = sid.group(1).lower().replace('-', '_')
             elif re.search(r'Stage\s*\d', section_name):
-                # Stage ヘッダはスキップ（子セクションで scene_id を設定）
-                pass
+                # Stage 繝倥ャ繝縺ｯ繧ｹ繧ｭ繝・・・亥ｭ舌そ繧ｯ繧ｷ繝ｧ繝ｳ縺ｧ scene_id 繧定ｨｭ螳夲ｼ・                pass
             continue
 
-        # 除外行
-        if l.startswith('【') or l.startswith('★') or l.startswith('——') or l == '---':
+        # 髯､螟冶｡・        if l.startswith('縲・) or l.startswith('笘・) or l.startswith('窶披・) or l == '---':
             continue
 
-        # 独白: （...）
-        monologue_match = re.match(r'^（(.+)）$', l)
+        # 迢ｬ逋ｽ: ・・..・・        monologue_match = re.match(r'^・・.+)・・', l)
         if monologue_match:
             text = monologue_match.group(1)
-            # 長い行は分割（60文字超）
-            sub_lines = _split_long_text(text, max_len=55)
+            # 髟ｷ縺・｡後・蛻・牡・・0譁・ｭ苓ｶ・ｼ・            sub_lines = _split_long_text(text, max_len=55)
             for sub in sub_lines:
                 emotion = infer_emotion_from_text(sub)
                 rows.append({
                     "scene_id": current_scene,
-                    "speaker": "白雨",
+                    "speaker": "逋ｽ髮ｨ",
                     "emotion_tags": emotion,
-                    "text_raw": f"（{sub}）",
-                    "line_type": "独白",
+                    "text_raw": f"・・sub}・・,
+                    "line_type": "迢ｬ逋ｽ",
                 })
             continue
 
-        # 発話: 「...」
-        speech_match = re.match(r'^「(.+?)」?$', l)
+        # 逋ｺ隧ｱ: 縲・..縲・        speech_match = re.match(r'^縲・.+?)縲・$', l)
         if speech_match:
             text = speech_match.group(1)
             sub_lines = _split_long_text(text, max_len=55)
@@ -434,31 +390,30 @@ def load_game_text(filepath: Path) -> list[dict]:
                 emotion = infer_emotion_from_text(sub)
                 rows.append({
                     "scene_id": current_scene,
-                    "speaker": "白雨",
+                    "speaker": "逋ｽ髮ｨ",
                     "emotion_tags": emotion,
                     "text_raw": sub,
-                    "line_type": "発話",
+                    "line_type": "逋ｺ隧ｱ",
                 })
             continue
 
-        # それ以外はナレーション → スキップ
+        # 縺昴ｌ莉･螟悶・繝翫Ξ繝ｼ繧ｷ繝ｧ繝ｳ 竊・繧ｹ繧ｭ繝・・
 
     return rows
 
 
 def _split_long_text(text: str, max_len: int = 55) -> list[str]:
-    """長いテキストを適切な位置で分割する"""
+    """髟ｷ縺・ユ繧ｭ繧ｹ繝医ｒ驕ｩ蛻・↑菴咲ｽｮ縺ｧ蛻・牡縺吶ｋ"""
     if len(text) <= max_len:
         return [text]
 
     result = []
-    # 「……」で分割を試みる
-    parts = re.split(r'(……)', text)
+    # 縲娯ｦ窶ｦ縲阪〒蛻・牡繧定ｩｦ縺ｿ繧・    parts = re.split(r'(窶ｦ窶ｦ)', text)
     current = ""
     for i, part in enumerate(parts):
-        if part == "……":
+        if part == "窶ｦ窶ｦ":
             current += part
-            # 次のパートと合わせて長すぎるなら、ここで切る
+            # 谺｡縺ｮ繝代・繝医→蜷医ｏ縺帙※髟ｷ縺吶℃繧九↑繧峨√％縺薙〒蛻・ｋ
             remaining = "".join(parts[i+1:]) if i+1 < len(parts) else ""
             if len(current) >= max_len * 0.4 and remaining:
                 result.append(current.strip())
@@ -473,12 +428,12 @@ def _split_long_text(text: str, max_len: int = 55) -> list[str]:
     if current.strip():
         result.append(current.strip())
 
-    # 分割できなかった場合はそのまま返す
+    # 蛻・牡縺ｧ縺阪↑縺九▲縺溷ｴ蜷医・縺昴・縺ｾ縺ｾ霑斐☆
     return result if result else [text]
 
 
 def load_json(filepath: Path) -> list[dict]:
-    """JSON形式の台本を読み込む"""
+    """JSON蠖｢蠑上・蜿ｰ譛ｬ繧定ｪｭ縺ｿ霎ｼ繧"""
     with open(filepath, "r", encoding="utf-8") as f:
         data = json.load(f)
     if isinstance(data, list):
@@ -489,14 +444,14 @@ def load_json(filepath: Path) -> list[dict]:
 
 
 def load_csv(filepath: Path) -> list[dict]:
-    """CSV形式の台本を読み込む"""
+    """CSV蠖｢蠑上・蜿ｰ譛ｬ繧定ｪｭ縺ｿ霎ｼ繧"""
     with open(filepath, "r", encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         return list(reader)
 
 
 def load_txt(filepath: Path) -> list[dict]:
-    """プレーンテキスト形式を読み込む（空行でシーン区切り）"""
+    """繝励Ξ繝ｼ繝ｳ繝・く繧ｹ繝亥ｽ｢蠑上ｒ隱ｭ縺ｿ霎ｼ繧・育ｩｺ陦後〒繧ｷ繝ｼ繝ｳ蛹ｺ蛻・ｊ・・""
     with open(filepath, "r", encoding="utf-8") as f:
         lines = f.readlines()
     rows = []
@@ -508,8 +463,8 @@ def load_txt(filepath: Path) -> list[dict]:
             continue
         rows.append({
             "scene_id": f"scene_{scene_num:02d}",
-            "speaker": "キャラ",
-            "emotion_note": "日常",
+            "speaker": "繧ｭ繝｣繝ｩ",
+            "emotion_note": "譌･蟶ｸ",
             "text_raw": line,
         })
     return rows
@@ -517,20 +472,17 @@ def load_txt(filepath: Path) -> list[dict]:
 
 def process_script(project_name: str, ignore_grok_emoji: bool = False,
                     use_pause_markers: bool = True) -> str:
-    """台本ファイルを読み込んで production.csv を生成する
-
-    対応形式（優先順）:
-      1. script_raw.json  (推奨: Grok JSON出力)
+    """蜿ｰ譛ｬ繝輔ぃ繧､繝ｫ繧定ｪｭ縺ｿ霎ｼ繧薙〒 production.csv 繧堤函謌舌☆繧・
+    蟇ｾ蠢懷ｽ｢蠑擾ｼ亥━蜈磯・ｼ・
+      1. script_raw.json  (謗ｨ螂ｨ: Grok JSON蜃ｺ蜉・
       2. script_raw.csv
       3. script_raw.txt
 
     Args:
-        project_name: プロジェクト名
-        ignore_grok_emoji: True の場合、Grok の emoji_suggestion を無視し
-            パイプラインの build_sandwich() で絵文字を再構築する。
-            改善されたパイプライン（絵文字2-3個制限、スタッキング等）を
-            Grok版データに適用する際に使用。
-        use_pause_markers: True の場合、「……」位置に ⏸️ を自動挿入する
+        project_name: 繝励Ο繧ｸ繧ｧ繧ｯ繝亥錐
+        ignore_grok_emoji: True 縺ｮ蝣ｴ蜷医；rok 縺ｮ emoji_suggestion 繧堤┌隕悶＠
+            繝代う繝励Λ繧､繝ｳ縺ｮ build_sandwich() 縺ｧ邨ｵ譁・ｭ励ｒ蜀肴ｧ狗ｯ峨☆繧九・            謾ｹ蝟・＆繧後◆繝代う繝励Λ繧､繝ｳ・育ｵｵ譁・ｭ・-3蛟句宛髯舌√せ繧ｿ繝・く繝ｳ繧ｰ遲会ｼ峨ｒ
+            Grok迚医ョ繝ｼ繧ｿ縺ｫ驕ｩ逕ｨ縺吶ｋ髫帙↓菴ｿ逕ｨ縲・        use_pause_markers: True 縺ｮ蝣ｴ蜷医√娯ｦ窶ｦ縲堺ｽ咲ｽｮ縺ｫ 竢ｸ・・繧定・蜍墓諺蜈･縺吶ｋ
     """
     project_dir = PROJECTS_DIR / project_name
     prod_csv = project_dir / "production.csv"
@@ -539,27 +491,27 @@ def process_script(project_name: str, ignore_grok_emoji: bool = False,
     raw_csv = project_dir / "script_raw.csv"
     raw_txt = project_dir / "script_raw.txt"
 
-    # 読み込み
+    # 隱ｭ縺ｿ霎ｼ縺ｿ
     rows = []
     if raw_json.exists():
         rows = load_json(raw_json)
-        print(f"[ok] script_raw.json を読み込みました ({len(rows)}行)")
+        print(f"[ok] script_raw.json 繧定ｪｭ縺ｿ霎ｼ縺ｿ縺ｾ縺励◆ ({len(rows)}陦・")
     elif raw_csv.exists():
         rows = load_csv(raw_csv)
-        print(f"[ok] script_raw.csv を読み込みました ({len(rows)}行)")
+        print(f"[ok] script_raw.csv 繧定ｪｭ縺ｿ霎ｼ縺ｿ縺ｾ縺励◆ ({len(rows)}陦・")
     elif raw_txt.exists():
         rows = load_txt(raw_txt)
-        print(f"[ok] script_raw.txt を読み込みました ({len(rows)}行)")
+        print(f"[ok] script_raw.txt 繧定ｪｭ縺ｿ霎ｼ縺ｿ縺ｾ縺励◆ ({len(rows)}陦・")
     else:
-        print(f"[error] 台本ファイルが見つかりません: {project_dir}")
-        print(f"  対応形式: script_raw.json / script_raw.csv / script_raw.txt")
+        print(f"[error] 蜿ｰ譛ｬ繝輔ぃ繧､繝ｫ縺瑚ｦ九▽縺九ｊ縺ｾ縺帙ｓ: {project_dir}")
+        print(f"  蟇ｾ蠢懷ｽ｢蠑・ script_raw.json / script_raw.csv / script_raw.txt")
         return ""
 
     if not rows:
-        print("[error] 台本が空です")
+        print("[error] 蜿ｰ譛ｬ縺檎ｩｺ縺ｧ縺・)
         return ""
 
-    # production.csv に変換
+    # production.csv 縺ｫ螟画鋤
     prod_rows = []
     scene_line_counts = {}
     stats = {"weak": 0, "medium": 0, "strong": 0, "extreme": 0}
@@ -569,39 +521,33 @@ def process_script(project_name: str, ignore_grok_emoji: bool = False,
         scene_line_counts[scene_id] = scene_line_counts.get(scene_id, 0) + 1
         line_num = scene_line_counts[scene_id]
 
-        # テキスト取得（JSON: text_raw, CSV: text / text_raw）
-        text_raw_orig = row.get("text_raw", row.get("text", ""))
+        # 繝・く繧ｹ繝亥叙蠕暦ｼ・SON: text_raw, CSV: text / text_raw・・        text_raw_orig = row.get("text_raw", row.get("text", ""))
         text_raw = normalize_text(text_raw_orig)
 
-        # 感情タグ取得（JSON: emotion_tags / emotion_note, CSV: emotion / emotion_note）
-        emotion = row.get("emotion_tags",
+        # 諢滓ュ繧ｿ繧ｰ蜿門ｾ暦ｼ・SON: emotion_tags / emotion_note, CSV: emotion / emotion_note・・        emotion = row.get("emotion_tags",
                   row.get("emotion_note",
                   row.get("emotion", "")))
 
-        # Grokの絵文字提案があればマージ用に保持
+        # Grok縺ｮ邨ｵ譁・ｭ玲署譯医′縺ゅｌ縺ｰ繝槭・繧ｸ逕ｨ縺ｫ菫晄戟
         grok_emoji = row.get("emoji_suggestion", "")
 
-        # 感情タグをパース
-        tags = [t.strip() for t in re.split(r"[,、\s]+", emotion.strip()) if t.strip()]
+        # 諢滓ュ繧ｿ繧ｰ繧偵ヱ繝ｼ繧ｹ
+        tags = [t.strip() for t in re.split(r"[,縲―s]+", emotion.strip()) if t.strip()]
 
-        # 強度判定
-        intensity = classify_intensity(tags)
+        # 蠑ｷ蠎ｦ蛻､螳・        intensity = classify_intensity(tags)
         stats[intensity] += 1
 
-        # 絵文字変換
+        # 邨ｵ譁・ｭ怜､画鋤
         emojis = emotion_to_emojis_all(emotion)
 
-        # ⏸️ 間マーカーの自動挿入
+        # 竢ｸ・・髢薙・繝ｼ繧ｫ繝ｼ縺ｮ閾ｪ蜍墓諺蜈･
         if use_pause_markers:
             text_raw = insert_pause_markers(text_raw)
 
-        # 絵文字サンドイッチ構築
-        if grok_emoji and not ignore_grok_emoji:
-            # Grok絵文字提案をそのまま使用（emoji_suggestionは既にサンドイッチ済み）
-            text_with_emoji = grok_emoji
+        # 邨ｵ譁・ｭ励し繝ｳ繝峨う繝・メ讒狗ｯ・        if grok_emoji and not ignore_grok_emoji:
+            # Grok邨ｵ譁・ｭ玲署譯医ｒ縺昴・縺ｾ縺ｾ菴ｿ逕ｨ・・moji_suggestion縺ｯ譌｢縺ｫ繧ｵ繝ｳ繝峨う繝・メ貂医∩・・            text_with_emoji = grok_emoji
         else:
-            # パイプラインで再構築（改善版: 絵文字2-3個制限、スタッキング等）
-            text_with_emoji = build_sandwich(text_raw, emojis, intensity)
+            # 繝代う繝励Λ繧､繝ｳ縺ｧ蜀肴ｧ狗ｯ会ｼ域隼蝟・沿: 邨ｵ譁・ｭ・-3蛟句宛髯舌√せ繧ｿ繝・く繝ｳ繧ｰ遲会ｼ・            text_with_emoji = build_sandwich(text_raw, emojis, intensity)
 
         prod_rows.append({
             "scene_id": scene_id,
@@ -625,15 +571,13 @@ def process_script(project_name: str, ignore_grok_emoji: bool = False,
             "notes": f"intensity={intensity}",
         })
 
-    # 書き出し
-    fieldnames = list(prod_rows[0].keys())
+    # 譖ｸ縺榊・縺・    fieldnames = list(prod_rows[0].keys())
     with open(prod_csv, "w", encoding="utf-8-sig", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(prod_rows)
 
-    # プレーンテキストも出力（人間確認用）
-    txt_path = project_dir / "script_with_emoji.txt"
+    # 繝励Ξ繝ｼ繝ｳ繝・く繧ｹ繝医ｂ蜃ｺ蜉幢ｼ井ｺｺ髢鍋｢ｺ隱咲畑・・    txt_path = project_dir / "script_with_emoji.txt"
     with open(txt_path, "w", encoding="utf-8") as f:
         current_scene = ""
         for row in prod_rows:
@@ -643,32 +587,30 @@ def process_script(project_name: str, ignore_grok_emoji: bool = False,
             intensity_mark = row["notes"].replace("intensity=", "")
             f.write(f"[{intensity_mark}][{row['emotion_note']}] {row['text_with_emoji']}\n")
 
-    print(f"\n[ok] production.csv を生成しました ({len(prod_rows)}行)")
-    print(f"[ok] script_with_emoji.txt を生成しました（確認用）")
+    print(f"\n[ok] production.csv 繧堤函謌舌＠縺ｾ縺励◆ ({len(prod_rows)}陦・")
+    print(f"[ok] script_with_emoji.txt 繧堤函謌舌＠縺ｾ縺励◆・育｢ｺ隱咲畑・・)
 
-    # サマリー
+    # 繧ｵ繝槭Μ繝ｼ
     scenes = sorted(set(r["scene_id"] for r in prod_rows))
-    print(f"\n  シーン数: {len(scenes)}")
+    print(f"\n  繧ｷ繝ｼ繝ｳ謨ｰ: {len(scenes)}")
     for s in scenes:
         count = sum(1 for r in prod_rows if r["scene_id"] == s)
-        print(f"    {s}: {count}行")
+        print(f"    {s}: {count}陦・)
 
-    print(f"\n  強度分布:")
-    print(f"    弱 (B_sandwich):     {stats['weak']}行")
-    print(f"    中 (B/C方式):        {stats['medium']}行")
-    print(f"    強 (D_sandwich_多):  {stats['strong']}行")
-    print(f"    極限 (D最大盛り):    {stats['extreme']}行")
+    print(f"\n  蠑ｷ蠎ｦ蛻・ｸ・")
+    print(f"    蠑ｱ (B_sandwich):     {stats['weak']}陦・)
+    print(f"    荳ｭ (B/C譁ｹ蠑・:        {stats['medium']}陦・)
+    print(f"    蠑ｷ (D_sandwich_螟・:  {stats['strong']}陦・)
+    print(f"    讌ｵ髯・(D譛螟ｧ逶帙ｊ):    {stats['extreme']}陦・)
 
     return str(prod_csv)
 
 
 def process_game_text(project_name: str, game_text_paths: list[str]) -> str:
-    """ゲームテキスト(.md)を解析して production.csv を生成する
-
+    """繧ｲ繝ｼ繝繝・く繧ｹ繝・.md)繧定ｧ｣譫舌＠縺ｦ production.csv 繧堤函謌舌☆繧・
     Args:
-        project_name: プロジェクト名
-        game_text_paths: ゲームテキストファイルのパスリスト
-    """
+        project_name: 繝励Ο繧ｸ繧ｧ繧ｯ繝亥錐
+        game_text_paths: 繧ｲ繝ｼ繝繝・く繧ｹ繝医ヵ繧｡繧､繝ｫ縺ｮ繝代せ繝ｪ繧ｹ繝・    """
     project_dir = PROJECTS_DIR / project_name
     project_dir.mkdir(parents=True, exist_ok=True)
     prod_csv = project_dir / "production.csv"
@@ -677,21 +619,21 @@ def process_game_text(project_name: str, game_text_paths: list[str]) -> str:
     for path_str in game_text_paths:
         filepath = Path(path_str)
         if not filepath.exists():
-            print(f"[error] ファイルが見つかりません: {filepath}")
+            print(f"[error] 繝輔ぃ繧､繝ｫ縺瑚ｦ九▽縺九ｊ縺ｾ縺帙ｓ: {filepath}")
             continue
         rows = load_game_text(filepath)
         source_name = filepath.stem
-        # rows に source 情報を追加
+        # rows 縺ｫ source 諠・ｱ繧定ｿｽ蜉
         for r in rows:
             r["source"] = source_name
         all_rows.extend(rows)
-        print(f"[ok] {filepath.name} → {len(rows)}行抽出（独白: {sum(1 for r in rows if r.get('line_type')=='独白')}, 発話: {sum(1 for r in rows if r.get('line_type')=='発話')}）")
+        print(f"[ok] {filepath.name} 竊・{len(rows)}陦梧歓蜃ｺ・育峡逋ｽ: {sum(1 for r in rows if r.get('line_type')=='迢ｬ逋ｽ')}, 逋ｺ隧ｱ: {sum(1 for r in rows if r.get('line_type')=='逋ｺ隧ｱ')}・・)
 
     if not all_rows:
-        print("[error] 音声化対象の行がありません")
+        print("[error] 髻ｳ螢ｰ蛹門ｯｾ雎｡縺ｮ陦後′縺ゅｊ縺ｾ縺帙ｓ")
         return ""
 
-    # production.csv に変換
+    # production.csv 縺ｫ螟画鋤
     prod_rows = []
     scene_line_counts = {}
     stats = {"weak": 0, "medium": 0, "strong": 0, "extreme": 0}
@@ -704,7 +646,7 @@ def process_game_text(project_name: str, game_text_paths: list[str]) -> str:
         text_raw = row.get("text_raw", "")
         emotion = row.get("emotion_tags", "")
 
-        tags = [t.strip() for t in re.split(r"[,、\s]+", emotion.strip()) if t.strip()]
+        tags = [t.strip() for t in re.split(r"[,縲―s]+", emotion.strip()) if t.strip()]
         intensity = classify_intensity(tags)
         stats[intensity] += 1
 
@@ -714,7 +656,7 @@ def process_game_text(project_name: str, game_text_paths: list[str]) -> str:
         prod_rows.append({
             "scene_id": scene_id,
             "line_id": f"line_{line_num:03d}",
-            "speaker": row.get("speaker", "白雨"),
+            "speaker": row.get("speaker", "逋ｽ髮ｨ"),
             "emotion_note": emotion,
             "text_raw": text_raw,
             "text_with_emoji": text_with_emoji,
@@ -733,15 +675,13 @@ def process_game_text(project_name: str, game_text_paths: list[str]) -> str:
             "notes": f"intensity={intensity},type={row.get('line_type', '')},src={row.get('source', '')}",
         })
 
-    # 書き出し
-    fieldnames = list(prod_rows[0].keys())
+    # 譖ｸ縺榊・縺・    fieldnames = list(prod_rows[0].keys())
     with open(prod_csv, "w", encoding="utf-8-sig", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(prod_rows)
 
-    # プレーンテキスト出力
-    txt_path = project_dir / "script_with_emoji.txt"
+    # 繝励Ξ繝ｼ繝ｳ繝・く繧ｹ繝亥・蜉・    txt_path = project_dir / "script_with_emoji.txt"
     with open(txt_path, "w", encoding="utf-8") as f:
         current_scene = ""
         for row in prod_rows:
@@ -754,21 +694,21 @@ def process_game_text(project_name: str, game_text_paths: list[str]) -> str:
                 intensity_mark = notes.split("intensity=")[1].split(",")[0]
             f.write(f"[{intensity_mark}][{row['emotion_note']}] {row['text_with_emoji']}\n")
 
-    print(f"\n[ok] production.csv を生成しました ({len(prod_rows)}行)")
-    print(f"[ok] script_with_emoji.txt を生成しました（確認用）")
+    print(f"\n[ok] production.csv 繧堤函謌舌＠縺ｾ縺励◆ ({len(prod_rows)}陦・")
+    print(f"[ok] script_with_emoji.txt 繧堤函謌舌＠縺ｾ縺励◆・育｢ｺ隱咲畑・・)
 
-    # サマリー
+    # 繧ｵ繝槭Μ繝ｼ
     scenes = sorted(set(r["scene_id"] for r in prod_rows))
-    print(f"\n  シーン数: {len(scenes)}")
+    print(f"\n  繧ｷ繝ｼ繝ｳ謨ｰ: {len(scenes)}")
     for s in scenes:
         count = sum(1 for r in prod_rows if r["scene_id"] == s)
-        print(f"    {s}: {count}行")
+        print(f"    {s}: {count}陦・)
 
-    print(f"\n  強度分布:")
-    print(f"    弱 (B_sandwich):     {stats['weak']}行")
-    print(f"    中 (B/C方式):        {stats['medium']}行")
-    print(f"    強 (D_sandwich_多):  {stats['strong']}行")
-    print(f"    極限 (D最大盛り):    {stats['extreme']}行")
+    print(f"\n  蠑ｷ蠎ｦ蛻・ｸ・")
+    print(f"    蠑ｱ (B_sandwich):     {stats['weak']}陦・)
+    print(f"    荳ｭ (B/C譁ｹ蠑・:        {stats['medium']}陦・)
+    print(f"    蠑ｷ (D_sandwich_螟・:  {stats['strong']}陦・)
+    print(f"    讌ｵ髯・(D譛螟ｧ逶帙ｊ):    {stats['extreme']}陦・)
 
     return str(prod_csv)
 
@@ -777,12 +717,12 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage:")
         print("  python script_processor.py <project_name> [--ignore-grok-emoji] [--no-pause]")
-        print("    台本形式: script_raw.json (推奨) / script_raw.csv / script_raw.txt")
-        print("    --ignore-grok-emoji: Grokのemoji_suggestionを無視しパイプラインで再構築")
-        print("    --no-pause: ⏸️間マーカーの自動挿入を無効化")
+        print("    蜿ｰ譛ｬ蠖｢蠑・ script_raw.json (謗ｨ螂ｨ) / script_raw.csv / script_raw.txt")
+        print("    --ignore-grok-emoji: Grok縺ｮemoji_suggestion繧堤┌隕悶＠繝代う繝励Λ繧､繝ｳ縺ｧ蜀肴ｧ狗ｯ・)
+        print("    --no-pause: 竢ｸ・城俣繝槭・繧ｫ繝ｼ縺ｮ閾ｪ蜍墓諺蜈･繧堤┌蜉ｹ蛹・)
         print()
         print("  python script_processor.py --game <project_name> <file1.md> [file2.md ...]")
-        print("    ゲームテキスト解析モード: .md ファイルから独白・発話を抽出")
+        print("    繧ｲ繝ｼ繝繝・く繧ｹ繝郁ｧ｣譫舌Δ繝ｼ繝・ .md 繝輔ぃ繧､繝ｫ縺九ｉ迢ｬ逋ｽ繝ｻ逋ｺ隧ｱ繧呈歓蜃ｺ")
         sys.exit(1)
 
     if sys.argv[1] == "--game":

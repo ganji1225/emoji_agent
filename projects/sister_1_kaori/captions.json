@@ -1,17 +1,17 @@
-{
+﻿{
   "profiles": {
-    "かおり_標準": {
-      "caption": "低く落ち着いた声の大人の女性が、余裕を持って静かに話している。",
+    "縺九♀繧垣讓呎ｺ・: {
+      "caption": "菴弱￥關ｽ縺｡逹縺・◆螢ｰ縺ｮ螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後∽ｽ呵｣輔ｒ謖√▲縺ｦ髱吶°縺ｫ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "alternating",
       "num_steps": 50,
-      "lora_path": "D:/irodori/emoji/lora/mizuhashi_kaori_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/mizuhashi_kaori_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     }
   },
   "scene_mapping": {
-    "confessional_futanari": "かおり_標準"
+    "confessional_futanari": "縺九♀繧垣讓呎ｺ・
   }
 }

@@ -1,17 +1,17 @@
-{
+﻿{
   "profiles": {
-    "ゆかり_標準": {
-      "caption": "クールで大人っぽい女性が、ツンデレな口調で少し素っ気なく話している。",
+    "繧・°繧垣讓呎ｺ・: {
+      "caption": "繧ｯ繝ｼ繝ｫ縺ｧ螟ｧ莠ｺ縺｣縺ｽ縺・･ｳ諤ｧ縺後√ヤ繝ｳ繝・Ξ縺ｪ蜿｣隱ｿ縺ｧ蟆代＠邏縺｣豌励↑縺剰ｩｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "alternating",
       "num_steps": 50,
-      "lora_path": "D:/irodori/emoji/lora/voice_aoyama_yukari_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/voice_aoyama_yukari_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     }
   },
   "scene_mapping": {
-    "confessional_futanari": "ゆかり_標準"
+    "confessional_futanari": "繧・°繧垣讓呎ｺ・
   }
 }

@@ -1,17 +1,17 @@
-{
+﻿{
   "profiles": {
-    "さゆみ_標準": {
-      "caption": "清潔感のある凛とした女性が、澄んだ美しい声で丁寧に話している。",
+    "縺輔ｆ縺ｿ_讓呎ｺ・: {
+      "caption": "貂・ｽ疲─縺ｮ縺ゅｋ蜃帙→縺励◆螂ｳ諤ｧ縺後∵ｾ・ｓ縺鄒弱＠縺・｣ｰ縺ｧ荳∝ｯｧ縺ｫ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "alternating",
       "num_steps": 50,
-      "lora_path": "D:/irodori/emoji/lora/suzushiro_sayumi_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/suzushiro_sayumi_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     }
   },
   "scene_mapping": {
-    "confessional_futanari": "さゆみ_標準"
+    "confessional_futanari": "縺輔ｆ縺ｿ_讓呎ｺ・
   }
 }

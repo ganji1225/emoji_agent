@@ -1,424 +1,424 @@
-{
-  "_comment": "デフォルトキャプションプロファイル - CFG比較テスト + 聴き比べ結果に基づく推奨値",
+﻿{
+  "_comment": "繝・ヵ繧ｩ繝ｫ繝医く繝｣繝励す繝ｧ繝ｳ繝励Ο繝輔ぃ繧､繝ｫ - CFG豈碑ｼ・ユ繧ｹ繝・+ 閨ｴ縺肴ｯ斐∋邨先棡縺ｫ蝓ｺ縺･縺乗耳螂ｨ蛟､",
   "_updated": "2026-05-25",
-  "_note_2026-04-25": "num_steps を 30 → 40 / 各プロファイルに cfg_guidance_mode を追加",
-  "_note_2026-05-04": "A案/B案CFGテスト結果を反映。cfg_text は 3.0〜4.0 の範囲で感情強度に合わせて変動。独立制御には independent モード推奨に変更。",
-  "_note_2026-05-25": "ノウハウDB反映: (1) 行動描写を全プロファイルに追加（声質指示だけでなく状況・しぐさを記述することで個性が出る）(2) 重複キャプションをキャラごとに差別化 (3) ganyu/konomi/maria の v3 LoRAプロファイル追加",
+  "_note_2026-04-25": "num_steps 繧・30 竊・40 / 蜷・・繝ｭ繝輔ぃ繧､繝ｫ縺ｫ cfg_guidance_mode 繧定ｿｽ蜉",
+  "_note_2026-05-04": "A譯・B譯・FG繝・せ繝育ｵ先棡繧貞渚譏縲Ｄfg_text 縺ｯ 3.0縲・.0 縺ｮ遽・峇縺ｧ諢滓ュ蠑ｷ蠎ｦ縺ｫ蜷医ｏ縺帙※螟牙虚縲ら峡遶句宛蠕｡縺ｫ縺ｯ independent 繝｢繝ｼ繝画耳螂ｨ縺ｫ螟画峩縲・,
+  "_note_2026-05-25": "繝弱え繝上えDB蜿肴丐: (1) 陦悟虚謠丞・繧貞・繝励Ο繝輔ぃ繧､繝ｫ縺ｫ霑ｽ蜉・亥｣ｰ雉ｪ謖・､ｺ縺縺代〒縺ｪ縺冗憾豕√・縺励＄縺輔ｒ險倩ｿｰ縺吶ｋ縺薙→縺ｧ蛟区ｧ縺悟・繧具ｼ・2) 驥崎､・く繝｣繝励す繝ｧ繝ｳ繧偵く繝｣繝ｩ縺斐→縺ｫ蟾ｮ蛻･蛹・(3) ganyu/konomi/maria 縺ｮ v3 LoRA繝励Ο繝輔ぃ繧､繝ｫ霑ｽ蜉",
   "_design_guide": {
-    "原則": [
-      "キャプションには音響指示（声の高さ・速さ）だけでなく、行動描写・性格描写を入れる",
-      "例: ×「高い声で話している」 → ○「一生懸命だけど少しドジっ子っぽく話している」",
-      "年齢表現で声質が変わる: '幼い女の子'=高く舌足らず / '少女'=中間 / '若い女性'=大人っぽく落ち着き",
-      "行動描写の影響: '一生懸命'=ハリが出る / 'たどたどしい'=区切る / '慌てる'=テンポ上昇 / '穏やか'=柔らかい"
+    "蜴溷援": [
+      "繧ｭ繝｣繝励す繝ｧ繝ｳ縺ｫ縺ｯ髻ｳ髻ｿ謖・､ｺ・亥｣ｰ縺ｮ鬮倥＆繝ｻ騾溘＆・峨□縺代〒縺ｪ縺上∬｡悟虚謠丞・繝ｻ諤ｧ譬ｼ謠丞・繧貞・繧後ｋ",
+      "萓・ ﾃ励碁ｫ倥＞螢ｰ縺ｧ隧ｱ縺励※縺・ｋ縲・竊・笳九御ｸ逕滓・蜻ｽ縺縺代←蟆代＠繝峨ず縺｣蟄舌▲縺ｽ縺剰ｩｱ縺励※縺・ｋ縲・,
+      "蟷ｴ鮨｢陦ｨ迴ｾ縺ｧ螢ｰ雉ｪ縺悟､峨ｏ繧・ '蟷ｼ縺・･ｳ縺ｮ蟄・=鬮倥￥闊瑚ｶｳ繧峨★ / '蟆大･ｳ'=荳ｭ髢・/ '闍･縺・･ｳ諤ｧ'=螟ｧ莠ｺ縺｣縺ｽ縺剰誠縺｡逹縺・,
+      "陦悟虚謠丞・縺ｮ蠖ｱ髻ｿ: '荳逕滓・蜻ｽ'=繝上Μ縺悟・繧・/ '縺溘←縺溘←縺励＞'=蛹ｺ蛻・ｋ / '諷後※繧・=繝・Φ繝昜ｸ頑・ / '遨上ｄ縺・=譟斐ｉ縺九＞"
     ],
-    "CFG値ガイド": {
-      "cfg_text推奨範囲": "3.0〜4.0。5.0以上はノイズ発生のリスク（2026-05-04 A案テストで確認）。感情強度に合わせて変動: 低=3.0 / 中=3.5 / 高=4.0",
-      "cfg_caption_3.5": "日常・自然体。感情の影響弱め",
-      "cfg_caption_5.0": "中程度の感情。恥じらい・甘え・動揺に最適",
-      "cfg_caption_6.0": "強い感情。絶頂・叫び・崩壊。ノイズとのバランスが良い",
-      "cfg_caption_7.0": "極限intensity。喘ぎ・崩壊系（2026-05-04 B案テストで問題なし確認）",
-      "cfg_caption_8.0": "非推奨。かすれ・ノイズ多発"
+    "CFG蛟､繧ｬ繧､繝・: {
+      "cfg_text謗ｨ螂ｨ遽・峇": "3.0縲・.0縲・.0莉･荳翫・繝弱う繧ｺ逋ｺ逕溘・繝ｪ繧ｹ繧ｯ・・026-05-04 A譯医ユ繧ｹ繝医〒遒ｺ隱搾ｼ峨よ─諠・ｼｷ蠎ｦ縺ｫ蜷医ｏ縺帙※螟牙虚: 菴・3.0 / 荳ｭ=3.5 / 鬮・4.0",
+      "cfg_caption_3.5": "譌･蟶ｸ繝ｻ閾ｪ辟ｶ菴薙よ─諠・・蠖ｱ髻ｿ蠑ｱ繧・,
+      "cfg_caption_5.0": "荳ｭ遞句ｺｦ縺ｮ諢滓ュ縲よ▼縺倥ｉ縺・・逕倥∴繝ｻ蜍墓昭縺ｫ譛驕ｩ",
+      "cfg_caption_6.0": "蠑ｷ縺・─諠・らｵｶ鬆ゅ・蜿ｫ縺ｳ繝ｻ蟠ｩ螢翫ゅヮ繧､繧ｺ縺ｨ縺ｮ繝舌Λ繝ｳ繧ｹ縺瑚憶縺・,
+      "cfg_caption_7.0": "讌ｵ髯進ntensity縲ょ迄縺弱・蟠ｩ螢顔ｳｻ・・026-05-04 B譯医ユ繧ｹ繝医〒蝠城｡後↑縺礼｢ｺ隱搾ｼ・,
+      "cfg_caption_8.0": "髱樊耳螂ｨ縲ゅ°縺吶ｌ繝ｻ繝弱う繧ｺ螟夂匱"
     },
-    "guidance_modeガイド": {
-      "_note": "2026-05-04 テスト結果。independent が最高品質と確認。cfg値が異なる場合は必ず independent を使うこと",
-      "independent": "【推奨】cfg_text と cfg_caption を個別に制御。品質最高。cfg値が異なる場合はこれを使う",
-      "joint": "cfg_text / cfg_caption / cfg_speaker が全て同じ値の場合のみ使用可。声質変化が滑らか。※値が異なるとエラー",
-      "alternating": "cfg値がバラバラでもOK。independentが使えない場合の代替。品質は independent より劣る",
-      "_constraint": "cfg値を個別に変更する場合（例: cfg_text=3.0, cfg_caption=5.0）は joint は使えない → independent を使うこと"
+    "guidance_mode繧ｬ繧､繝・: {
+      "_note": "2026-05-04 繝・せ繝育ｵ先棡縲Ｊndependent 縺梧怙鬮伜刀雉ｪ縺ｨ遒ｺ隱阪Ｄfg蛟､縺檎焚縺ｪ繧句ｴ蜷医・蠢・★ independent 繧剃ｽｿ縺・％縺ｨ",
+      "independent": "縲先耳螂ｨ縲祖fg_text 縺ｨ cfg_caption 繧貞句挨縺ｫ蛻ｶ蠕｡縲ょ刀雉ｪ譛鬮倥Ｄfg蛟､縺檎焚縺ｪ繧句ｴ蜷医・縺薙ｌ繧剃ｽｿ縺・,
+      "joint": "cfg_text / cfg_caption / cfg_speaker 縺悟・縺ｦ蜷後§蛟､縺ｮ蝣ｴ蜷医・縺ｿ菴ｿ逕ｨ蜿ｯ縲ょ｣ｰ雉ｪ螟牙喧縺梧ｻ代ｉ縺九やｻ蛟､縺檎焚縺ｪ繧九→繧ｨ繝ｩ繝ｼ",
+      "alternating": "cfg蛟､縺後ヰ繝ｩ繝舌Λ縺ｧ繧０K縲Ｊndependent縺御ｽｿ縺医↑縺・ｴ蜷医・莉｣譖ｿ縲ょ刀雉ｪ縺ｯ independent 繧医ｊ蜉｣繧・,
+      "_constraint": "cfg蛟､繧貞句挨縺ｫ螟画峩縺吶ｋ蝣ｴ蜷茨ｼ井ｾ・ cfg_text=3.0, cfg_caption=5.0・峨・ joint 縺ｯ菴ｿ縺医↑縺・竊・independent 繧剃ｽｿ縺・％縺ｨ"
     },
-    "LoRA使用ガイド": {
-      "_note": "プロファイルに lora_path / lora_scale を追加すると、casting apply 時に自動で production.csv に書き込まれる",
-      "_example": "下の '日常会話_甘雨_例' を参照",
-      "lora_path": "LoRAアダプタフォルダの絶対パス（lora_checkpoint_final_ema を指定）",
-      "lora_scale": "0.0=無効、1.0=標準、1.5=強調、2.0+はノイズリスク",
-      "未指定時": "プロファイルに lora_path が無い場合、production.csv の lora_path 列は空のまま（LoRA 不使用）"
+    "LoRA菴ｿ逕ｨ繧ｬ繧､繝・: {
+      "_note": "繝励Ο繝輔ぃ繧､繝ｫ縺ｫ lora_path / lora_scale 繧定ｿｽ蜉縺吶ｋ縺ｨ縲…asting apply 譎ゅ↓閾ｪ蜍輔〒 production.csv 縺ｫ譖ｸ縺崎ｾｼ縺ｾ繧後ｋ",
+      "_example": "荳九・ '譌･蟶ｸ莨夊ｩｱ_逕倬岑_萓・ 繧貞盾辣ｧ",
+      "lora_path": "LoRA繧｢繝繝励ち繝輔か繝ｫ繝縺ｮ邨ｶ蟇ｾ繝代せ・・ora_checkpoint_final_ema 繧呈欠螳夲ｼ・,
+      "lora_scale": "0.0=辟｡蜉ｹ縲・.0=讓呎ｺ悶・.5=蠑ｷ隱ｿ縲・.0+縺ｯ繝弱う繧ｺ繝ｪ繧ｹ繧ｯ",
+      "譛ｪ謖・ｮ壽凾": "繝励Ο繝輔ぃ繧､繝ｫ縺ｫ lora_path 縺檎┌縺・ｴ蜷医｝roduction.csv 縺ｮ lora_path 蛻励・遨ｺ縺ｮ縺ｾ縺ｾ・・oRA 荳堺ｽｿ逕ｨ・・
     },
-    "参考": "https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku"
+    "蜿り・: "https://zenn.dev/ojisan_ai_lab/articles/post-20260411-nu5cku"
   },
   "profiles": {
-    "日常会話": {
-      "caption": "若い女性が、リラックスした自然な口調で、のんびり明るく話している。",
+    "譌･蟶ｸ莨夊ｩｱ": {
+      "caption": "闍･縺・･ｳ諤ｧ縺後√Μ繝ｩ繝・け繧ｹ縺励◆閾ｪ辟ｶ縺ｪ蜿｣隱ｿ縺ｧ縲√・繧薙・繧頑・繧九￥隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.0,
       "cfg_caption": 3.5,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40
     },
-    "甘い囁き": {
-      "caption": "若い女性が、耳元で甘く囁くように、とろけた柔らかい声で息を漏らしながら話している。",
+    "逕倥＞蝗√″": {
+      "caption": "闍･縺・･ｳ諤ｧ縺後∬ｳ蜈・〒逕倥￥蝗√￥繧医≧縺ｫ縲√→繧阪￠縺滓沐繧峨°縺・｣ｰ縺ｧ諱ｯ繧呈ｼ上ｉ縺励↑縺後ｉ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40
     },
-    "恥じらい": {
-      "caption": "若い女性が、恥ずかしそうにもじもじしながら、言葉を選ぶように小さな声で話している。",
+    "諱･縺倥ｉ縺・: {
+      "caption": "闍･縺・･ｳ諤ｧ縺後∵▼縺壹°縺励◎縺・↓繧ゅ§繧ゅ§縺励↑縺後ｉ縲∬ｨ闡峨ｒ驕ｸ縺ｶ繧医≧縺ｫ蟆上＆縺ｪ螢ｰ縺ｧ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40
     },
-    "積極的・甘え": {
-      "caption": "若い女性が、自信を持って甘く誘うように、距離を詰めながらからかうように話している。",
+    "遨肴･ｵ逧・・逕倥∴": {
+      "caption": "闍･縺・･ｳ諤ｧ縺後∬・菫｡繧呈戟縺｣縺ｦ逕倥￥隱倥≧繧医≧縺ｫ縲∬ｷ晞屬繧定ｩｰ繧√↑縺後ｉ縺九ｉ縺九≧繧医≧縺ｫ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40
     },
-    "興奮・高まり": {
-      "caption": "若い女性が、息を荒くしながら、感情が抑えきれず声が震えて話している。",
+    "闊亥･ｮ繝ｻ鬮倥∪繧・: {
+      "caption": "闍･縺・･ｳ諤ｧ縺後∵・繧定穀縺上＠縺ｪ縺後ｉ縲∵─諠・′謚代∴縺阪ｌ縺壼｣ｰ縺碁怫縺医※隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 4.0,
       "cfg_caption": 7.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40
     },
-    "絶頂・叫び": {
-      "caption": "若い女性が、感情が限界に達して、涙声で息を詰まらせながら叫んでいる。",
+    "邨ｶ鬆ゅ・蜿ｫ縺ｳ": {
+      "caption": "闍･縺・･ｳ諤ｧ縺後∵─諠・′髯千阜縺ｫ驕斐＠縺ｦ縲∵ｶ吝｣ｰ縺ｧ諱ｯ繧定ｩｰ縺ｾ繧峨○縺ｪ縺後ｉ蜿ｫ繧薙〒縺・ｋ縲・,
       "cfg_text": 4.0,
       "cfg_caption": 6.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "_note": "2026-04-22: 7.0→6.0。絵文字4+4との組み合わせで感情表現↑・かすれ抑制を確認"
+      "_note": "2026-04-22: 7.0竊・.0縲らｵｵ譁・ｭ・+4縺ｨ縺ｮ邨・∩蜷医ｏ縺帙〒諢滓ュ陦ｨ迴ｾ竊代・縺九☆繧梧椛蛻ｶ繧堤｢ｺ隱・
     },
-    "極限・崩壊": {
-      "caption": "若い女性が、完全に理性を失い、声が裏返りながら荒い息で絶叫している。",
+    "讌ｵ髯舌・蟠ｩ螢・: {
+      "caption": "闍･縺・･ｳ諤ｧ縺後∝ｮ悟・縺ｫ逅・ｧ繧貞､ｱ縺・∝｣ｰ縺瑚｣剰ｿ斐ｊ縺ｪ縺後ｉ闕偵＞諱ｯ縺ｧ邨ｶ蜿ｫ縺励※縺・ｋ縲・,
       "cfg_text": 4.0,
       "cfg_caption": 6.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "_note": "2026-04-22: 8.0→6.0。絵文字4+4との組み合わせで感情表現↑・かすれ抑制を確認"
+      "_note": "2026-04-22: 8.0竊・.0縲らｵｵ譁・ｭ・+4縺ｨ縺ｮ邨・∩蜷医ｏ縺帙〒諢滓ュ陦ｨ迴ｾ竊代・縺九☆繧梧椛蛻ｶ繧堤｢ｺ隱・
     },
-    "余韻・安堵": {
-      "caption": "若い女性が、ほっとしたように力が抜けて、穏やかに息をつきながらゆっくり話している。",
+    "菴咎渊繝ｻ螳牙ｵ": {
+      "caption": "闍･縺・･ｳ諤ｧ縺後√⊇縺｣縺ｨ縺励◆繧医≧縺ｫ蜉帙′謚懊￠縺ｦ縲∫ｩ上ｄ縺九↓諱ｯ繧偵▽縺阪↑縺後ｉ繧・▲縺上ｊ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.0,
       "cfg_caption": 3.5,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40
     },
-    "泣き・感動": {
-      "caption": "若い女性が、涙を堪えきれず声を詰まらせながら、感情を込めて話している。",
+    "豕｣縺阪・諢溷虚": {
+      "caption": "闍･縺・･ｳ諤ｧ縺後∵ｶ吶ｒ蝣ｪ縺医″繧後★螢ｰ繧定ｩｰ縺ｾ繧峨○縺ｪ縺後ｉ縲∵─諠・ｒ霎ｼ繧√※隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40
     },
-    "甘雨_標準": {
-      "_comment": "voice_ganyu_v1 LoRA - 穏やかで優しい若い女性",
-      "caption": "穏やかで優しい若い女性が、相手に寄り添うようにゆっくりと、静かに丁寧に話している。",
+    "逕倬岑_讓呎ｺ・: {
+      "_comment": "voice_ganyu_v1 LoRA - 遨上ｄ縺九〒蜆ｪ縺励＞闍･縺・･ｳ諤ｧ",
+      "caption": "遨上ｄ縺九〒蜆ｪ縺励＞闍･縺・･ｳ諤ｧ縺後∫嶌謇九↓蟇・ｊ豺ｻ縺・ｈ縺・↓繧・▲縺上ｊ縺ｨ縲・撕縺九↓荳∝ｯｧ縺ｫ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 3.5,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/voice_ganyu_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/voice_ganyu_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "甘雨_甘え": {
-      "_comment": "voice_ganyu_v1 LoRA - 甘え・誘い系（CFG↑で感情強調）",
-      "caption": "穏やかで優しい若い女性が、甘えるように身体を寄せて、ささやくような声で話している。",
+    "逕倬岑_逕倥∴": {
+      "_comment": "voice_ganyu_v1 LoRA - 逕倥∴繝ｻ隱倥＞邉ｻ・・FG竊代〒諢滓ュ蠑ｷ隱ｿ・・,
+      "caption": "遨上ｄ縺九〒蜆ｪ縺励＞闍･縺・･ｳ諤ｧ縺後∫曝縺医ｋ繧医≧縺ｫ霄ｫ菴薙ｒ蟇・○縺ｦ縲√＆縺輔ｄ縺上ｈ縺・↑螢ｰ縺ｧ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/voice_ganyu_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/voice_ganyu_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "このみ_標準": {
-      "_comment": "voice_konomi_v1 LoRA - クールビューティーな大人の女性",
-      "caption": "クールビューティーな大人の女性が、余裕の笑みを浮かべながら、艶っぽく落ち着いた声で親密に話している。",
+    "縺薙・縺ｿ_讓呎ｺ・: {
+      "_comment": "voice_konomi_v1 LoRA - 繧ｯ繝ｼ繝ｫ繝薙Η繝ｼ繝・ぅ繝ｼ縺ｪ螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ",
+      "caption": "繧ｯ繝ｼ繝ｫ繝薙Η繝ｼ繝・ぅ繝ｼ縺ｪ螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後∽ｽ呵｣輔・隨代∩繧呈ｵｮ縺九∋縺ｪ縺後ｉ縲∬恩縺｣縺ｽ縺剰誠縺｡逹縺・◆螢ｰ縺ｧ隕ｪ蟇・↓隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/voice_konomi_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/voice_konomi_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "このみ_誘惑": {
-      "_comment": "voice_konomi_v1 LoRA - お姉さんの誘い系・色気強め",
-      "caption": "セクシーで色っぽい大人の女性が、誘うように艶めかしく、低めの艶のある声で話している。",
+    "縺薙・縺ｿ_隱俶ヱ": {
+      "_comment": "voice_konomi_v1 LoRA - 縺雁ｧ峨＆繧薙・隱倥＞邉ｻ繝ｻ濶ｲ豌怜ｼｷ繧・,
+      "caption": "繧ｻ繧ｯ繧ｷ繝ｼ縺ｧ濶ｲ縺｣縺ｽ縺・､ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後∬ｪ倥≧繧医≧縺ｫ濶ｶ繧√°縺励￥縲∽ｽ弱ａ縺ｮ濶ｶ縺ｮ縺ゅｋ螢ｰ縺ｧ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 4.0,
       "cfg_caption": 6.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/voice_konomi_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/voice_konomi_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "ゆかり_標準": {
-      "_comment": "voice_aoyama_yukari_v1 LoRA - 大人っぽいツンデレお姉さん",
-      "caption": "クールで大人っぽい女性が、少し顔をそらしながらツンデレな口調で、照れを隠して話している。",
+    "繧・°繧垣讓呎ｺ・: {
+      "_comment": "voice_aoyama_yukari_v1 LoRA - 螟ｧ莠ｺ縺｣縺ｽ縺・ヤ繝ｳ繝・Ξ縺雁ｧ峨＆繧・,
+      "caption": "繧ｯ繝ｼ繝ｫ縺ｧ螟ｧ莠ｺ縺｣縺ｽ縺・･ｳ諤ｧ縺後∝ｰ代＠鬘斐ｒ縺昴ｉ縺励↑縺後ｉ繝・Φ繝・Ξ縺ｪ蜿｣隱ｿ縺ｧ縲∫・繧後ｒ髫縺励※隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/voice_aoyama_yukari_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/voice_aoyama_yukari_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "みなみ_標準": {
-      "_comment": "voice_hokuto_minami_v1 LoRA - 凛とした甘い声の大人のお姉さん",
-      "caption": "凛とした落ち着きのある大人の女性が、すっと背筋を伸ばしながら、甘く優しい声で話している。",
+    "縺ｿ縺ｪ縺ｿ_讓呎ｺ・: {
+      "_comment": "voice_hokuto_minami_v1 LoRA - 蜃帙→縺励◆逕倥＞螢ｰ縺ｮ螟ｧ莠ｺ縺ｮ縺雁ｧ峨＆繧・,
+      "caption": "蜃帙→縺励◆關ｽ縺｡逹縺阪・縺ゅｋ螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後√☆縺｣縺ｨ閭檎ｭ九ｒ莨ｸ縺ｰ縺励↑縺後ｉ縲∫曝縺丞━縺励＞螢ｰ縺ｧ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/voice_hokuto_minami_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/voice_hokuto_minami_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "ひかる_標準": {
-      "_comment": "voice_isshiki_hikaru_v1 LoRA - 低い声の大人のお姉さん",
-      "caption": "低く落ち着いた声の大人の女性が、どっしりとした余裕を持ちながら、静かに話している。",
+    "縺ｲ縺九ｋ_讓呎ｺ・: {
+      "_comment": "voice_isshiki_hikaru_v1 LoRA - 菴弱＞螢ｰ縺ｮ螟ｧ莠ｺ縺ｮ縺雁ｧ峨＆繧・,
+      "caption": "菴弱￥關ｽ縺｡逹縺・◆螢ｰ縺ｮ螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後√←縺｣縺励ｊ縺ｨ縺励◆菴呵｣輔ｒ謖√■縺ｪ縺後ｉ縲・撕縺九↓隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/voice_isshiki_hikaru_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/voice_isshiki_hikaru_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "りの_標準": {
-      "_comment": "voice_kawashima_rino_v1 LoRA - 優しい声の大人のお姉さん",
-      "caption": "優しく穏やかな大人の女性が、ほっこりとした笑顔で、柔らかい声で話しかけるように話している。",
+    "繧翫・_讓呎ｺ・: {
+      "_comment": "voice_kawashima_rino_v1 LoRA - 蜆ｪ縺励＞螢ｰ縺ｮ螟ｧ莠ｺ縺ｮ縺雁ｧ峨＆繧・,
+      "caption": "蜆ｪ縺励￥遨上ｄ縺九↑螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後√⊇縺｣縺薙ｊ縺ｨ縺励◆隨鷹｡斐〒縲∵沐繧峨°縺・｣ｰ縺ｧ隧ｱ縺励°縺代ｋ繧医≧縺ｫ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/voice_kawashima_rino_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/voice_kawashima_rino_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "奈々_標準": {
-      "_comment": "voice_aikawa_nana_v1 LoRA - 落ち着いた大人のお姉さん（BGM除外学習）",
-      "caption": "落ち着いた大人の女性が、穏やかな表情でしっとりとした声を保ちながら、ゆったりと話している。",
+    "螂医・讓呎ｺ・: {
+      "_comment": "voice_aikawa_nana_v1 LoRA - 關ｽ縺｡逹縺・◆螟ｧ莠ｺ縺ｮ縺雁ｧ峨＆繧難ｼ・GM髯､螟門ｭｦ鄙抵ｼ・,
+      "caption": "關ｽ縺｡逹縺・◆螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後∫ｩ上ｄ縺九↑陦ｨ諠・〒縺励▲縺ｨ繧翫→縺励◆螢ｰ繧剃ｿ昴■縺ｪ縺後ｉ縲√ｆ縺｣縺溘ｊ縺ｨ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/voice_aikawa_nana_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/voice_aikawa_nana_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "マリア_標準": {
-      "_comment": "maria_v1 LoRA - 優しい大人のお姉さん（1000steps）/ 2026-05-04: cfg_text=5.0→3.0, mode=joint→independent",
-      "caption": "優しく穏やかな大人の女性が、慈愛を込めてゆっくり語りかけるように、温かみのある柔らかい声で話している。",
+    "繝槭Μ繧｢_讓呎ｺ・: {
+      "_comment": "maria_v1 LoRA - 蜆ｪ縺励＞螟ｧ莠ｺ縺ｮ縺雁ｧ峨＆繧難ｼ・000steps・・ 2026-05-04: cfg_text=5.0竊・.0, mode=joint竊段ndependent",
+      "caption": "蜆ｪ縺励￥遨上ｄ縺九↑螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後∵・諢帙ｒ霎ｼ繧√※繧・▲縺上ｊ隱槭ｊ縺九￠繧九ｈ縺・↓縲∵ｸｩ縺九∩縺ｮ縺ゅｋ譟斐ｉ縺九＞螢ｰ縺ｧ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/maria_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/maria_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "りんご_標準": {
-      "_comment": "aoba_ringo_v1 LoRA - 甘い声の女の子",
-      "caption": "甘く可愛らしい女の子が、ぴょんと弾むような元気な声で明るく話している。",
+    "繧翫ｓ縺農讓呎ｺ・: {
+      "_comment": "aoba_ringo_v1 LoRA - 逕倥＞螢ｰ縺ｮ螂ｳ縺ｮ蟄・,
+      "caption": "逕倥￥蜿ｯ諢帙ｉ縺励＞螂ｳ縺ｮ蟄舌′縲√・繧・ｓ縺ｨ蠑ｾ繧繧医≧縺ｪ蜈・ｰ励↑螢ｰ縺ｧ譏弱ｋ縺剰ｩｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/aoba_ringo_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/aoba_ringo_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "ゆか_標準": {
-      "_comment": "kanamatsu_yuka_v1 LoRA - セクシーな声の大人のお姉さん",
-      "caption": "セクシーで色っぽい大人の女性が、視線を絡めるような低めの艶のある声で、余裕を持って話している。",
+    "繧・°_讓呎ｺ・: {
+      "_comment": "kanamatsu_yuka_v1 LoRA - 繧ｻ繧ｯ繧ｷ繝ｼ縺ｪ螢ｰ縺ｮ螟ｧ莠ｺ縺ｮ縺雁ｧ峨＆繧・,
+      "caption": "繧ｻ繧ｯ繧ｷ繝ｼ縺ｧ濶ｲ縺｣縺ｽ縺・､ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後∬ｦ也ｷ壹ｒ邨｡繧√ｋ繧医≧縺ｪ菴弱ａ縺ｮ濶ｶ縺ｮ縺ゅｋ螢ｰ縺ｧ縲∽ｽ呵｣輔ｒ謖√▲縺ｦ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/kanamatsu_yuka_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/kanamatsu_yuka_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "まお_標準": {
-      "_comment": "mao_v1 LoRA - 優しい大人のお姉さん",
-      "caption": "優しく穏やかな大人の女性が、包み込むような温かさで、柔らかい声でゆっくり話している。",
+    "縺ｾ縺垣讓呎ｺ・: {
+      "_comment": "mao_v1 LoRA - 蜆ｪ縺励＞螟ｧ莠ｺ縺ｮ縺雁ｧ峨＆繧・,
+      "caption": "蜆ｪ縺励￥遨上ｄ縺九↑螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後∝桁縺ｿ霎ｼ繧繧医≧縺ｪ貂ｩ縺九＆縺ｧ縲∵沐繧峨°縺・｣ｰ縺ｧ繧・▲縺上ｊ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/mao_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/mao_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "あむ_標準": {
-      "_comment": "mochiri_amu_v1 LoRA - 甘ったるい声の女の子",
-      "caption": "甘えるような甘ったるい声の女の子が、もじもじしながらとろけるような口調で話している。",
+    "縺ゅ・_讓呎ｺ・: {
+      "_comment": "mochiri_amu_v1 LoRA - 逕倥▲縺溘ｋ縺・｣ｰ縺ｮ螂ｳ縺ｮ蟄・,
+      "caption": "逕倥∴繧九ｈ縺・↑逕倥▲縺溘ｋ縺・｣ｰ縺ｮ螂ｳ縺ｮ蟄舌′縲√ｂ縺倥ｂ縺倥＠縺ｪ縺後ｉ縺ｨ繧阪￠繧九ｈ縺・↑蜿｣隱ｿ縺ｧ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/mochiri_amu_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/mochiri_amu_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "みかん_標準": {
-      "_comment": "nonaka_mikan_v1 LoRA - 優しい声の大人のお姉さん",
-      "caption": "優しく穏やかな大人の女性が、にこやかな雰囲気で柔らかく親しみやすく話している。",
+    "縺ｿ縺九ｓ_讓呎ｺ・: {
+      "_comment": "nonaka_mikan_v1 LoRA - 蜆ｪ縺励＞螢ｰ縺ｮ螟ｧ莠ｺ縺ｮ縺雁ｧ峨＆繧・,
+      "caption": "蜆ｪ縺励￥遨上ｄ縺九↑螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後√↓縺薙ｄ縺九↑髮ｰ蝗ｲ豌励〒譟斐ｉ縺九￥隕ｪ縺励∩繧・☆縺剰ｩｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/nonaka_mikan_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/nonaka_mikan_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "ぽぷら_標準": {
-      "_comment": "sawano_popura_v1 LoRA - 甘くてセクシーな大人のお姉さん",
-      "caption": "甘くセクシーな大人の女性が、とろけるような艶っぽい声で甘く誘うように話している。",
+    "縺ｽ縺ｷ繧雲讓呎ｺ・: {
+      "_comment": "sawano_popura_v1 LoRA - 逕倥￥縺ｦ繧ｻ繧ｯ繧ｷ繝ｼ縺ｪ螟ｧ莠ｺ縺ｮ縺雁ｧ峨＆繧・,
+      "caption": "逕倥￥繧ｻ繧ｯ繧ｷ繝ｼ縺ｪ螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後√→繧阪￠繧九ｈ縺・↑濶ｶ縺｣縺ｽ縺・｣ｰ縺ｧ逕倥￥隱倥≧繧医≧縺ｫ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/sawano_popura_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/sawano_popura_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "さゆみ_標準": {
-      "_comment": "suzushiro_sayumi_v1 LoRA - きれいな声のお姉さん",
-      "caption": "清潔感のある凛とした女性が、真っ直ぐな眼差しで澄んだ美しい声を保ちながら丁寧に話している。",
+    "縺輔ｆ縺ｿ_讓呎ｺ・: {
+      "_comment": "suzushiro_sayumi_v1 LoRA - 縺阪ｌ縺・↑螢ｰ縺ｮ縺雁ｧ峨＆繧・,
+      "caption": "貂・ｽ疲─縺ｮ縺ゅｋ蜃帙→縺励◆螂ｳ諤ｧ縺後∫悄縺｣逶ｴ縺舌↑逵ｼ蟾ｮ縺励〒貔・ｓ縺鄒弱＠縺・｣ｰ繧剃ｿ昴■縺ｪ縺後ｉ荳∝ｯｧ縺ｫ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/suzushiro_sayumi_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/suzushiro_sayumi_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "fai_標準": {
-      "_comment": "f_ai_v1 LoRA - 気だるげなお姉さん（3000steps）",
-      "caption": "気だるげな女性が、力を抜いたような低くかすれた色気のある声でゆったりと話している。",
+    "fai_讓呎ｺ・: {
+      "_comment": "f_ai_v1 LoRA - 豌励□繧九￡縺ｪ縺雁ｧ峨＆繧難ｼ・000steps・・,
+      "caption": "豌励□繧九￡縺ｪ螂ｳ諤ｧ縺後∝鴨繧呈栢縺・◆繧医≧縺ｪ菴弱￥縺九☆繧後◆濶ｲ豌励・縺ゅｋ螢ｰ縺ｧ繧・▲縺溘ｊ縺ｨ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/f_ai_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/f_ai_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "ゆうこ_標準": {
-      "_comment": "minaguchi_yuko_v1 LoRA - 優しい声の大人のお姉さん（3000steps）",
-      "caption": "優しく穏やかな大人の女性が、包み込むような温かさで柔らかく話している。",
+    "繧・≧縺点讓呎ｺ・: {
+      "_comment": "minaguchi_yuko_v1 LoRA - 蜆ｪ縺励＞螢ｰ縺ｮ螟ｧ莠ｺ縺ｮ縺雁ｧ峨＆繧難ｼ・000steps・・,
+      "caption": "蜆ｪ縺励￥遨上ｄ縺九↑螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後∝桁縺ｿ霎ｼ繧繧医≧縺ｪ貂ｩ縺九＆縺ｧ譟斐ｉ縺九￥隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/minaguchi_yuko_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/minaguchi_yuko_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "かおり_標準": {
-      "_comment": "mizuhashi_kaori_v1 LoRA - 低い声の大人のお姉さん（2000steps）",
-      "caption": "低く落ち着いた声の大人の女性が、ゆったりとした間を保ちながら静かに話している。",
+    "縺九♀繧垣讓呎ｺ・: {
+      "_comment": "mizuhashi_kaori_v1 LoRA - 菴弱＞螢ｰ縺ｮ螟ｧ莠ｺ縺ｮ縺雁ｧ峨＆繧難ｼ・000steps・・,
+      "caption": "菴弱￥關ｽ縺｡逹縺・◆螢ｰ縺ｮ螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後√ｆ縺｣縺溘ｊ縺ｨ縺励◆髢薙ｒ菫昴■縺ｪ縺後ｉ髱吶°縺ｫ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/mizuhashi_kaori_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/mizuhashi_kaori_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "まみこ_標準": {
-      "_comment": "noto_mamiko_v1 LoRA - 優しい声の大人のお姉さん（3000steps）",
-      "caption": "優しく穏やかな大人の女性が、温かみのある柔らかい声で、詩を読み聞かせるようにゆったりと話している。",
+    "縺ｾ縺ｿ縺点讓呎ｺ・: {
+      "_comment": "noto_mamiko_v1 LoRA - 蜆ｪ縺励＞螢ｰ縺ｮ螟ｧ莠ｺ縺ｮ縺雁ｧ峨＆繧難ｼ・000steps・・,
+      "caption": "蜆ｪ縺励￥遨上ｄ縺九↑螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後∵ｸｩ縺九∩縺ｮ縺ゅｋ譟斐ｉ縺九＞螢ｰ縺ｧ縲∬ｩｩ繧定ｪｭ縺ｿ閨槭°縺帙ｋ繧医≧縺ｫ繧・▲縺溘ｊ縺ｨ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/noto_mamiko_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/noto_mamiko_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "あけの_標準": {
-      "_comment": "watanabe_akeno_v1 LoRA - 低い声の大人のお姉さん（2000steps）",
-      "caption": "低く落ち着いた声の大人の女性が、思慮深そうな表情で余裕を持って静かに話している。",
+    "縺ゅ￠縺ｮ_讓呎ｺ・: {
+      "_comment": "watanabe_akeno_v1 LoRA - 菴弱＞螢ｰ縺ｮ螟ｧ莠ｺ縺ｮ縺雁ｧ峨＆繧難ｼ・000steps・・,
+      "caption": "菴弱￥關ｽ縺｡逹縺・◆螢ｰ縺ｮ螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後∵晄・豺ｱ縺昴≧縺ｪ陦ｨ諠・〒菴呵｣輔ｒ謖√▲縺ｦ髱吶°縺ｫ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/watanabe_akeno_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/watanabe_akeno_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
 
-    "_comment_v3_section": "=== v3 LoRA プロファイル（ganyu_v3 / konomi_v3 / maria_v3 / baked models） ===",
+    "_comment_v3_section": "=== v3 LoRA 繝励Ο繝輔ぃ繧､繝ｫ・・anyu_v3 / konomi_v3 / maria_v3 / baked models・・===",
 
-    "甘雨_v3_標準": {
-      "_comment": "ganyu_v3 LoRA - v3準拠 (duration_predictor + diffusion_attn) / 10,000steps / v2_add込み約587件",
-      "caption": "穏やかで優しい若い女性が、相手に寄り添うようにゆっくりと、静かに丁寧に話している。",
+    "逕倬岑_v3_讓呎ｺ・: {
+      "_comment": "ganyu_v3 LoRA - v3貅匁侠 (duration_predictor + diffusion_attn) / 10,000steps / v2_add霎ｼ縺ｿ邏・87莉ｶ",
+      "caption": "遨上ｄ縺九〒蜆ｪ縺励＞闍･縺・･ｳ諤ｧ縺後∫嶌謇九↓蟇・ｊ豺ｻ縺・ｈ縺・↓繧・▲縺上ｊ縺ｨ縲・撕縺九↓荳∝ｯｧ縺ｫ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 3.5,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/ganyu_v3/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/ganyu_v3/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "甘雨_v3_甘え": {
-      "_comment": "ganyu_v3 LoRA - 甘え系（cfg_caption=5.0で恥じらい強調）",
-      "caption": "穏やかで優しい若い女性が、少し照れながら甘えるように身体を寄せて、ささやくような声で話している。",
+    "逕倬岑_v3_逕倥∴": {
+      "_comment": "ganyu_v3 LoRA - 逕倥∴邉ｻ・・fg_caption=5.0縺ｧ諱･縺倥ｉ縺・ｼｷ隱ｿ・・,
+      "caption": "遨上ｄ縺九〒蜆ｪ縺励＞闍･縺・･ｳ諤ｧ縺後∝ｰ代＠辣ｧ繧後↑縺後ｉ逕倥∴繧九ｈ縺・↓霄ｫ菴薙ｒ蟇・○縺ｦ縲√＆縺輔ｄ縺上ｈ縺・↑螢ｰ縺ｧ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/ganyu_v3/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/ganyu_v3/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "このみ_v3_標準": {
-      "_comment": "konomi_v3 LoRA - v3準拠 / 12,000steps / v2_add込み約789件",
-      "caption": "クールビューティーな大人の女性が、余裕の笑みを浮かべながら、艶っぽく落ち着いた声で親密に話している。",
+    "縺薙・縺ｿ_v3_讓呎ｺ・: {
+      "_comment": "konomi_v3 LoRA - v3貅匁侠 / 12,000steps / v2_add霎ｼ縺ｿ邏・89莉ｶ",
+      "caption": "繧ｯ繝ｼ繝ｫ繝薙Η繝ｼ繝・ぅ繝ｼ縺ｪ螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後∽ｽ呵｣輔・隨代∩繧呈ｵｮ縺九∋縺ｪ縺後ｉ縲∬恩縺｣縺ｽ縺剰誠縺｡逹縺・◆螢ｰ縺ｧ隕ｪ蟇・↓隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/konomi_v3/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/konomi_v3/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "このみ_v3_誘惑": {
-      "_comment": "konomi_v3 LoRA - 誘惑系・色気強め",
-      "caption": "セクシーで色っぽい大人の女性が、誘うように艶めかしく、低めの艶のある声で話している。",
+    "縺薙・縺ｿ_v3_隱俶ヱ": {
+      "_comment": "konomi_v3 LoRA - 隱俶ヱ邉ｻ繝ｻ濶ｲ豌怜ｼｷ繧・,
+      "caption": "繧ｻ繧ｯ繧ｷ繝ｼ縺ｧ濶ｲ縺｣縺ｽ縺・､ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後∬ｪ倥≧繧医≧縺ｫ濶ｶ繧√°縺励￥縲∽ｽ弱ａ縺ｮ濶ｶ縺ｮ縺ゅｋ螢ｰ縺ｧ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 4.0,
       "cfg_caption": 6.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/konomi_v3/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/konomi_v3/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "マリア_v3_標準": {
-      "_comment": "maria_v3 LoRA - v3準拠 / 10,000steps / v2_add込み約898件",
-      "caption": "優しく穏やかな大人の女性が、慈愛を込めてゆっくり語りかけるように、温かみのある柔らかい声で話している。",
+    "繝槭Μ繧｢_v3_讓呎ｺ・: {
+      "_comment": "maria_v3 LoRA - v3貅匁侠 / 10,000steps / v2_add霎ｼ縺ｿ邏・98莉ｶ",
+      "caption": "蜆ｪ縺励￥遨上ｄ縺九↑螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後∵・諢帙ｒ霎ｼ繧√※繧・▲縺上ｊ隱槭ｊ縺九￠繧九ｈ縺・↓縲∵ｸｩ縺九∩縺ｮ縺ゅｋ譟斐ｉ縺九＞螢ｰ縺ｧ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/maria_v3/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/maria_v3/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     },
-    "マリア_v3_甘え": {
-      "_comment": "maria_v3 LoRA - 甘え・慕情系",
-      "caption": "優しく穏やかな大人の女性が、少し照れながら甘えるように、温かみのある声で囁くように話している。",
+    "繝槭Μ繧｢_v3_逕倥∴": {
+      "_comment": "maria_v3 LoRA - 逕倥∴繝ｻ諷墓ュ邉ｻ",
+      "caption": "蜆ｪ縺励￥遨上ｄ縺九↑螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後∝ｰ代＠辣ｧ繧後↑縺後ｉ逕倥∴繧九ｈ縺・↓縲∵ｸｩ縺九∩縺ｮ縺ゅｋ螢ｰ縺ｧ蝗√￥繧医≧縺ｫ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/maria_v3/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/maria_v3/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     }
   }

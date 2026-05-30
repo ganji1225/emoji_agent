@@ -1,18 +1,17 @@
-#!/usr/bin/env python3
-"""承認候補設定スクリプト - approvals_template.json を production.csv に反映する
+﻿#!/usr/bin/env python3
+"""謇ｿ隱榊呵｣懆ｨｭ螳壹せ繧ｯ繝ｪ繝励ヨ - approvals_template.json 繧・production.csv 縺ｫ蜿肴丐縺吶ｋ
 
-使い方:
+菴ｿ縺・婿:
   python approve.py <project_name>
   python approve.py <project_name> --json path/to/approvals.json
 
-approvals_template.json の形式:
+approvals_template.json 縺ｮ蠖｢蠑・
   {
     "s1_ev3/line_001": 2,
     "s1_ev3/line_002": 1,
     ...
   }
-  ※ キーは "scene_id/line_id"、値は候補番号（1始まりの整数）
-"""
+  窶ｻ 繧ｭ繝ｼ縺ｯ "scene_id/line_id"縲∝､縺ｯ蛟呵｣懃分蜿ｷ・・蟋九∪繧翫・謨ｴ謨ｰ・・"""
 import csv
 import json
 import sys
@@ -24,33 +23,33 @@ if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-PROJECTS_DIR = Path("D:/irodori/projects")
+PROJECTS_DIR = Path("E:/irodori/projects")
 
 
 def apply_approvals(project_name: str, json_path: Path) -> None:
     csv_path = PROJECTS_DIR / project_name / "production.csv"
 
     if not csv_path.exists():
-        print(f"[error] production.csv が見つかりません: {csv_path}")
+        print(f"[error] production.csv 縺瑚ｦ九▽縺九ｊ縺ｾ縺帙ｓ: {csv_path}")
         sys.exit(1)
 
-    # 承認JSONを読み込む
+    # 謇ｿ隱巷SON繧定ｪｭ縺ｿ霎ｼ繧
     approvals: dict = json.loads(json_path.read_text(encoding="utf-8"))
     if not approvals:
-        print("[warn] approvals_template.json が空です。処理を中断します。")
+        print("[warn] approvals_template.json 縺檎ｩｺ縺ｧ縺吶ょ・逅・ｒ荳ｭ譁ｭ縺励∪縺吶・)
         sys.exit(0)
 
-    # production.csv を読み込む
+    # production.csv 繧定ｪｭ縺ｿ霎ｼ繧
     rows = list(csv.DictReader(csv_path.open(encoding="utf-8-sig")))
     fieldnames = list(rows[0].keys())
 
-    # キー "scene_id/line_id" → row のマップを作成
+    # 繧ｭ繝ｼ "scene_id/line_id" 竊・row 縺ｮ繝槭ャ繝励ｒ菴懈・
     row_map: dict = {f"{r['scene_id']}/{r['line_id']}": r for r in rows}
 
     print(f"=== approve.py ===")
-    print(f"プロジェクト: {project_name}")
-    print(f"承認JSON: {json_path}")
-    print(f"承認対象: {len(approvals)}行")
+    print(f"繝励Ο繧ｸ繧ｧ繧ｯ繝・ {project_name}")
+    print(f"謇ｿ隱巷SON: {json_path}")
+    print(f"謇ｿ隱榊ｯｾ雎｡: {len(approvals)}陦・)
     print()
 
     updated = 0
@@ -67,26 +66,25 @@ def apply_approvals(project_name: str, json_path: Path) -> None:
         row["approved_candidate"] = str(int(candidate))
         row["status"] = "approved"
         updated += 1
-        print(f"  [OK] {key} → 候補{candidate}")
+        print(f"  [OK] {key} 竊・蛟呵｣悳candidate}")
 
-    # production.csv を書き戻す（utf-8-sig を維持）
-    with open(csv_path, "w", encoding="utf-8-sig", newline="") as f:
+    # production.csv 繧呈嶌縺肴綾縺呻ｼ・tf-8-sig 繧堤ｶｭ謖・ｼ・    with open(csv_path, "w", encoding="utf-8-sig", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
 
     print()
     print(f"{'='*50}")
-    print(f"承認設定完了！")
-    print(f"  更新: {updated}行")
+    print(f"謇ｿ隱崎ｨｭ螳壼ｮ御ｺ・ｼ・)
+    print(f"  譖ｴ譁ｰ: {updated}陦・)
     if skipped:
-        print(f"  スキップ（見つからず）: {skipped}行")
+        print(f"  繧ｹ繧ｭ繝・・・郁ｦ九▽縺九ｉ縺夲ｼ・ {skipped}陦・)
         for k in not_found:
             print(f"    - {k}")
     print(f"  production.csv: {csv_path}")
     print()
-    print(f"次のステップ:")
-    print(f"  python D:/irodori/agents/ma_agent.py {project_name}")
+    print(f"谺｡縺ｮ繧ｹ繝・ャ繝・")
+    print(f"  python E:/irodori/agents/ma_agent.py {project_name}")
 
 
 def main():
@@ -96,21 +94,20 @@ def main():
 
     project_name = sys.argv[1]
 
-    # --json オプションの解析
-    json_path = None
+    # --json 繧ｪ繝励す繝ｧ繝ｳ縺ｮ隗｣譫・    json_path = None
     if "--json" in sys.argv:
         idx = sys.argv.index("--json")
         if idx + 1 < len(sys.argv):
             json_path = Path(sys.argv[idx + 1])
         else:
-            print("[error] --json の後にパスを指定してください")
+            print("[error] --json 縺ｮ蠕後↓繝代せ繧呈欠螳壹＠縺ｦ縺上□縺輔＞")
             sys.exit(1)
     else:
         json_path = PROJECTS_DIR / project_name / "approvals_template.json"
 
     if not json_path.exists():
-        print(f"[error] 承認JSONが見つかりません: {json_path}")
-        print(f"  先に qc-reviewer を実行して approvals_template.json を生成してください。")
+        print(f"[error] 謇ｿ隱巷SON縺瑚ｦ九▽縺九ｊ縺ｾ縺帙ｓ: {json_path}")
+        print(f"  蜈医↓ qc-reviewer 繧貞ｮ溯｡後＠縺ｦ approvals_template.json 繧堤函謌舌＠縺ｦ縺上□縺輔＞縲・)
         sys.exit(1)
 
     apply_approvals(project_name, json_path)

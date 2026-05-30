@@ -1,17 +1,17 @@
-{
+﻿{
   "profiles": {
-    "ぽぷら_標準": {
-      "caption": "甘くセクシーな大人の女性が、とろけるような艶っぽい声で話している。",
+    "縺ｽ縺ｷ繧雲讓呎ｺ・: {
+      "caption": "逕倥￥繧ｻ繧ｯ繧ｷ繝ｼ縺ｪ螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後√→繧阪￠繧九ｈ縺・↑濶ｶ縺｣縺ｽ縺・｣ｰ縺ｧ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 4.0,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "alternating",
       "num_steps": 40,
-      "lora_path": "D:/irodori/emoji/lora/sawano_popura_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/sawano_popura_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     }
   },
   "scene_mapping": {
-    "confessional_futanari": "ぽぷら_標準"
+    "confessional_futanari": "縺ｽ縺ｷ繧雲讓呎ｺ・
   }
 }

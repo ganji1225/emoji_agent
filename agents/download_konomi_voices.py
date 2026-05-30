@@ -1,9 +1,8 @@
-"""
-馬場このみwiki から .m4a ボイスファイルを一括ダウンロードする。
-
-保存先:
-  downloads/konomi_voices/base/          (アイドル詳細 80件)
-  downloads/konomi_voices/theater_days/  (シアターデイズ 50件)
+﻿"""
+鬥ｬ蝣ｴ縺薙・縺ｿwiki 縺九ｉ .m4a 繝懊う繧ｹ繝輔ぃ繧､繝ｫ繧剃ｸ諡ｬ繝繧ｦ繝ｳ繝ｭ繝ｼ繝峨☆繧九・
+菫晏ｭ伜・:
+  downloads/konomi_voices/base/          (繧｢繧､繝峨Ν隧ｳ邏ｰ 80莉ｶ)
+  downloads/konomi_voices/theater_days/  (繧ｷ繧｢繧ｿ繝ｼ繝・う繧ｺ 50莉ｶ)
 """
 
 import re
@@ -25,7 +24,7 @@ TARGETS = [
     },
 ]
 
-BASE_DIR = Path(r"D:\irodori\downloads\konomi_voices")
+BASE_DIR = Path(r"E:\irodori\downloads\konomi_voices")
 SLEEP_SEC = 0.5
 MAX_RETRIES = 2
 FILENAME_MAX_LEN = 50
@@ -58,9 +57,8 @@ def make_filename(idx: int, entry: dict) -> str:
     if text:
         name = f"{idx:03d}_{sanitize(text)}"
     else:
-        # URL末尾のファイル名部分をそのまま使う
-        name = urllib.parse.unquote(entry["url"].split("/")[-1])
-        name = name.rsplit(".", 1)[0]  # 拡張子除去
+        # URL譛ｫ蟆ｾ縺ｮ繝輔ぃ繧､繝ｫ蜷埼Κ蛻・ｒ縺昴・縺ｾ縺ｾ菴ｿ縺・        name = urllib.parse.unquote(entry["url"].split("/")[-1])
+        name = name.rsplit(".", 1)[0]  # 諡｡蠑ｵ蟄宣勁蜴ｻ
         name = sanitize(name)
     return name + ".m4a"
 
@@ -85,13 +83,13 @@ def process(target: dict, session: requests.Session) -> None:
     subdir.mkdir(parents=True, exist_ok=True)
 
     print(f"\n=== {target['subdir']} ===")
-    print(f"  取得: {url}")
+    print(f"  蜿門ｾ・ {url}")
 
     resp = session.get(url, timeout=30)
     resp.raise_for_status()
 
     links = collect_links(resp.text)
-    print(f"  リンク数: {len(links)}")
+    print(f"  繝ｪ繝ｳ繧ｯ謨ｰ: {len(links)}")
 
     ok = fail = 0
     for idx, entry in enumerate(links, start=1):
@@ -99,7 +97,7 @@ def process(target: dict, session: requests.Session) -> None:
         dest = subdir / fname
 
         if dest.exists() and dest.stat().st_size > 0:
-            print(f"  [{idx:03d}] スキップ(既存): {fname}")
+            print(f"  [{idx:03d}] 繧ｹ繧ｭ繝・・(譌｢蟄・: {fname}")
             ok += 1
             continue
 
@@ -114,7 +112,7 @@ def process(target: dict, session: requests.Session) -> None:
 
         time.sleep(SLEEP_SEC)
 
-    print(f"  完了: {ok}件成功 / {fail}件失敗")
+    print(f"  螳御ｺ・ {ok}莉ｶ謌仙粥 / {fail}莉ｶ螟ｱ謨・)
 
 
 def main() -> None:
@@ -131,7 +129,7 @@ def main() -> None:
     for target in TARGETS:
         process(target, session)
 
-    print("\n全ページ処理完了")
+    print("\n蜈ｨ繝壹・繧ｸ蜃ｦ逅・ｮ御ｺ・)
 
 
 if __name__ == "__main__":

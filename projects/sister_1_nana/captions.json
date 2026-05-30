@@ -1,17 +1,17 @@
-{
+﻿{
   "profiles": {
-    "奈々_標準": {
-      "caption": "落ち着いた大人の女性が、穏やかでしっとりとした声で話している。",
+    "螂医・讓呎ｺ・: {
+      "caption": "關ｽ縺｡逹縺・◆螟ｧ莠ｺ縺ｮ螂ｳ諤ｧ縺後∫ｩ上ｄ縺九〒縺励▲縺ｨ繧翫→縺励◆螢ｰ縺ｧ隧ｱ縺励※縺・ｋ縲・,
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "alternating",
       "num_steps": 50,
-      "lora_path": "D:/irodori/emoji/lora/voice_aikawa_nana_v1/lora_checkpoint_final_ema",
+      "lora_path": "E:/irodori/emoji/lora/voice_aikawa_nana_v1/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     }
   },
   "scene_mapping": {
-    "confessional_futanari": "奈々_標準"
+    "confessional_futanari": "螂医・讓呎ｺ・
   }
 }
