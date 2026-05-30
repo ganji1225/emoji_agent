@@ -1,8 +1,9 @@
 {
   "_comment": "デフォルトキャプションプロファイル - CFG比較テスト + 聴き比べ結果に基づく推奨値",
-  "_updated": "2026-05-04",
+  "_updated": "2026-05-25",
   "_note_2026-04-25": "num_steps を 30 → 40 / 各プロファイルに cfg_guidance_mode を追加",
   "_note_2026-05-04": "A案/B案CFGテスト結果を反映。cfg_text は 3.0〜4.0 の範囲で感情強度に合わせて変動。独立制御には independent モード推奨に変更。",
+  "_note_2026-05-25": "ノウハウDB反映: (1) 行動描写を全プロファイルに追加（声質指示だけでなく状況・しぐさを記述することで個性が出る）(2) 重複キャプションをキャラごとに差別化 (3) ganyu/konomi/maria の v3 LoRAプロファイル追加",
   "_design_guide": {
     "原則": [
       "キャプションには音響指示（声の高さ・速さ）だけでなく、行動描写・性格描写を入れる",
@@ -111,7 +112,7 @@
     },
     "甘雨_標準": {
       "_comment": "voice_ganyu_v1 LoRA - 穏やかで優しい若い女性",
-      "caption": "穏やかで優しい若い女性が、落ち着いた静かな声で丁寧に話している。",
+      "caption": "穏やかで優しい若い女性が、相手に寄り添うようにゆっくりと、静かに丁寧に話している。",
       "cfg_text": 3.5,
       "cfg_caption": 3.5,
       "cfg_speaker": 5.0,
@@ -133,7 +134,7 @@
     },
     "このみ_標準": {
       "_comment": "voice_konomi_v1 LoRA - クールビューティーな大人の女性",
-      "caption": "クールビューティーな大人の女性が、艶っぽく落ち着いた声で、余裕を持って親密に話している。",
+      "caption": "クールビューティーな大人の女性が、余裕の笑みを浮かべながら、艶っぽく落ち着いた声で親密に話している。",
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
@@ -155,7 +156,7 @@
     },
     "ゆかり_標準": {
       "_comment": "voice_aoyama_yukari_v1 LoRA - 大人っぽいツンデレお姉さん",
-      "caption": "クールで大人っぽい女性が、ツンデレな口調で少し素っ気なく話している。",
+      "caption": "クールで大人っぽい女性が、少し顔をそらしながらツンデレな口調で、照れを隠して話している。",
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
@@ -166,7 +167,7 @@
     },
     "みなみ_標準": {
       "_comment": "voice_hokuto_minami_v1 LoRA - 凛とした甘い声の大人のお姉さん",
-      "caption": "凛とした落ち着きのある大人の女性が、甘く優しい声で話している。",
+      "caption": "凛とした落ち着きのある大人の女性が、すっと背筋を伸ばしながら、甘く優しい声で話している。",
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
@@ -177,7 +178,7 @@
     },
     "ひかる_標準": {
       "_comment": "voice_isshiki_hikaru_v1 LoRA - 低い声の大人のお姉さん",
-      "caption": "低く落ち着いた声の大人の女性が、余裕を持って静かに話している。",
+      "caption": "低く落ち着いた声の大人の女性が、どっしりとした余裕を持ちながら、静かに話している。",
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
@@ -188,7 +189,7 @@
     },
     "りの_標準": {
       "_comment": "voice_kawashima_rino_v1 LoRA - 優しい声の大人のお姉さん",
-      "caption": "優しく穏やかな大人の女性が、柔らかい声で親しみやすく話している。",
+      "caption": "優しく穏やかな大人の女性が、ほっこりとした笑顔で、柔らかい声で話しかけるように話している。",
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
@@ -199,7 +200,7 @@
     },
     "奈々_標準": {
       "_comment": "voice_aikawa_nana_v1 LoRA - 落ち着いた大人のお姉さん（BGM除外学習）",
-      "caption": "落ち着いた大人の女性が、穏やかでしっとりとした声で話している。",
+      "caption": "落ち着いた大人の女性が、穏やかな表情でしっとりとした声を保ちながら、ゆったりと話している。",
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
@@ -210,7 +211,7 @@
     },
     "マリア_標準": {
       "_comment": "maria_v1 LoRA - 優しい大人のお姉さん（1000steps）/ 2026-05-04: cfg_text=5.0→3.0, mode=joint→independent",
-      "caption": "優しく穏やかな大人の女性が、温かみのある柔らかい声で話している。",
+      "caption": "優しく穏やかな大人の女性が、慈愛を込めてゆっくり語りかけるように、温かみのある柔らかい声で話している。",
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
@@ -221,7 +222,7 @@
     },
     "りんご_標準": {
       "_comment": "aoba_ringo_v1 LoRA - 甘い声の女の子",
-      "caption": "甘く可愛らしい女の子が、明るく元気な声で話している。",
+      "caption": "甘く可愛らしい女の子が、ぴょんと弾むような元気な声で明るく話している。",
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
@@ -232,7 +233,7 @@
     },
     "ゆか_標準": {
       "_comment": "kanamatsu_yuka_v1 LoRA - セクシーな声の大人のお姉さん",
-      "caption": "セクシーで色っぽい大人の女性が、低めの艶のある声で余裕を持って話している。",
+      "caption": "セクシーで色っぽい大人の女性が、視線を絡めるような低めの艶のある声で、余裕を持って話している。",
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
@@ -243,7 +244,7 @@
     },
     "まお_標準": {
       "_comment": "mao_v1 LoRA - 優しい大人のお姉さん",
-      "caption": "優しく穏やかな大人の女性が、温かみのある柔らかい声で話している。",
+      "caption": "優しく穏やかな大人の女性が、包み込むような温かさで、柔らかい声でゆっくり話している。",
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
@@ -254,7 +255,7 @@
     },
     "あむ_標準": {
       "_comment": "mochiri_amu_v1 LoRA - 甘ったるい声の女の子",
-      "caption": "甘えるような甘ったるい声の女の子が、とろけるような口調で話している。",
+      "caption": "甘えるような甘ったるい声の女の子が、もじもじしながらとろけるような口調で話している。",
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
@@ -265,7 +266,7 @@
     },
     "みかん_標準": {
       "_comment": "nonaka_mikan_v1 LoRA - 優しい声の大人のお姉さん",
-      "caption": "優しく穏やかな大人の女性が、柔らかく親しみやすい声で話している。",
+      "caption": "優しく穏やかな大人の女性が、にこやかな雰囲気で柔らかく親しみやすく話している。",
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
@@ -276,7 +277,7 @@
     },
     "ぽぷら_標準": {
       "_comment": "sawano_popura_v1 LoRA - 甘くてセクシーな大人のお姉さん",
-      "caption": "甘くセクシーな大人の女性が、とろけるような艶っぽい声で話している。",
+      "caption": "甘くセクシーな大人の女性が、とろけるような艶っぽい声で甘く誘うように話している。",
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
@@ -287,7 +288,7 @@
     },
     "さゆみ_標準": {
       "_comment": "suzushiro_sayumi_v1 LoRA - きれいな声のお姉さん",
-      "caption": "清潔感のある凛とした女性が、澄んだ美しい声で丁寧に話している。",
+      "caption": "清潔感のある凛とした女性が、真っ直ぐな眼差しで澄んだ美しい声を保ちながら丁寧に話している。",
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
@@ -298,7 +299,7 @@
     },
     "fai_標準": {
       "_comment": "f_ai_v1 LoRA - 気だるげなお姉さん（3000steps）",
-      "caption": "気だるげな女性が、低くかすれた色気のある声でゆったりと話している。",
+      "caption": "気だるげな女性が、力を抜いたような低くかすれた色気のある声でゆったりと話している。",
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
@@ -309,7 +310,7 @@
     },
     "ゆうこ_標準": {
       "_comment": "minaguchi_yuko_v1 LoRA - 優しい声の大人のお姉さん（3000steps）",
-      "caption": "優しく穏やかな大人の女性が、柔らかく親しみやすい声で話している。",
+      "caption": "優しく穏やかな大人の女性が、包み込むような温かさで柔らかく話している。",
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
@@ -320,7 +321,7 @@
     },
     "かおり_標準": {
       "_comment": "mizuhashi_kaori_v1 LoRA - 低い声の大人のお姉さん（2000steps）",
-      "caption": "低く落ち着いた声の大人の女性が、余裕を持って静かに話している。",
+      "caption": "低く落ち着いた声の大人の女性が、ゆったりとした間を保ちながら静かに話している。",
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
@@ -331,7 +332,7 @@
     },
     "まみこ_標準": {
       "_comment": "noto_mamiko_v1 LoRA - 優しい声の大人のお姉さん（3000steps）",
-      "caption": "優しく穏やかな大人の女性が、温かみのある柔らかい声で話している。",
+      "caption": "優しく穏やかな大人の女性が、温かみのある柔らかい声で、詩を読み聞かせるようにゆったりと話している。",
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
@@ -342,13 +343,82 @@
     },
     "あけの_標準": {
       "_comment": "watanabe_akeno_v1 LoRA - 低い声の大人のお姉さん（2000steps）",
-      "caption": "低く落ち着いた声の大人の女性が、余裕を持って静かに話している。",
+      "caption": "低く落ち着いた声の大人の女性が、思慮深そうな表情で余裕を持って静かに話している。",
       "cfg_text": 3.5,
       "cfg_caption": 5.0,
       "cfg_speaker": 5.0,
       "cfg_guidance_mode": "independent",
       "num_steps": 40,
       "lora_path": "D:/irodori/emoji/lora/watanabe_akeno_v1/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
+    },
+
+    "_comment_v3_section": "=== v3 LoRA プロファイル（ganyu_v3 / konomi_v3 / maria_v3 / baked models） ===",
+
+    "甘雨_v3_標準": {
+      "_comment": "ganyu_v3 LoRA - v3準拠 (duration_predictor + diffusion_attn) / 10,000steps / v2_add込み約587件",
+      "caption": "穏やかで優しい若い女性が、相手に寄り添うようにゆっくりと、静かに丁寧に話している。",
+      "cfg_text": 3.5,
+      "cfg_caption": 3.5,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "independent",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/ganyu_v3/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
+    },
+    "甘雨_v3_甘え": {
+      "_comment": "ganyu_v3 LoRA - 甘え系（cfg_caption=5.0で恥じらい強調）",
+      "caption": "穏やかで優しい若い女性が、少し照れながら甘えるように身体を寄せて、ささやくような声で話している。",
+      "cfg_text": 3.5,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "independent",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/ganyu_v3/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
+    },
+    "このみ_v3_標準": {
+      "_comment": "konomi_v3 LoRA - v3準拠 / 12,000steps / v2_add込み約789件",
+      "caption": "クールビューティーな大人の女性が、余裕の笑みを浮かべながら、艶っぽく落ち着いた声で親密に話している。",
+      "cfg_text": 3.5,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "independent",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/konomi_v3/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
+    },
+    "このみ_v3_誘惑": {
+      "_comment": "konomi_v3 LoRA - 誘惑系・色気強め",
+      "caption": "セクシーで色っぽい大人の女性が、誘うように艶めかしく、低めの艶のある声で話している。",
+      "cfg_text": 4.0,
+      "cfg_caption": 6.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "independent",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/konomi_v3/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
+    },
+    "マリア_v3_標準": {
+      "_comment": "maria_v3 LoRA - v3準拠 / 10,000steps / v2_add込み約898件",
+      "caption": "優しく穏やかな大人の女性が、慈愛を込めてゆっくり語りかけるように、温かみのある柔らかい声で話している。",
+      "cfg_text": 3.5,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "independent",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/maria_v3/lora_checkpoint_final_ema",
+      "lora_scale": 1.0
+    },
+    "マリア_v3_甘え": {
+      "_comment": "maria_v3 LoRA - 甘え・慕情系",
+      "caption": "優しく穏やかな大人の女性が、少し照れながら甘えるように、温かみのある声で囁くように話している。",
+      "cfg_text": 3.5,
+      "cfg_caption": 5.0,
+      "cfg_speaker": 5.0,
+      "cfg_guidance_mode": "independent",
+      "num_steps": 40,
+      "lora_path": "D:/irodori/emoji/lora/maria_v3/lora_checkpoint_final_ema",
       "lora_scale": 1.0
     }
   }

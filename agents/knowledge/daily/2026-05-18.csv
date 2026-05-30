@@ -1,0 +1,5 @@
+﻿id,title,url,categories,combined_score,summary,knowhow_count,publish_date
+art_20260518_035,Irodori-TTS-500M-v3: 公式モデルカード,https://huggingface.co/Aratako/Irodori-TTS-500M-v3,"voice_quality,emoji_technique,training_tips",0.94,Rectified Flow Diffusion Transformer（RF-DiT）ベースの日本語TTSモデル。v3では可変長学習、Duration Predictor導入、訓練データ拡大、Sil,4,2026-01-01
+art_20260518_037,Emoji-TTS（Irodori-TTSフォーク版）日本語README,https://github.com/iron-mukakin/Emoji-TTS/blob/main/README_ja.md,"cfg_tuning,training_tips,emoji_technique,voice_quality",0.94,Flow Matchingベースの日本語TTS。DACVAE潜在空間上のRectified Flow拡散トランスフォーマーを採用。ゼロショット声質クローニング、絵文字スタイル制御、LoRA学習に対応。,11,
+art_20260518_034,【彩】Irodori-TTS 解説,https://note.com/417__/n/n7c25cf9a04c2,"voice_quality,caption_design,emoji_technique,cfg_tuning",0.86,日本の開発者Aratako氏によるローカルTTSモデル「Irodori-TTS」の包括的な解説。日本語特化による高品質な読み上げ、Voice Design・Voice Clone機能、技術的なFlow,4,2026-05-08
+art_20260518_036,Irodori-TTS-500M-v3 絵文字アノテーション完全ガイド,https://huggingface.co/Aratako/Irodori-TTS-500M-v3/blob/main/EMOJI_ANNOTATIONS.md,emoji_technique,0.62,Irodori-TTS-500M-v3で音声合成時に入力テキストに挿入可能な絵文字を使用して、音響効果・話し方・感情表現を細かく制御できる機能の公式ドキュメント,4,

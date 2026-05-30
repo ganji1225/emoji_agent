@@ -658,6 +658,540 @@
       "confidence": "high",
       "status": "pending_review",
       "created": "2026-04-25"
+    },
+    {
+      "id": "upd_20260512_art_20260512_028",
+      "target": "default_captions.json",
+      "operation": "review_caption_technique",
+      "data": {
+        "finding": "VoiceDesign版で自然言語による声指定が可能。『明るい女性の声』のような言語表現で声質をテキスト記述制御。参照音声なしでの声質指定に対応。",
+        "params": {
+          "method": "自然言語記述",
+          "example": "明るい女性の声"
+        }
+      },
+      "source_article": "art_20260512_028",
+      "source_url": "https://hatohato.jp/blog/core/single.php?id=1032",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-12"
+    },
+    {
+      "id": "upd_20260512_art_20260512_029",
+      "target": "default_captions.json",
+      "operation": "review_caption_technique",
+      "data": {
+        "finding": "VoiceDesignモデル(irodori-tts-500m-v2-voicedesign)ではCaption/Style Promptフィールドで年齢・性別・感情などのメタデータを組み込み、より精密な音声生成が実現される。",
+        "params": {
+          "model": "irodori-tts-500m-v2-voicedesign",
+          "field": "Caption / Style Prompt"
+        }
+      },
+      "source_article": "art_20260512_029",
+      "source_url": "https://local-llm.memo.wiki/d/%A1%DATTS%A1%DBIrodori-TTS-v2%A4%CE%B4%CA%C3%B1%A4%CA%BB%C8%A4%A4%CA%FD%A4%CA%A4%C9",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-12"
+    },
+    {
+      "id": "upd_20260512_art_20260512_029",
+      "target": "default_captions.json",
+      "operation": "review_cfg_values",
+      "data": {
+        "finding": "CFG Scale Textのデフォルト値は3。値を大きくするとテキスト指示への準拠性が強くなるが、不自然になる可能性がある。VoiceDesignではCFG Scale Captionデフォルト値4でスタイル指定の効果を調整。",
+        "params": {
+          "cfg_scale_text_default": 3,
+          "cfg_scale_caption_default": 4,
+          "cfg_scale_speaker_default": 5,
+          "cfg_guidance_modes": [
+            "independent",
+            "joint",
+            "alternating"
+          ]
+        }
+      },
+      "source_article": "art_20260512_029",
+      "source_url": "https://local-llm.memo.wiki/d/%A1%DATTS%A1%DBIrodori-TTS-v2%A4%CE%B4%CA%C3%B1%A4%CA%BB%C8%A4%A4%CA%FD%A4%CA%A4%C9",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-12"
+    },
+    {
+      "id": "upd_20260512_art_20260512_030",
+      "target": "default_captions.json",
+      "operation": "review_caption_technique",
+      "data": {
+        "finding": "VoiceDesign版では参照音声なしで、声の説明文（例：『落ち着いた女性の声で、やわらかく自然に』）を入力することで声質・感情・話し方を指定可能。描写的なキャプションで話者性を制御。",
+        "params": {
+          "examples": "落ち着いた女性の声で自然に / 低めの男性が疲れた優しい雰囲気 / 若い女性が困惑しながら小さな声で"
+        }
+      },
+      "source_article": "art_20260512_030",
+      "source_url": "https://note.com/fuma_ai_lab/n/nef8cb249ccdf",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-12"
+    },
+    {
+      "id": "upd_20260512_art_20260512_031",
+      "target": "ma_agent.py",
+      "operation": "review_postprocess_technique",
+      "data": {
+        "finding": "DAC VAEの推論時にウォーターマーク処理をバイパス(model.decoder.alpha=0.0設定)することで、ファインチューニングされたモデルの性能を最大化できる。正規化(-16.0dB)と振幅制御も重要。",
+        "params": {
+          "watermark_alpha": 0.0,
+          "normalization_db": -16.0
+        }
+      },
+      "source_article": "art_20260512_031",
+      "source_url": "https://huggingface.co/Aratako/Semantic-DACVAE-Japanese",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-12"
+    },
+    {
+      "id": "upd_20260512_art_20260512_032",
+      "target": "default_captions.json",
+      "operation": "review_caption_technique",
+      "data": {
+        "finding": "VoiceDesign版では『Caption / Style Prompt』欄に声の性別や声質を日本語で説明するプロンプトを入力。例：『高飛車なお嬢様のような、若い女性話者』と指定すると対応するボイスが生成される。",
+        "params": {
+          "field_name": "Caption / Style Prompt",
+          "example_prompt": "高飛車なお嬢様のような、若い女性話者"
+        }
+      },
+      "source_article": "art_20260512_032",
+      "source_url": "https://kurokumasoft.com/2026/04/28/irodori-tts/",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-12"
+    },
+    {
+      "id": "upd_20260518_art_20260518_034",
+      "target": "default_captions.json",
+      "operation": "review_caption_technique",
+      "data": {
+        "finding": "Voice Designで声の高さや話し方を記述可能。感情指示は効果が限定的なため、読み上げ文章側のプロンプト（絵文字）で対応するのが現実的",
+        "params": {}
+      },
+      "source_article": "art_20260518_034",
+      "source_url": "https://note.com/417__/n/n7c25cf9a04c2",
+      "confidence": "medium",
+      "status": "pending_review",
+      "created": "2026-05-18"
+    },
+    {
+      "id": "upd_20260518_art_20260518_035",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "v3で確認された絵文字例：😭（泣く）、🤧（病気）、👂（囁き）、😮‍💨（息遣い）。複合絵文字（ZWJ含む）も対応",
+        "params": {
+          "verified_emojis": [
+            "😭",
+            "🤧",
+            "👂",
+            "😮‍💨"
+          ]
+        }
+      },
+      "source_article": "art_20260518_035",
+      "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v3",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-18"
+    },
+    {
+      "id": "upd_20260518_art_20260518_035",
+      "target": "ma_agent.py",
+      "operation": "review_postprocess_technique",
+      "data": {
+        "finding": "v3でSilentCipherを統合し、生成出力に堅牢な不可視音声透かしを自動適用。責任あるAI利用を推進する仕組み",
+        "params": {
+          "watermarking_tech": "SilentCipher"
+        }
+      },
+      "source_article": "art_20260518_035",
+      "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v3",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-18"
+    },
+    {
+      "id": "upd_20260518_art_20260518_036",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "📢絵文字でエコーとリバーブを追加可能。音声に空間的な響きを付与して劇的な表現効果を生成",
+        "params": {
+          "emoji": "📢",
+          "effect": "echo_reverb"
+        }
+      },
+      "source_article": "art_20260518_036",
+      "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v3/blob/main/EMOJI_ANNOTATIONS.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-18"
+    },
+    {
+      "id": "upd_20260518_art_20260518_036",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "😰絵文字で慌て・緊張・どもりといった心理状態を反映した不安定な音声生成が可能。キャラクター演技の幅を拡げる",
+        "params": {
+          "emoji": "😰"
+        }
+      },
+      "source_article": "art_20260518_036",
+      "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v3/blob/main/EMOJI_ANNOTATIONS.md",
+      "confidence": "medium",
+      "status": "pending_review",
+      "created": "2026-05-18"
+    },
+    {
+      "id": "upd_20260518_art_20260518_036",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "📖絵文字でナレーション・独白・モノローグといった客観的な叙述表現を指定可能。語り手スタイルを分離できる",
+        "params": {
+          "emoji": "📖"
+        }
+      },
+      "source_article": "art_20260518_036",
+      "source_url": "https://huggingface.co/Aratako/Irodori-TTS-500M-v3/blob/main/EMOJI_ANNOTATIONS.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-18"
+    },
+    {
+      "id": "upd_20260518_art_20260518_037",
+      "target": "default_captions.json",
+      "operation": "review_cfg_values",
+      "data": {
+        "finding": "CFGスケール推奨値：テキスト条件3.0、話者条件5.0。独立・結合・交互の3つのガイダンスモードから選択可能。デフォルトステップ数は40で1～120の範囲で調整可",
+        "params": {
+          "cfg_scale_text": 3.0,
+          "cfg_scale_speaker": 5.0,
+          "num_steps_default": 40,
+          "guidance_modes": [
+            "independent",
+            "joint",
+            "alternating"
+          ]
+        }
+      },
+      "source_article": "art_20260518_037",
+      "source_url": "https://github.com/iron-mukakin/Emoji-TTS/blob/main/README_ja.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-18"
+    },
+    {
+      "id": "upd_20260518_art_20260518_037",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "絵文字キャプションは音響特徴量抽出後LLM APIで自動生成。38種の絵文字（囁き・笑い・喘ぎ・早口など）で声のスタイルを自然言語アノテーション可能",
+        "params": {
+          "emoji_count": 38,
+          "supported_apis": [
+            "lm_studio",
+            "groq",
+            "openai",
+            "together"
+          ]
+        }
+      },
+      "source_article": "art_20260518_037",
+      "source_url": "https://github.com/iron-mukakin/Emoji-TTS/blob/main/README_ja.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-18"
+    },
+    {
+      "id": "upd_20260518_art_20260518_037",
+      "target": "ma_agent.py",
+      "operation": "review_postprocess_technique",
+      "data": {
+        "finding": "改行分割生成は3モード選択可：全文同時生成・改行ごと個別出力・改行ごと無音区間（0.1～3.0秒）挟んで連結",
+        "params": {
+          "silence_duration_range": "0.1-3.0秒"
+        }
+      },
+      "source_article": "art_20260518_037",
+      "source_url": "https://github.com/iron-mukakin/Emoji-TTS/blob/main/README_ja.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-18"
+    },
+    {
+      "id": "upd_20260518_art_20260518_037",
+      "target": "ma_agent.py",
+      "operation": "review_postprocess_technique",
+      "data": {
+        "finding": "音声前処理ツールはSilero VAD（音声活動検出）で長尺音声分割し、Whisper（tiny～large-v3選択可）で字幕化。自動的にLLMで絵文字アノテーション付与",
+        "params": {
+          "vad_threshold": 0.5,
+          "whisper_models": [
+            "tiny",
+            "base",
+            "small",
+            "medium",
+            "large-v3"
+          ]
+        }
+      },
+      "source_article": "art_20260518_037",
+      "source_url": "https://github.com/iron-mukakin/Emoji-TTS/blob/main/README_ja.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-18"
+    },
+    {
+      "id": "upd_20260525_art_20260525_038",
+      "target": "default_captions.json",
+      "operation": "review_cfg_values",
+      "data": {
+        "finding": "v2-duration-controlで短発話のRTFが大幅改善。推定式 est = len(text)/4.5 + 1.0 を使用するため、同一テキストでも+42%音声長になりRTF算出方式に注意が必要。",
+        "params": {
+          "duration_estimate": "len(text)/4.5 + 1.0"
+        }
+      },
+      "source_article": "art_20260525_038",
+      "source_url": "https://zenn.dev/yoshitetsu/articles/6376a9a2204ffb",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-25"
+    },
+    {
+      "id": "upd_20260525_art_20260525_038",
+      "target": "ma_agent.py",
+      "operation": "review_postprocess_technique",
+      "data": {
+        "finding": "WaveEx併用は wall-clock 13.3%短縮の効果はあるが、duration-controlではTaylor外挿の誤差が増幅して聴感品質が低下する。安定品質優先ならlinear_30が最良。",
+        "params": {
+          "steps": 6,
+          "nfe": 40,
+          "speedup_pct": 13.3
+        }
+      },
+      "source_article": "art_20260525_038",
+      "source_url": "https://zenn.dev/yoshitetsu/articles/6376a9a2204ffb",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-25"
+    },
+    {
+      "id": "upd_20260525_art_20260525_039",
+      "target": "default_captions.json",
+      "operation": "review_caption_technique",
+      "data": {
+        "finding": "VoiceDesignのキャプションは音響指定だけでなく『一生懸命』『ドジっ子っぽく』『時々慌てる』といった行動・性格描写を含めると、無個性な声から個性的な声に大きく変化する。",
+        "params": {}
+      },
+      "source_article": "art_20260525_039",
+      "source_url": "https://note.com/ojisan_ai_lab/n/n870c6f00a4d1",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-25"
+    },
+    {
+      "id": "upd_20260525_art_20260525_039",
+      "target": "default_captions.json",
+      "operation": "review_caption_technique",
+      "data": {
+        "finding": "1文に『声の高さ』『年齢感』『話し方』『感情』のうち最低3要素を盛り込む。長さは1-2文がベスト。『幼い』と『若い』では声の印象が大きく異なるため語彙選択も重要。",
+        "params": {
+          "min_elements": 3,
+          "ideal_sentences": "1-2"
+        }
+      },
+      "source_article": "art_20260525_039",
+      "source_url": "https://note.com/ojisan_ai_lab/n/n870c6f00a4d1",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-25"
+    },
+    {
+      "id": "upd_20260525_art_20260525_039",
+      "target": "default_captions.json",
+      "operation": "review_caption_technique",
+      "data": {
+        "finding": "確定キャプション例『少し高めの声の少女が、一生懸命だけど少しドジっ子っぽく話している。穏やかだけど時々慌てる』+ seed値1234で再現可能なキャラ声が確立した。",
+        "params": {
+          "seed": 1234
+        }
+      },
+      "source_article": "art_20260525_039",
+      "source_url": "https://note.com/ojisan_ai_lab/n/n870c6f00a4d1",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-25"
+    },
+    {
+      "id": "upd_20260525_art_20260525_039",
+      "target": "emoji_patterns.json",
+      "operation": "review_emoji_pattern",
+      "data": {
+        "finding": "感情変化の『直前』に絵文字を配置すると自然な表現になる。😊嬉しい・😰慌てる・🥺落ち込み・😲驚き・🤔分析・😌安堵・⏸️沈黙・⏩早口の8種を使い分け。",
+        "params": {}
+      },
+      "source_article": "art_20260525_039",
+      "source_url": "https://note.com/ojisan_ai_lab/n/n870c6f00a4d1",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-25"
+    },
+    {
+      "id": "upd_20260525_art_20260525_040",
+      "target": "default_captions.json",
+      "operation": "review_caption_technique",
+      "data": {
+        "finding": "VoiceDesignでは『落ち着いた女性の声で、近い距離感でやわらかく自然に読み上げてください』のような自然文キャプションでスタイルを直接指定でき、参照音声不要。",
+        "params": {}
+      },
+      "source_article": "art_20260525_040",
+      "source_url": "https://zenn.dev/kun432/scraps/b83b0406b067bb",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-25"
+    },
+    {
+      "id": "upd_20260525_art_20260525_040",
+      "target": "default_captions.json",
+      "operation": "review_cfg_values",
+      "data": {
+        "finding": "Sway Samplingで推論を約5倍高速化（483.6ms→98.8ms）。--num-steps 6 --t-schedule-mode sway --sway-coeff -1.0 を指定。品質低下とのトレードオフあり。",
+        "params": {
+          "num_steps": 6,
+          "t_schedule_mode": "sway",
+          "sway_coeff": -1.0
+        }
+      },
+      "source_article": "art_20260525_040",
+      "source_url": "https://zenn.dev/kun432/scraps/b83b0406b067bb",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-25"
+    },
+    {
+      "id": "upd_20260525_art_20260525_040",
+      "target": "default_captions.json",
+      "operation": "review_cfg_values",
+      "data": {
+        "finding": "v3は出力長を自動推定するため --seconds 指定が不要に。--duration-scale で倍率調整可能（>1で長く、<1で短く）。v2の固定30秒問題を解決。",
+        "params": {
+          "duration_scale_default": 1.0
+        }
+      },
+      "source_article": "art_20260525_040",
+      "source_url": "https://zenn.dev/kun432/scraps/b83b0406b067bb",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-25"
+    },
+    {
+      "id": "upd_20260525_art_20260525_041",
+      "target": "default_captions.json",
+      "operation": "review_cfg_values",
+      "data": {
+        "finding": "CFG independent モードがデフォルト推奨。各条件（text/caption/speaker）が独自無条件分岐を持ち最も柔軟だが、バッチサイズ増でVRAM消費増。CFG-activeステップでは通常3倍のNFE。",
+        "params": {
+          "cfg_guidance_mode": "independent"
+        }
+      },
+      "source_article": "art_20260525_041",
+      "source_url": "https://github.com/Aratako/Irodori-TTS/blob/main/docs/parameters.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-25"
+    },
+    {
+      "id": "upd_20260525_art_20260525_041",
+      "target": "default_captions.json",
+      "operation": "review_cfg_values",
+      "data": {
+        "finding": "CFGスケール公式デフォルト値: text=3.0, caption=3.0, speaker=5.0。発音が弱いときはtextスケールを『わずかに』増加させる。話者類似性が弱いときはspeakerスケールを調整。",
+        "params": {
+          "cfg_scale_text": 3.0,
+          "cfg_scale_caption": 3.0,
+          "cfg_scale_speaker": 5.0
+        }
+      },
+      "source_article": "art_20260525_041",
+      "source_url": "https://github.com/Aratako/Irodori-TTS/blob/main/docs/parameters.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-25"
+    },
+    {
+      "id": "upd_20260525_art_20260525_041",
+      "target": "default_captions.json",
+      "operation": "review_cfg_values",
+      "data": {
+        "finding": "CFG時間範囲は cfg-min-t=0.5, cfg-max-t=1.0 がデフォルト。拡散プロセスの特定段階のみにガイダンスを適用することで品質と速度のバランスを取る。",
+        "params": {
+          "cfg_min_t": 0.5,
+          "cfg_max_t": 1.0
+        }
+      },
+      "source_article": "art_20260525_041",
+      "source_url": "https://github.com/Aratako/Irodori-TTS/blob/main/docs/parameters.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-25"
+    },
+    {
+      "id": "upd_20260525_art_20260525_041",
+      "target": "default_captions.json",
+      "operation": "review_cfg_values",
+      "data": {
+        "finding": "Sway Sampling推奨設定: t-schedule-mode=sway, sway-coeff=-1.0。ノイズ側に計算スケジュール解像度を割く設計。低ステップ数（6〜10）での品質改善に効く。",
+        "params": {
+          "t_schedule_mode": "sway",
+          "sway_coeff": -1.0,
+          "num_steps_range": "6-10"
+        }
+      },
+      "source_article": "art_20260525_041",
+      "source_url": "https://github.com/Aratako/Irodori-TTS/blob/main/docs/parameters.md",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-25"
+    },
+    {
+      "id": "upd_20260525_art_20260525_043",
+      "target": "ma_agent.py",
+      "operation": "review_postprocess_technique",
+      "data": {
+        "finding": "DiTとDACVAEを非同時実行するパイプライン設計でメモリを再利用しVRAM占有を最小化。Lite版運用ではこの設計が画像生成AIとの共存可否を決める。",
+        "params": {}
+      },
+      "source_article": "art_20260525_043",
+      "source_url": "https://note.com/humble_bobcat51/n/ne4c7a419c97f",
+      "confidence": "medium",
+      "status": "pending_review",
+      "created": "2026-05-25"
+    },
+    {
+      "id": "upd_20260525_art_20260525_045",
+      "target": "ma_agent.py",
+      "operation": "review_postprocess_technique",
+      "data": {
+        "finding": "Irodori-TTS-ServerはOpenAI互換 POST /v1/audio/speech エンドポイント。wav/mp3/flac/opus/aac/pcm の6形式に対応し、長文テキストは自動で分割されて処理される。",
+        "params": {
+          "endpoint": "/v1/audio/speech",
+          "formats": "wav,mp3,flac,opus,aac,pcm"
+        }
+      },
+      "source_article": "art_20260525_045",
+      "source_url": "https://zenn.dev/kun432/scraps/27a96c1a3d3f7e",
+      "confidence": "high",
+      "status": "pending_review",
+      "created": "2026-05-25"
     }
   ]
 }

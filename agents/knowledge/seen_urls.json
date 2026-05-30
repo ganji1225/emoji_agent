@@ -3,7 +3,7 @@
     "title": "Irodori-TTSのキャプション設計で声質を操る方法",
     "snippet": "キャプションの行動描写が声質に影響する",
     "first_seen": "2026-04-16",
-    "last_checked": "2026-05-04",
+    "last_checked": "2026-05-18",
     "status": "fetched",
     "content_hash": "sha256:e82a1609bc71fecc"
   },
@@ -11,7 +11,7 @@
     "title": "絵文字で感情表現ができるIrodori-TTSの使い方",
     "snippet": "絵文字を使った感情表現テクニック",
     "first_seen": "2026-04-16",
-    "last_checked": "2026-05-04",
+    "last_checked": "2026-05-18",
     "status": "fetched",
     "content_hash": "sha256:aa9f83d6365d9712"
   },
@@ -19,7 +19,7 @@
     "title": "Irodori-TTSを実際に動かしてみた！感情絵文字で声に表情をつける面白さ",
     "snippet": "感情絵文字による声の表情付け実践",
     "first_seen": "2026-04-16",
-    "last_checked": "2026-05-04",
+    "last_checked": "2026-05-18",
     "status": "fetched",
     "content_hash": "sha256:ddb2dd1c4ceb5147"
   },
@@ -27,7 +27,7 @@
     "title": "ローカルで動かせる日本語TTSをいろいろ試す（その３）",
     "snippet": "日本語TTS比較とIrodori-TTS",
     "first_seen": "2026-04-16",
-    "last_checked": "2026-05-04",
+    "last_checked": "2026-05-18",
     "status": "fetched",
     "content_hash": "sha256:7c51a5136d41b7e7"
   },
@@ -59,7 +59,7 @@
     "title": "日本語最強クラスの音声生成Irodori-TTS 絵文字で感情まで操れる",
     "snippet": "絵文字で感情操作の解説",
     "first_seen": "2026-04-16",
-    "last_checked": "2026-05-04",
+    "last_checked": "2026-05-18",
     "status": "fetched",
     "content_hash": "sha256:9cc19969bb565a68"
   },
@@ -67,7 +67,7 @@
     "title": "絵文字で感情表現ができる合成音声Irodori-TTSを使ってみた",
     "snippet": "絵文字による感情表現の実践レポート",
     "first_seen": "2026-04-16",
-    "last_checked": "2026-05-04",
+    "last_checked": "2026-05-18",
     "status": "fetched",
     "content_hash": "sha256:8771c5d16c747c40"
   },
@@ -75,7 +75,7 @@
     "title": "Irodori-TTSを試す",
     "snippet": "Irodori-TTSの試用レポート",
     "first_seen": "2026-04-16",
-    "last_checked": "2026-05-04",
+    "last_checked": "2026-05-18",
     "status": "fetched",
     "content_hash": "sha256:1ff80829de8725d3"
   },
@@ -83,9 +83,9 @@
     "title": "声優不要！？神AI Irodori-TTS",
     "snippet": "Irodori-TTS紹介記事",
     "first_seen": "2026-04-16",
-    "last_checked": "2026-05-01",
-    "status": "pending_fetch",
-    "content_hash": ""
+    "last_checked": "2026-05-18",
+    "status": "fetched",
+    "content_hash": "sha256:1265b29cc3d77325"
   },
   "https://x.com/rotejin/status/2041101420213243907": {
     "title": "ろてじん: 追加学習+参照音源でIrodori-TTS試した感想",
@@ -147,7 +147,7 @@
     "title": "テキスト指示だけで声を作れる日本語TTS「Irodori-TTS VoiceDesign」をMacで試した",
     "snippet": "テキスト指示だけで声を作れる。Mac環境での試用",
     "first_seen": "2026-04-17",
-    "last_checked": "2026-05-04",
+    "last_checked": "2026-05-18",
     "status": "fetched",
     "content_hash": "sha256:23b7f00b84a46bb2"
   },
@@ -171,7 +171,7 @@
     "title": "Irodori-TTSで音声を一括生成する",
     "snippet": "一括生成のテクニック",
     "first_seen": "2026-04-17",
-    "last_checked": "2026-04-17",
+    "last_checked": "2026-05-12",
     "status": "fetched",
     "content_hash": "sha256:b0d43b9faa591b16"
   },
@@ -211,7 +211,7 @@
     "title": "Aratako/Irodori-TTS-500M-v2-VoiceDesign · Hugging Face",
     "snippet": "テキストキャプションだけで声・感情・話し方を完全制御するVoiceDesignモデル。",
     "first_seen": "2026-04-18",
-    "last_checked": "2026-05-04",
+    "last_checked": "2026-05-18",
     "status": "fetched",
     "content_hash": "sha256:b2ee2224d4406fd9"
   },
@@ -219,7 +219,7 @@
     "title": "Emoji-TTS: Irodori-TTSフォーク・echo-TTSのwebui",
     "snippet": "Normal/Strong/Calm/Bright/Whisperのemotion style presets。CFG細粒度制御、LLMによる絵文字アノテーション機能。",
     "first_seen": "2026-04-18",
-    "last_checked": "2026-05-04",
+    "last_checked": "2026-05-18",
     "status": "fetched",
     "content_hash": "sha256:450edee787eb6eb9"
   },
@@ -235,7 +235,7 @@
     "title": "Irodori-TTS: Flow Matching-based TTS with Emoji-driven Style Control",
     "snippet": "絵文字駆動スタイル制御のフローマッチングベースTTS。",
     "first_seen": "2026-04-18",
-    "last_checked": "2026-05-04",
+    "last_checked": "2026-05-18",
     "status": "fetched",
     "content_hash": "sha256:ccb1fd595a87c3b8"
   },
@@ -243,7 +243,7 @@
     "title": "Aratako/Irodori-TTS-500M-v2 · Hugging Face",
     "snippet": "Irodori-TTS v2ベースモデル。推論パラメータの詳細。",
     "first_seen": "2026-04-20",
-    "last_checked": "2026-05-04",
+    "last_checked": "2026-05-18",
     "status": "fetched",
     "content_hash": "sha256:104d6f089069d0cb"
   },
@@ -259,7 +259,7 @@
     "title": "EMOJI_ANNOTATIONS.md · Aratako/Irodori-TTS-500M at main",
     "snippet": "絵文字アノテーションのドキュメント",
     "first_seen": "2026-04-21",
-    "last_checked": "2026-05-04",
+    "last_checked": "2026-05-18",
     "status": "fetched",
     "content_hash": "sha256:4e64407265b869eb"
   },
@@ -363,9 +363,9 @@
     "title": "Aratako/Semantic-DACVAE-Japanese · Hugging Face",
     "snippet": "Japanese fine-tuned DACVAE with WavLM semantic distillation",
     "first_seen": "2026-04-22",
-    "last_checked": "2026-05-04",
-    "status": "pending_fetch",
-    "content_hash": ""
+    "last_checked": "2026-05-18",
+    "status": "fetched",
+    "content_hash": "sha256:af3df3243f72f378"
   },
   "https://github.com/facebookresearch/dacvae": {
     "title": "GitHub - facebookresearch/dacvae",
@@ -411,7 +411,7 @@
     "title": "【多様な感情表現】Irodori TTSサンプル＆導入解説",
     "snippet": "Irodori TTSの感情表現サンプルと導入解説",
     "first_seen": "2026-04-23",
-    "last_checked": "2026-05-04",
+    "last_checked": "2026-05-18",
     "status": "fetched",
     "content_hash": "sha256:8f132ebb4933fbb0"
   },
@@ -475,7 +475,7 @@
     "title": "「声をテキストで作る時代」が来た——Irodori-TTS（彩りTTS）がヤバすぎる件",
     "snippet": "VoiceDesignによるテキスト指示のみでの声生成の解説記事。",
     "first_seen": "2026-04-24",
-    "last_checked": "2026-05-04",
+    "last_checked": "2026-05-18",
     "status": "fetched",
     "content_hash": "sha256:e4fb3d5fa86588d4"
   },
@@ -515,7 +515,7 @@
     "title": "Irodori-TTSのLoRA配布",
     "snippet": "LoRA 配布記事",
     "first_seen": "2026-05-01",
-    "last_checked": "2026-05-04",
+    "last_checked": "2026-05-18",
     "status": "fetched",
     "content_hash": "sha256:e43a7c06cb5233a4"
   },
@@ -523,9 +523,9 @@
     "title": "日本語音声AI「Irodori-TTS」の導入方法・使い方",
     "snippet": "導入と使い方",
     "first_seen": "2026-05-01",
-    "last_checked": "2026-05-01",
-    "status": "pending_fetch",
-    "content_hash": ""
+    "last_checked": "2026-05-18",
+    "status": "fetched",
+    "content_hash": "sha256:039a831fa1155c74"
   },
   "https://www.ipentec.com/document/software/audio-generation-irodori-tts": {
     "title": "Irodori-TTS のローカルマシンへのインストール",
@@ -572,6 +572,326 @@
     "snippet": "Qwen3-TTSとの比較",
     "first_seen": "2026-05-04",
     "last_checked": "2026-05-04",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://www.sukoreru.com/irodori-tts-voicedesign": {
+    "title": "Irodori-TTS VoiceDesignで声を作る手順とプロンプト例",
+    "snippet": "VoiceDesign声作りプロンプト例と音声サンプル",
+    "first_seen": "2026-05-12",
+    "last_checked": "2026-05-18",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://hatohato.jp/blog/core/single.php?id=1032": {
+    "title": "Irodori-TTS の考察｜日本語特化ローカル AI 音声合成",
+    "snippet": "Irodori-TTS技術考察、行動描写キャプション、CFGパラメータ",
+    "first_seen": "2026-05-12",
+    "last_checked": "2026-05-18",
+    "status": "fetched",
+    "content_hash": "sha256:680b076c8d2b9395"
+  },
+  "https://local-llm.memo.wiki/d/%A1%DATTS%A1%DBIrodori-TTS-v2%A4%CE%B4%CA%C3%B1%A4%CA%BB%C8%A4%A4%CA%FD%A4%CA%A4%C9": {
+    "title": "Irodori-TTS-v2の簡単な使い方",
+    "snippet": "v2モデルの実践的なTipsとパラメータ調整",
+    "first_seen": "2026-05-12",
+    "last_checked": "2026-05-12",
+    "status": "fetched",
+    "content_hash": "sha256:05e69db3939568fd"
+  },
+  "https://note.com/fuma_ai_lab/n/nef8cb249ccdf": {
+    "title": "Irodori-TTSがかなりヤバい 絵文字で感情を操る時代へ",
+    "snippet": "絵文字感情制御の実例",
+    "first_seen": "2026-05-12",
+    "last_checked": "2026-05-12",
+    "status": "fetched",
+    "content_hash": "sha256:cdc1823226a46eda"
+  },
+  "https://github.com/Aratako/Irodori-TTS/blob/main/EMOJI_ANNOTATIONS.md": {
+    "title": "EMOJI_ANNOTATIONS.md - Irodori-TTS",
+    "snippet": "絵文字アノテーション仕様",
+    "first_seen": "2026-05-12",
+    "last_checked": "2026-05-12",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://note.com/dialogs_develop/n/nad8cef0bc146": {
+    "title": "ローカル音声合成AI Irodori-TTS をWindowsに導入して使う手順まとめ",
+    "snippet": "Windows導入手順",
+    "first_seen": "2026-05-18",
+    "last_checked": "2026-05-18",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://fanartanime.com/blog/irodori-tts-guide.html": {
+    "title": "Irodori-TTSとは 日本語音声生成AIのすごい点をわかりやすく解説",
+    "snippet": "機能解説記事",
+    "first_seen": "2026-05-18",
+    "last_checked": "2026-05-18",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://blog.turai.work/entry/20260513/1778684336": {
+    "title": "irodori-ttsをOpenAI Text-to-Speech互換APIで使う",
+    "snippet": "OpenAI互換API利用",
+    "first_seen": "2026-05-18",
+    "last_checked": "2026-05-18",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://note.com/417__/n/n7c25cf9a04c2": {
+    "title": "彩 Irodori-TTS 解説",
+    "snippet": "椎名による解説",
+    "first_seen": "2026-05-18",
+    "last_checked": "2026-05-18",
+    "status": "fetched",
+    "content_hash": "sha256:4558edf9756f722e"
+  },
+  "https://note.com/comfyui_lab/n/n15fd0a190c6e": {
+    "title": "IrodoriTTS もはやナレーターはAIで充分か ComfyUI",
+    "snippet": "ComfyUI連携",
+    "first_seen": "2026-05-18",
+    "last_checked": "2026-05-18",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://huggingface.co/Aratako/Irodori-TTS-500M-v3": {
+    "title": "Aratako/Irodori-TTS-500M-v3 Hugging Face",
+    "snippet": "公式v3モデルカード",
+    "first_seen": "2026-05-18",
+    "last_checked": "2026-05-18",
+    "status": "fetched",
+    "content_hash": "sha256:f686d76cc60b5de2"
+  },
+  "https://gigazine.net/gsc_news/en/20260504-irodori-tts-text-to-speech-ai": {
+    "title": "How to use Irodori-TTS GIGAZINE",
+    "snippet": "GIGAZINE使い方記事",
+    "first_seen": "2026-05-18",
+    "last_checked": "2026-05-18",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://note.com/nullpolab/n/n8b8ac5ebf20c": {
+    "title": "Irodori-TTS の参照音声で長文の音声出力をなんとなくできるようにした",
+    "snippet": "長文出力 絵文字補助",
+    "first_seen": "2026-05-18",
+    "last_checked": "2026-05-18",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://note.com/asagi_ai_lab/n/nc4b439f7cb2a": {
+    "title": "軽量TTS Irodori-TTS をローカルPC CPU で動かしてみた",
+    "snippet": "CPU実行",
+    "first_seen": "2026-05-18",
+    "last_checked": "2026-05-18",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://emoji-tts.github.io/": {
+    "title": "Emoji-TTS anonymous demo",
+    "snippet": "デモサイト",
+    "first_seen": "2026-05-18",
+    "last_checked": "2026-05-18",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://github.com/iron-mukakin/Emoji-TTS/blob/main/README_ja.md": {
+    "title": "Emoji-TTS/README_ja.md",
+    "snippet": "日本語README",
+    "first_seen": "2026-05-18",
+    "last_checked": "2026-05-18",
+    "status": "fetched",
+    "content_hash": "sha256:ea3f855153e3fb9c"
+  },
+  "https://deepwiki.com/iron-mukakin/Emoji-TTS": {
+    "title": "iron-mukakin/Emoji-TTS DeepWiki",
+    "snippet": "DeepWiki解析",
+    "first_seen": "2026-05-18",
+    "last_checked": "2026-05-18",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://huggingface.co/Aratako/Irodori-TTS-500M-v3/blob/main/EMOJI_ANNOTATIONS.md": {
+    "title": "EMOJI_ANNOTATIONS.md v3",
+    "snippet": "v3公式絵文字一覧",
+    "first_seen": "2026-05-18",
+    "last_checked": "2026-05-18",
+    "status": "fetched",
+    "content_hash": "sha256:95a21ebe61891010"
+  },
+  "https://github.com/jupo-ai/ComfyUI_IrodoriTTS_Wrapper": {
+    "title": "GitHub jupo-ai/ComfyUI_IrodoriTTS_Wrapper",
+    "snippet": "ComfyUIラッパー",
+    "first_seen": "2026-05-18",
+    "last_checked": "2026-05-18",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://zenn.dev/kun432/scraps/b83b0406b067bb": {
+    "title": "「Irodori-TTS v3」「Irodori-TTS v2 VoiceDesign」を試す",
+    "snippet": "v3 と v2 VoiceDesign の試用レポート",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "fetched",
+    "content_hash": "sha256:7870a2dee9771a98"
+  },
+  "https://zenn.dev/platina/articles/speaker-inversion": {
+    "title": "Irodori-TTSを使って音声ファイルよりも軽い埋め込みだけで声を学習する",
+    "snippet": "Speaker embedding inversion による軽量声学習",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "fetched",
+    "content_hash": "sha256:890a119ff89e39bd"
+  },
+  "https://zenn.dev/kun432/scraps/27a96c1a3d3f7e": {
+    "title": "「Irodori-TTS-Server」を試す",
+    "snippet": "OpenAI互換サーバー実装の試用",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "fetched",
+    "content_hash": "sha256:7cff7f539622ae30"
+  },
+  "https://zenn.dev/acntechjp/articles/530307d5e9c459": {
+    "title": "【無料・商用可】Irodori-TTSが凄すぎた。日本語AI音声がついに「声優レベル」へ",
+    "snippet": "無料商用可・声優レベルの日本語TTS解説",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "fetched",
+    "content_hash": "sha256:ad6e241c04c75068"
+  },
+  "https://zenn.dev/michy/articles/52c163a166454d": {
+    "title": "【Irodori-TTS】DGX Spark (GB10) でOpenAI互換TTSサーバーを構築する",
+    "snippet": "DGX SparkでのOpenAI互換サーバー構築",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://zenn.dev/yoshitetsu/articles/6376a9a2204ffb": {
+    "title": "Irodori-TTS の WaveEx × duration-control を Mac MPS で 4 条件比較",
+    "snippet": "WaveEx と duration-control の4条件比較レポート",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "fetched",
+    "content_hash": "sha256:98a9b6e2508e7e82"
+  },
+  "https://zenn.dev/masahide/articles/324e6879ba1deb": {
+    "title": "好きな声で喋ってくれるIrodori-TTSをRadeon RX9070系 + WSL で動かす",
+    "snippet": "AMD GPU + WSL での動作手順",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://note.com/uunin/n/n0f1876229022": {
+    "title": "今話題の日本語TTS「Irodori-TTS」をワンクリックで簡単導入",
+    "snippet": "ワンクリックインストーラ紹介",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://note.com/humble_bobcat51/n/ne4c7a419c97f": {
+    "title": "1GBのVRAMで動く次世代音声合成：Irodori-TTS-Lite",
+    "snippet": "4-bit 量子化で1GB VRAM動作する軽量版",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "fetched",
+    "content_hash": "sha256:f257d5832d2ecbe1"
+  },
+  "https://note.com/inu94suno/n/nda406f759dc7": {
+    "title": "ローカル音声合成AI「Irodori-TTS」でClaudeの回答をCoworkで自動ボイス化",
+    "snippet": "Claude × Irodori-TTS で AITuber 化",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://github.com/jupo-ai/comfy-Irodori-TTS": {
+    "title": "jupo-ai/comfy-Irodori-TTS",
+    "snippet": "ComfyUI 用 Irodori-TTS ラッパー",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://github.com/oosawak/irodori-tts": {
+    "title": "oosawak/irodori-tts フォーク",
+    "snippet": "Irodori-TTS のフォーク版",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://github.com/Aratako/Irodori-TTS/blob/main/gradio_app_voicedesign.py": {
+    "title": "gradio_app_voicedesign.py",
+    "snippet": "VoiceDesign 用 Gradio アプリの実装",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://github.com/Aratako/Irodori-TTS/blob/main/docs/parameters.md": {
+    "title": "Irodori-TTS docs/parameters.md",
+    "snippet": "公式パラメータドキュメント (CFG mode/min-t/max-t など)",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "fetched",
+    "content_hash": "sha256:f6628c6d04519704"
+  },
+  "https://huggingface.co/collections/Aratako/irodori-tts": {
+    "title": "Irodori-TTS - Aratako Collection",
+    "snippet": "公式モデルコレクション",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://x.com/gigazine/status/2051297127989383651": {
+    "title": "GIGAZINE: 好きな声で好きなセリフを喋らせられるローカルAI「Irodori-TTS」の使い方",
+    "snippet": "日本語特化ローカル動作TTSの紹介",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://x.com/beef_and_rice/status/2050406579196088661": {
+    "title": "gyu-don: IrodoriTTS感動",
+    "snippet": "使用感想ツイート",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://x.com/Prince_Canuma/status/2038674930514985363": {
+    "title": "mlx-audio v0.4.2 with Irodori-TTS",
+    "snippet": "mlx-audio へのIrodori-TTS統合",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://note.com/gb10_tsurumitsu/n/nbad43afdaca2": {
+    "title": "自宅AI基盤に、VRMデジタル秘書デモ",
+    "snippet": "LLM・表情・モーション・Irodori-TTSをつないだ秘書",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://note.com/ojisan_ai_lab/n/n870c6f00a4d1": {
+    "title": "20回試行して見つけた、AIキャラの推し声の作り方",
+    "snippet": "行動描写を入れたキャプション設計のコツ",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
+    "status": "fetched",
+    "content_hash": "sha256:6c558e5c1cbe5abe"
+  },
+  "https://note.com/96s_km4osm/n/n255432606573": {
+    "title": "愛が重すぎるキャラが推しの音声を捏造するシチュで使える技術",
+    "snippet": "創作用途のTTSテクニック",
+    "first_seen": "2026-05-25",
+    "last_checked": "2026-05-25",
     "status": "pending_fetch",
     "content_hash": ""
   }
