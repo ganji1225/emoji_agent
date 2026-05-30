@@ -1,5 +1,5 @@
 # TTS Production Knowledge Base
-_Auto-updated: 2026-05-25 | Total findings: 148 | Sources: 37 articles_
+_Auto-updated: 2026-05-30 | Total findings: 148 | Sources: 38 articles_
 
 
 ## Caption Design (キャプション設計)

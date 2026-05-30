@@ -19,7 +19,7 @@
     "title": "Irodori-TTSを実際に動かしてみた！感情絵文字で声に表情をつける面白さ",
     "snippet": "感情絵文字による声の表情付け実践",
     "first_seen": "2026-04-16",
-    "last_checked": "2026-05-18",
+    "last_checked": "2026-05-30",
     "status": "fetched",
     "content_hash": "sha256:ddb2dd1c4ceb5147"
   },
@@ -27,7 +27,7 @@
     "title": "ローカルで動かせる日本語TTSをいろいろ試す（その３）",
     "snippet": "日本語TTS比較とIrodori-TTS",
     "first_seen": "2026-04-16",
-    "last_checked": "2026-05-18",
+    "last_checked": "2026-05-30",
     "status": "fetched",
     "content_hash": "sha256:7c51a5136d41b7e7"
   },
@@ -43,7 +43,7 @@
     "title": "Irodori-TTS VoiceDesign Colab版",
     "snippet": "WebUI実装・Colab対応",
     "first_seen": "2026-04-16",
-    "last_checked": "2026-05-04",
+    "last_checked": "2026-05-30",
     "status": "pending_fetch",
     "content_hash": ""
   },
@@ -147,7 +147,7 @@
     "title": "テキスト指示だけで声を作れる日本語TTS「Irodori-TTS VoiceDesign」をMacで試した",
     "snippet": "テキスト指示だけで声を作れる。Mac環境での試用",
     "first_seen": "2026-04-17",
-    "last_checked": "2026-05-18",
+    "last_checked": "2026-05-30",
     "status": "fetched",
     "content_hash": "sha256:23b7f00b84a46bb2"
   },
@@ -323,7 +323,7 @@
     "title": "GitHub - Irodori-TTS-Playground: Docker-based playground with Web UI",
     "snippet": "Docker playground for Irodori-TTS with VoiceDesign support and emoji annotations",
     "first_seen": "2026-04-22",
-    "last_checked": "2026-05-04",
+    "last_checked": "2026-05-30",
     "status": "pending_fetch",
     "content_hash": ""
   },
@@ -475,7 +475,7 @@
     "title": "「声をテキストで作る時代」が来た——Irodori-TTS（彩りTTS）がヤバすぎる件",
     "snippet": "VoiceDesignによるテキスト指示のみでの声生成の解説記事。",
     "first_seen": "2026-04-24",
-    "last_checked": "2026-05-18",
+    "last_checked": "2026-05-30",
     "status": "fetched",
     "content_hash": "sha256:e4fb3d5fa86588d4"
   },
@@ -723,7 +723,7 @@
     "title": "GitHub jupo-ai/ComfyUI_IrodoriTTS_Wrapper",
     "snippet": "ComfyUIラッパー",
     "first_seen": "2026-05-18",
-    "last_checked": "2026-05-18",
+    "last_checked": "2026-05-30",
     "status": "pending_fetch",
     "content_hash": ""
   },
@@ -747,7 +747,7 @@
     "title": "「Irodori-TTS-Server」を試す",
     "snippet": "OpenAI互換サーバー実装の試用",
     "first_seen": "2026-05-25",
-    "last_checked": "2026-05-25",
+    "last_checked": "2026-05-30",
     "status": "fetched",
     "content_hash": "sha256:7cff7f539622ae30"
   },
@@ -755,7 +755,7 @@
     "title": "【無料・商用可】Irodori-TTSが凄すぎた。日本語AI音声がついに「声優レベル」へ",
     "snippet": "無料商用可・声優レベルの日本語TTS解説",
     "first_seen": "2026-05-25",
-    "last_checked": "2026-05-25",
+    "last_checked": "2026-05-30",
     "status": "fetched",
     "content_hash": "sha256:ad6e241c04c75068"
   },
@@ -763,9 +763,9 @@
     "title": "【Irodori-TTS】DGX Spark (GB10) でOpenAI互換TTSサーバーを構築する",
     "snippet": "DGX SparkでのOpenAI互換サーバー構築",
     "first_seen": "2026-05-25",
-    "last_checked": "2026-05-25",
-    "status": "pending_fetch",
-    "content_hash": ""
+    "last_checked": "2026-05-30",
+    "status": "fetched",
+    "content_hash": "sha256:15230c07d6384561"
   },
   "https://zenn.dev/yoshitetsu/articles/6376a9a2204ffb": {
     "title": "Irodori-TTS の WaveEx × duration-control を Mac MPS で 4 条件比較",
@@ -779,7 +779,7 @@
     "title": "好きな声で喋ってくれるIrodori-TTSをRadeon RX9070系 + WSL で動かす",
     "snippet": "AMD GPU + WSL での動作手順",
     "first_seen": "2026-05-25",
-    "last_checked": "2026-05-25",
+    "last_checked": "2026-05-30",
     "status": "pending_fetch",
     "content_hash": ""
   },
@@ -803,9 +803,9 @@
     "title": "ローカル音声合成AI「Irodori-TTS」でClaudeの回答をCoworkで自動ボイス化",
     "snippet": "Claude × Irodori-TTS で AITuber 化",
     "first_seen": "2026-05-25",
-    "last_checked": "2026-05-25",
-    "status": "pending_fetch",
-    "content_hash": ""
+    "last_checked": "2026-05-30",
+    "status": "fetched",
+    "content_hash": "sha256:854dd2b77f5c9f83"
   },
   "https://github.com/jupo-ai/comfy-Irodori-TTS": {
     "title": "jupo-ai/comfy-Irodori-TTS",
@@ -894,5 +894,53 @@
     "last_checked": "2026-05-25",
     "status": "pending_fetch",
     "content_hash": ""
+  },
+  "https://note.com/ren_ai_coach/n/n73e205bdede2": {
+    "title": "Irodori-TTS Parameters: Which ones should you actually touch",
+    "snippet": "パラメータ調整の実践的な順番。1つずつ変更して聞き比べる手順。cfg_scale_speaker、cfg_scale_text、num-stepsの優先順位",
+    "first_seen": "2026-05-30",
+    "last_checked": "2026-05-30",
+    "status": "fetched",
+    "content_hash": "sha256:7b219ec9edb07223"
+  },
+  "https://note.com/aituberonair/n/n0133274f79ff": {
+    "title": "AITuber開発者向けローカルTTS 10選 2026年版",
+    "snippet": "2026年版ローカルTTS比較。Irodori-TTSを含む10種類のオープンウェイト音声エンジンまとめ",
+    "first_seen": "2026-05-30",
+    "last_checked": "2026-05-30",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://note.com/kongo_lab/n/na2f5bf541c42": {
+    "title": "DGX Sparkで音声合成Irodori-TTSを動かそう Part 2",
+    "snippet": "DGX SparkでIrodori-TTSを動かすPart2。実際の動作確認と設定",
+    "first_seen": "2026-05-30",
+    "last_checked": "2026-05-30",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://note.com/kongo_lab/n/nbc1b116749ed": {
+    "title": "DGX Sparkで音声合成Irodori-TTSを動かそう Part 1",
+    "snippet": "DGX SparkでIrodori-TTSを動かすPart1。環境構築手順",
+    "first_seen": "2026-05-30",
+    "last_checked": "2026-05-30",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://note.com/aituberonair/n/n2a0999dd51c0": {
+    "title": "AITuber OnAir Voice 13種類のTTSを同じAPIで扱える音声ライブラリ",
+    "snippet": "Irodori-TTSを含む13種類のTTSを統一APIで扱えるライブラリ紹介",
+    "first_seen": "2026-05-30",
+    "last_checked": "2026-05-30",
+    "status": "pending_fetch",
+    "content_hash": ""
+  },
+  "https://note.com/proper_quoll6268/n/ndab3e601d6fd": {
+    "title": "Irodori-TTS 長文を自動分割・生成・結合するPythonスクリプト",
+    "snippet": "30秒制限を突破する長文音声生成。自動分割・生成・結合のPythonスクリプト実装",
+    "first_seen": "2026-05-30",
+    "last_checked": "2026-05-30",
+    "status": "fetched",
+    "content_hash": "sha256:dafe7f7141825592"
   }
 }

@@ -1,12 +1,12 @@
 {
-  "_updated": "2026-05-25T10:18:46.923089+09:00",
-  "_total_articles": 45,
+  "_updated": "2026-05-30T23:27:19.004916+09:00",
+  "_total_articles": 49,
   "_categories": {
-    "caption_design": 16,
+    "caption_design": 18,
     "emoji_technique": 24,
-    "cfg_tuning": 10,
-    "audio_postprocess": 8,
-    "voice_quality": 30,
+    "cfg_tuning": 11,
+    "audio_postprocess": 10,
+    "voice_quality": 33,
     "training_tips": 7
   },
   "articles": [
@@ -2685,6 +2685,90 @@
         }
       ],
       "publish_date": "2026-05-15",
+      "excluded": false,
+      "exclusion_reason": null
+    },
+    {
+      "id": "art_20260530_046",
+      "url": "https://note.com/ren_ai_coach/n/n73e205bdede2",
+      "title": "Irodori-TTS パラメータ：実際に触るべき順番",
+      "source_type": "blog",
+      "discovered_date": "2026-05-30",
+      "fetch_date": "2026-05-30",
+      "categories": [
+        "cfg_tuning",
+        "voice_quality",
+        "caption_design"
+      ],
+      "relevance_score": 0.45,
+      "quality_score": 0.55,
+      "combined_score": 0.49,
+      "content_hash": "sha256:7b219ec9edb07223",
+      "summary": "Irodori-TTSのパラメータ調整を優先順位別に解説。第一段階(speed/cfg_scale_speaker/caption)から始め、1つずつ変更して効果を確認する手順を提示。",
+      "extracted_knowhow": [],
+      "publish_date": "2026-05-26",
+      "excluded": true,
+      "exclusion_reason": "combined_score 0.49 < 0.5"
+    },
+    {
+      "id": "art_20260530_047",
+      "url": "https://zenn.dev/michy/articles/52c163a166454d",
+      "title": "Irodori-TTS DGX Spark GB10 でOpenAI互換TTSサーバーを構築する",
+      "source_type": "blog",
+      "discovered_date": "2026-05-30",
+      "fetch_date": "2026-05-30",
+      "categories": [
+        "audio_postprocess",
+        "voice_quality"
+      ],
+      "relevance_score": 0.45,
+      "quality_score": 0.5,
+      "combined_score": 0.47,
+      "content_hash": "sha256:15230c07d6384561",
+      "summary": "DGX Spark(GB10/SM_121)でIrodori-TTS v3のOpenAI互換サーバーを構築。NGC 26.01コンテナ使用、torchaudioシム実装、/v1/audio/speech対応。",
+      "extracted_knowhow": [],
+      "publish_date": "2026-05-01",
+      "excluded": true,
+      "exclusion_reason": "combined_score 0.47 < 0.5"
+    },
+    {
+      "id": "art_20260530_048",
+      "url": "https://note.com/proper_quoll6268/n/ndab3e601d6fd",
+      "title": "Irodori-TTS 長文を自動分割・生成・結合するPythonスクリプト",
+      "source_type": "blog",
+      "discovered_date": "2026-05-30",
+      "fetch_date": "2026-05-30",
+      "categories": [
+        "audio_postprocess"
+      ],
+      "relevance_score": 0.45,
+      "quality_score": 0.45,
+      "combined_score": 0.45,
+      "content_hash": "sha256:dafe7f7141825592",
+      "summary": "30秒制限を突破する長文音声生成。gradio_clientでWeb UIに接続、pydubで音声結合、無音区間400msで自然な息継ぎを実現。",
+      "extracted_knowhow": [],
+      "publish_date": "2026-04-20",
+      "excluded": true,
+      "exclusion_reason": "combined_score 0.45 < 0.5"
+    },
+    {
+      "id": "art_20260530_049",
+      "url": "https://note.com/inu94suno/n/nda406f759dc7",
+      "title": "Irodori-TTSでClaudeの回答をCoworkで自動ボイス化してAITuberが誕生",
+      "source_type": "blog",
+      "discovered_date": "2026-05-30",
+      "fetch_date": "2026-05-30",
+      "categories": [
+        "caption_design",
+        "voice_quality"
+      ],
+      "relevance_score": 0.65,
+      "quality_score": 0.5,
+      "combined_score": 0.59,
+      "content_hash": "sha256:854dd2b77f5c9f83",
+      "summary": "Irodori-TTS VoiceDesignとClaude Cowork連携によるAITuber構築。Seed固定で一貫性確保、バッチ自動化。",
+      "extracted_knowhow": [],
+      "publish_date": "2026-05-10",
       "excluded": false,
       "exclusion_reason": null
     }
